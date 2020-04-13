@@ -1,0 +1,426 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
+/* generation.css empty *//* Document
+ * ========================================================================== *//**
+ * Add border box sizing in all browsers (opinionated).
+ */*,
+::before,
+::after {
+  box-sizing: border-box;
+}/**
+ * 1. Add text decoration inheritance in all browsers (opinionated).
+ * 2. Add vertical alignment inheritance in all browsers (opinionated).
+ */::before,
+::after {
+  text-decoration: inherit; /* 1 */
+  vertical-align: inherit; /* 2 */
+}/**
+ * 1. Use the default cursor in all browsers (opinionated).
+ * 2. Change the line height in all browsers (opinionated).
+ * 3. Use a 4-space tab width in all browsers (opinionated).
+ * 4. Remove the grey highlight on links in iOS (opinionated).
+ * 5. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ * 6. Breaks words to prevent overflow in all browsers (opinionated).
+ */html {
+  cursor: default; /* 1 */
+  line-height: 1.5; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  -webkit-tap-highlight-color: transparent /* 4 */;
+  -ms-text-size-adjust: 100%; /* 5 */
+  -webkit-text-size-adjust: 100%; /* 5 */
+  word-break: break-word; /* 6 */
+}/* Sections
+ * ========================================================================== *//**
+ * Remove the margin in all browsers (opinionated).
+ */body {
+  margin: 0;
+}/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Edge, Firefox, and Safari.
+ */h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}/* Grouping content
+ * ========================================================================== *//**
+ * Remove the margin on nested lists in Chrome, Edge, IE, and Safari.
+ */dl dl,
+dl ol,
+dl ul,
+ol dl,
+ul dl {
+  margin: 0;
+}/**
+ * Remove the margin on nested lists in Edge 18- and IE.
+ */ol ol,
+ol ul,
+ul ol,
+ul ul {
+  margin: 0;
+}/**
+ * 1. Add the correct sizing in Firefox.
+ * 2. Show the overflow in Edge 18- and IE.
+ */hr {
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}/**
+ * Add the correct display in IE.
+ */main {
+  display: block;
+}/**
+ * Remove the list style on navigation lists in all browsers (opinionated).
+ */nav ol,
+nav ul {
+  list-style: none;
+  padding: 0;
+}/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}/* Text-level semantics
+ * ========================================================================== *//**
+ * Remove the gray background on active links in IE 10.
+ */a {
+  background-color: transparent;
+}/**
+ * Add the correct text decoration in Edge 18-, IE, and Safari.
+ */abbr[title] {
+  text-decoration: underline;
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */b,
+strong {
+  font-weight: bolder;
+}/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}/**
+ * Add the correct font size in all browsers.
+ */small {
+  font-size: 80%;
+}/* Embedded content
+ * ========================================================================== *//*
+ * Change the alignment on media elements in all browsers (opinionated).
+ */audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle;
+}/**
+ * Add the correct display in IE 9-.
+ */audio,
+video {
+  display: inline-block;
+}/**
+ * Add the correct display in iOS 4-7.
+ */audio:not([controls]) {
+  display: none;
+  height: 0;
+}/**
+ * Remove the border on iframes in all browsers (opinionated).
+ */iframe {
+  border-style: none;
+}/**
+ * Remove the border on images within links in IE 10-.
+ */img {
+  border-style: none;
+}/**
+ * Change the fill color to match the text color in all browsers (opinionated).
+ */svg:not([fill]) {
+  fill: currentColor;
+}/**
+ * Hide the overflow in IE.
+ */svg:not(:root) {
+  overflow: hidden;
+}/* Tabular data
+ * ========================================================================== *//**
+ * Collapse border spacing in all browsers (opinionated).
+ */table {
+  border-collapse: collapse;
+}/* Forms
+ * ========================================================================== *//**
+ * Remove the margin on controls in Safari.
+ */button,
+input,
+select {
+  margin: 0;
+}/**
+ * 1. Show the overflow in IE.
+ * 2. Remove the inheritance of text transform in Edge 18-, Firefox, and IE.
+ */button {
+  overflow: visible; /* 1 */
+  text-transform: none; /* 2 */
+}/**
+ * Correct the inability to style buttons in iOS and Safari.
+ */button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}/**
+ * 1. Change the inconsistent appearance in all browsers (opinionated).
+ * 2. Correct the padding in Firefox.
+ */fieldset {
+  border: 1px solid #a0a0a0; /* 1 */
+  padding: 0.35em 0.75em 0.625em; /* 2 */
+}/**
+ * Show the overflow in Edge 18- and IE.
+ */input {
+  overflow: visible;
+}/**
+ * 1. Correct the text wrapping in Edge 18- and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ */legend {
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  white-space: normal; /* 1 */
+}/**
+ * 1. Add the correct display in Edge 18- and IE.
+ * 2. Add the correct vertical alignment in Chrome, Edge, and Firefox.
+ */progress {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}/**
+ * Remove the inheritance of text transform in Firefox.
+ */select {
+  text-transform: none;
+}/**
+ * 1. Remove the margin in Firefox and Safari.
+ * 2. Remove the default vertical scrollbar in IE.
+ * 3. Change the resize direction in all browsers (opinionated).
+ */textarea {
+  margin: 0; /* 1 */
+  overflow: auto; /* 2 */
+  resize: vertical; /* 3 */
+}/**
+ * Remove the padding in IE 10-.
+ */[type="checkbox"],
+[type="radio"] {
+  padding: 0;
+}/**
+ * 1. Correct the odd appearance in Chrome, Edge, and Safari.
+ * 2. Correct the outline style in Safari.
+ */[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}/**
+ * Correct the cursor style of increment and decrement buttons in Safari.
+ */::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}/**
+ * Correct the text style of placeholders in Chrome, Edge, and Safari.
+ */::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}/**
+ * Remove the inner padding in Chrome, Edge, and Safari on macOS.
+ */::-webkit-search-decoration {
+  -webkit-appearance: none;
+}/**
+ * 1. Correct the inability to style upload buttons in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}/**
+ * Remove the inner border and padding of focus outlines in Firefox.
+ */::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}/**
+ * Restore the focus outline styles unset by the previous rule in Firefox.
+ */:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}/**
+ * Remove the additional :invalid styles in Firefox.
+ */:-moz-ui-invalid {
+  box-shadow: none;
+}/* Interactive
+ * ========================================================================== *//*
+ * Add the correct display in Edge 18- and IE.
+ */details {
+  display: block;
+}/*
+ * Add the correct styles in Edge 18-, IE, and Safari.
+ */dialog {
+  background-color: white;
+  border: solid;
+  color: black;
+  display: block;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  left: 0;
+  margin: auto;
+  padding: 1em;
+  position: absolute;
+  right: 0;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}dialog:not([open]) {
+  display: none;
+}/*
+ * Add the correct display in all browsers.
+ */summary {
+  display: list-item;
+}/* Scripting
+ * ========================================================================== *//**
+ * Add the correct display in IE 9-.
+ */canvas {
+  display: inline-block;
+}/**
+ * Add the correct display in IE.
+ */template {
+  display: none;
+}/* User interaction
+ * ========================================================================== *//*
+ * 1. Remove the tapping delay in IE 10.
+ * 2. Remove the tapping delay on clickable elements
+      in all browsers (opinionated).
+ */a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] { /* 1 */
+  touch-action: manipulation; /* 2 */
+}/**
+ * Add the correct display in IE 10-.
+ */[hidden] {
+  display: none;
+}/* Accessibility
+ * ========================================================================== *//**
+ * Change the cursor on busy elements in all browsers (opinionated).
+ */[aria-busy="true"] {
+  cursor: progress;
+}/*
+ * Change the cursor on control elements in all browsers (opinionated).
+ */[aria-controls] {
+  cursor: pointer;
+}/*
+ * Change the cursor on disabled, not-editable, or otherwise
+ * inoperable elements in all browsers (opinionated).
+ */[aria-disabled="true"],
+[disabled] {
+  cursor: not-allowed;
+}/*
+ * Change the display on visually hidden accessible elements
+ * in all browsers (opinionated).
+ */[aria-hidden="false"][hidden] {
+  display: inline;
+  display: initial;
+}[aria-hidden="false"][hidden]:not(:focus) {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}.pt-sans { font-family: PT Sans; font-family: var(--pt-sans)}:root {
+--dark-blue: #001426;
+--dark-teal: #014059;
+--teal: #02738C;
+--slate-gray: #788C8C;
+--white: #F7F7F7;
+--black: #0C0C0C;
+--dark-blue-rgb: 0, 20, 38;
+--dark-teal-rgb: 1, 64, 89;
+--teal-rgb: 2, 115, 140;
+--slate-gray-rgb: 120, 140, 140;
+--white-rgb: 247, 247, 247;
+--black-rgb: 12, 12, 12;
+--pt-sans: PT Sans;
+}/* dark-blue */.dark-blue { color: #001426; color: var(--dark-blue); }/* dark-blue borders */.b-dark-blue  { border-color: #001426; border-color: var(--dark-blue); }.bt-dark-blue { border-top-color: #001426; border-top-color: var(--dark-blue); }.br-dark-blue { border-right-color: #001426; border-right-color: var(--dark-blue); }.bb-dark-blue { border-bottom-color: #001426; border-bottom-color: var(--dark-blue); }.bl-dark-blue { border-left-color: #001426; border-left-color: var(--dark-blue); }/* dark-blue backgrounds */.bgd-dark-blue             { background-color: #001426; background-color: var(--dark-blue); }.bgd-dark-blue-tint-10     { background-color: rgb(25, 43, 60); }.bgd-dark-blue-tint-20     { background-color: rgb(51, 67, 81); }.bgd-dark-blue-tint-30     { background-color: rgb(77, 91, 103); }.bgd-dark-blue-tint-40     { background-color: rgb(102, 114, 125); }.bgd-dark-blue-tint-50     { background-color: rgb(128, 138, 147); }.bgd-dark-blue-tint-60     { background-color: rgb(153, 161, 168); }.bgd-dark-blue-tint-70     { background-color: rgb(179, 185, 190); }.bgd-dark-blue-tint-80     { background-color: rgb(204, 208, 212); }.bgd-dark-blue-tint-90     { background-color: rgb(230, 232, 233); }.bgd-dark-blue-shade-10    { background-color: rgb(0, 18, 34); }.bgd-dark-blue-shade-20    { background-color: rgb(0, 16, 30); }.bgd-dark-blue-shade-30    { background-color: rgb(0, 14, 27); }.bgd-dark-blue-shade-40    { background-color: rgb(0, 12, 23); }.bgd-dark-blue-shade-50    { background-color: rgb(0, 10, 19); }.bgd-dark-blue-shade-60    { background-color: rgb(0, 8, 15); }.bgd-dark-blue-shade-70    { background-color: rgb(0, 6, 11); }.bgd-dark-blue-shade-80    { background-color: rgb(0, 4, 8); }.bgd-dark-blue-shade-90    { background-color: rgb(0, 2, 4); }.bgd-dark-blue-opacity-10  { background-color: rgba(0, 20, 38, 0.1); background-color: rgba(var(--dark-blue-rgb), 0.1); }.bgd-dark-blue-opacity-20  { background-color: rgba(0, 20, 38, 0.2); background-color: rgba(var(--dark-blue-rgb), 0.2); }.bgd-dark-blue-opacity-30  { background-color: rgba(0, 20, 38, 0.3); background-color: rgba(var(--dark-blue-rgb), 0.3); }.bgd-dark-blue-opacity-40  { background-color: rgba(0, 20, 38, 0.4); background-color: rgba(var(--dark-blue-rgb), 0.4); }.bgd-dark-blue-opacity-50  { background-color: rgba(0, 20, 38, 0.5); background-color: rgba(var(--dark-blue-rgb), 0.5); }.bgd-dark-blue-opacity-60  { background-color: rgba(0, 20, 38, 0.6); background-color: rgba(var(--dark-blue-rgb), 0.6); }.bgd-dark-blue-opacity-70  { background-color: rgba(0, 20, 38, 0.7); background-color: rgba(var(--dark-blue-rgb), 0.7); }.bgd-dark-blue-opacity-80  { background-color: rgba(0, 20, 38, 0.8); background-color: rgba(var(--dark-blue-rgb), 0.8); }.bgd-dark-blue-opacity-90  { background-color: rgba(0, 20, 38, 0.9); background-color: rgba(var(--dark-blue-rgb), 0.9); }/* dark-blue svg */body .fill-dark-blue,
+body .fill-dark-blue svg,
+body .fill-dark-blue-h:hover,
+body .fill-dark-blue-h:hover svg {
+  fill: #001426;
+  fill: var(--dark-blue);
+}body .stroke-dark-blue,
+body .stroke-dark-blue svg,
+body .stroke-dark-blue-h:hover,
+body .stroke-dark-blue-h:hover svg {
+  stroke: #001426;
+  stroke: var(--dark-blue);
+}/* dark-teal */.dark-teal { color: #014059; color: var(--dark-teal); }/* dark-teal borders */.b-dark-teal  { border-color: #014059; border-color: var(--dark-teal); }.bt-dark-teal { border-top-color: #014059; border-top-color: var(--dark-teal); }.br-dark-teal { border-right-color: #014059; border-right-color: var(--dark-teal); }.bb-dark-teal { border-bottom-color: #014059; border-bottom-color: var(--dark-teal); }.bl-dark-teal { border-left-color: #014059; border-left-color: var(--dark-teal); }/* dark-teal backgrounds */.bgd-dark-teal             { background-color: #014059; background-color: var(--dark-teal); }.bgd-dark-teal-tint-10     { background-color: rgb(26, 83, 106); }.bgd-dark-teal-tint-20     { background-color: rgb(52, 102, 122); }.bgd-dark-teal-tint-30     { background-color: rgb(77, 121, 139); }.bgd-dark-teal-tint-40     { background-color: rgb(103, 140, 155); }.bgd-dark-teal-tint-50     { background-color: rgb(128, 160, 172); }.bgd-dark-teal-tint-60     { background-color: rgb(153, 179, 189); }.bgd-dark-teal-tint-70     { background-color: rgb(179, 198, 205); }.bgd-dark-teal-tint-80     { background-color: rgb(204, 217, 222); }.bgd-dark-teal-tint-90     { background-color: rgb(230, 236, 238); }.bgd-dark-teal-shade-10    { background-color: rgb(1, 58, 80); }.bgd-dark-teal-shade-20    { background-color: rgb(1, 51, 71); }.bgd-dark-teal-shade-30    { background-color: rgb(1, 45, 62); }.bgd-dark-teal-shade-40    { background-color: rgb(1, 38, 53); }.bgd-dark-teal-shade-50    { background-color: rgb(1, 32, 45); }.bgd-dark-teal-shade-60    { background-color: rgb(0, 26, 36); }.bgd-dark-teal-shade-70    { background-color: rgb(0, 19, 27); }.bgd-dark-teal-shade-80    { background-color: rgb(0, 13, 18); }.bgd-dark-teal-shade-90    { background-color: rgb(0, 6, 9); }.bgd-dark-teal-opacity-10  { background-color: rgba(1, 64, 89, 0.1); background-color: rgba(var(--dark-teal-rgb), 0.1); }.bgd-dark-teal-opacity-20  { background-color: rgba(1, 64, 89, 0.2); background-color: rgba(var(--dark-teal-rgb), 0.2); }.bgd-dark-teal-opacity-30  { background-color: rgba(1, 64, 89, 0.3); background-color: rgba(var(--dark-teal-rgb), 0.3); }.bgd-dark-teal-opacity-40  { background-color: rgba(1, 64, 89, 0.4); background-color: rgba(var(--dark-teal-rgb), 0.4); }.bgd-dark-teal-opacity-50  { background-color: rgba(1, 64, 89, 0.5); background-color: rgba(var(--dark-teal-rgb), 0.5); }.bgd-dark-teal-opacity-60  { background-color: rgba(1, 64, 89, 0.6); background-color: rgba(var(--dark-teal-rgb), 0.6); }.bgd-dark-teal-opacity-70  { background-color: rgba(1, 64, 89, 0.7); background-color: rgba(var(--dark-teal-rgb), 0.7); }.bgd-dark-teal-opacity-80  { background-color: rgba(1, 64, 89, 0.8); background-color: rgba(var(--dark-teal-rgb), 0.8); }.bgd-dark-teal-opacity-90  { background-color: rgba(1, 64, 89, 0.9); background-color: rgba(var(--dark-teal-rgb), 0.9); }/* dark-teal svg */body .fill-dark-teal,
+body .fill-dark-teal svg,
+body .fill-dark-teal-h:hover,
+body .fill-dark-teal-h:hover svg {
+  fill: #014059;
+  fill: var(--dark-teal);
+}body .stroke-dark-teal,
+body .stroke-dark-teal svg,
+body .stroke-dark-teal-h:hover,
+body .stroke-dark-teal-h:hover svg {
+  stroke: #014059;
+  stroke: var(--dark-teal);
+}/* teal */.teal { color: #02738C; color: var(--teal); }/* teal borders */.b-teal  { border-color: #02738C; border-color: var(--teal); }.bt-teal { border-top-color: #02738C; border-top-color: var(--teal); }.br-teal { border-right-color: #02738C; border-right-color: var(--teal); }.bb-teal { border-bottom-color: #02738C; border-bottom-color: var(--teal); }.bl-teal { border-left-color: #02738C; border-left-color: var(--teal); }/* teal backgrounds */.bgd-teal             { background-color: #02738C; background-color: var(--teal); }.bgd-teal-tint-10     { background-color: rgb(27, 129, 152); }.bgd-teal-tint-20     { background-color: rgb(53, 143, 163); }.bgd-teal-tint-30     { background-color: rgb(78, 157, 175); }.bgd-teal-tint-40     { background-color: rgb(103, 171, 186); }.bgd-teal-tint-50     { background-color: rgb(129, 185, 198); }.bgd-teal-tint-60     { background-color: rgb(154, 199, 209); }.bgd-teal-tint-70     { background-color: rgb(179, 213, 221); }.bgd-teal-tint-80     { background-color: rgb(204, 227, 232); }.bgd-teal-tint-90     { background-color: rgb(230, 241, 244); }.bgd-teal-shade-10    { background-color: rgb(2, 104, 126); }.bgd-teal-shade-20    { background-color: rgb(2, 92, 112); }.bgd-teal-shade-30    { background-color: rgb(1, 81, 98); }.bgd-teal-shade-40    { background-color: rgb(1, 69, 84); }.bgd-teal-shade-50    { background-color: rgb(1, 58, 70); }.bgd-teal-shade-60    { background-color: rgb(1, 46, 56); }.bgd-teal-shade-70    { background-color: rgb(1, 35, 42); }.bgd-teal-shade-80    { background-color: rgb(0, 23, 28); }.bgd-teal-shade-90    { background-color: rgb(0, 11, 14); }.bgd-teal-opacity-10  { background-color: rgba(2, 115, 140, 0.1); background-color: rgba(var(--teal-rgb), 0.1); }.bgd-teal-opacity-20  { background-color: rgba(2, 115, 140, 0.2); background-color: rgba(var(--teal-rgb), 0.2); }.bgd-teal-opacity-30  { background-color: rgba(2, 115, 140, 0.3); background-color: rgba(var(--teal-rgb), 0.3); }.bgd-teal-opacity-40  { background-color: rgba(2, 115, 140, 0.4); background-color: rgba(var(--teal-rgb), 0.4); }.bgd-teal-opacity-50  { background-color: rgba(2, 115, 140, 0.5); background-color: rgba(var(--teal-rgb), 0.5); }.bgd-teal-opacity-60  { background-color: rgba(2, 115, 140, 0.6); background-color: rgba(var(--teal-rgb), 0.6); }.bgd-teal-opacity-70  { background-color: rgba(2, 115, 140, 0.7); background-color: rgba(var(--teal-rgb), 0.7); }.bgd-teal-opacity-80  { background-color: rgba(2, 115, 140, 0.8); background-color: rgba(var(--teal-rgb), 0.8); }.bgd-teal-opacity-90  { background-color: rgba(2, 115, 140, 0.9); background-color: rgba(var(--teal-rgb), 0.9); }/* teal svg */body .fill-teal,
+body .fill-teal svg,
+body .fill-teal-h:hover,
+body .fill-teal-h:hover svg {
+  fill: #02738C;
+  fill: var(--teal);
+}body .stroke-teal,
+body .stroke-teal svg,
+body .stroke-teal-h:hover,
+body .stroke-teal-h:hover svg {
+  stroke: #02738C;
+  stroke: var(--teal);
+}/* slate-gray */.slate-gray { color: #788C8C; color: var(--slate-gray); }/* slate-gray borders */.b-slate-gray  { border-color: #788C8C; border-color: var(--slate-gray); }.bt-slate-gray { border-top-color: #788C8C; border-top-color: var(--slate-gray); }.br-slate-gray { border-right-color: #788C8C; border-right-color: var(--slate-gray); }.bb-slate-gray { border-bottom-color: #788C8C; border-bottom-color: var(--slate-gray); }.bl-slate-gray { border-left-color: #788C8C; border-left-color: var(--slate-gray); }/* slate-gray backgrounds */.bgd-slate-gray             { background-color: #788C8C; background-color: var(--slate-gray); }.bgd-slate-gray-tint-10     { background-color: rgb(134, 152, 152); }.bgd-slate-gray-tint-20     { background-color: rgb(147, 163, 163); }.bgd-slate-gray-tint-30     { background-color: rgb(161, 175, 175); }.bgd-slate-gray-tint-40     { background-color: rgb(174, 186, 186); }.bgd-slate-gray-tint-50     { background-color: rgb(188, 198, 198); }.bgd-slate-gray-tint-60     { background-color: rgb(201, 209, 209); }.bgd-slate-gray-tint-70     { background-color: rgb(215, 221, 221); }.bgd-slate-gray-tint-80     { background-color: rgb(228, 232, 232); }.bgd-slate-gray-tint-90     { background-color: rgb(242, 244, 244); }.bgd-slate-gray-shade-10    { background-color: rgb(108, 126, 126); }.bgd-slate-gray-shade-20    { background-color: rgb(96, 112, 112); }.bgd-slate-gray-shade-30    { background-color: rgb(84, 98, 98); }.bgd-slate-gray-shade-40    { background-color: rgb(72, 84, 84); }.bgd-slate-gray-shade-50    { background-color: rgb(60, 70, 70); }.bgd-slate-gray-shade-60    { background-color: rgb(48, 56, 56); }.bgd-slate-gray-shade-70    { background-color: rgb(36, 42, 42); }.bgd-slate-gray-shade-80    { background-color: rgb(24, 28, 28); }.bgd-slate-gray-shade-90    { background-color: rgb(12, 14, 14); }.bgd-slate-gray-opacity-10  { background-color: rgba(120, 140, 140, 0.1); background-color: rgba(var(--slate-gray-rgb), 0.1); }.bgd-slate-gray-opacity-20  { background-color: rgba(120, 140, 140, 0.2); background-color: rgba(var(--slate-gray-rgb), 0.2); }.bgd-slate-gray-opacity-30  { background-color: rgba(120, 140, 140, 0.3); background-color: rgba(var(--slate-gray-rgb), 0.3); }.bgd-slate-gray-opacity-40  { background-color: rgba(120, 140, 140, 0.4); background-color: rgba(var(--slate-gray-rgb), 0.4); }.bgd-slate-gray-opacity-50  { background-color: rgba(120, 140, 140, 0.5); background-color: rgba(var(--slate-gray-rgb), 0.5); }.bgd-slate-gray-opacity-60  { background-color: rgba(120, 140, 140, 0.6); background-color: rgba(var(--slate-gray-rgb), 0.6); }.bgd-slate-gray-opacity-70  { background-color: rgba(120, 140, 140, 0.7); background-color: rgba(var(--slate-gray-rgb), 0.7); }.bgd-slate-gray-opacity-80  { background-color: rgba(120, 140, 140, 0.8); background-color: rgba(var(--slate-gray-rgb), 0.8); }.bgd-slate-gray-opacity-90  { background-color: rgba(120, 140, 140, 0.9); background-color: rgba(var(--slate-gray-rgb), 0.9); }/* slate-gray svg */body .fill-slate-gray,
+body .fill-slate-gray svg,
+body .fill-slate-gray-h:hover,
+body .fill-slate-gray-h:hover svg {
+  fill: #788C8C;
+  fill: var(--slate-gray);
+}body .stroke-slate-gray,
+body .stroke-slate-gray svg,
+body .stroke-slate-gray-h:hover,
+body .stroke-slate-gray-h:hover svg {
+  stroke: #788C8C;
+  stroke: var(--slate-gray);
+}/* white */.white { color: #F7F7F7; color: var(--white); }/* white borders */.b-white  { border-color: #F7F7F7; border-color: var(--white); }.bt-white { border-top-color: #F7F7F7; border-top-color: var(--white); }.br-white { border-right-color: #F7F7F7; border-right-color: var(--white); }.bb-white { border-bottom-color: #F7F7F7; border-bottom-color: var(--white); }.bl-white { border-left-color: #F7F7F7; border-left-color: var(--white); }/* white backgrounds */.bgd-white             { background-color: #F7F7F7; background-color: var(--white); }.bgd-white-tint-10     { background-color: rgb(248, 248, 248); }.bgd-white-tint-20     { background-color: rgb(249, 249, 249); }.bgd-white-tint-30     { background-color: rgb(249, 249, 249); }.bgd-white-tint-40     { background-color: rgb(250, 250, 250); }.bgd-white-tint-50     { background-color: rgb(251, 251, 251); }.bgd-white-tint-60     { background-color: rgb(252, 252, 252); }.bgd-white-tint-70     { background-color: rgb(253, 253, 253); }.bgd-white-tint-80     { background-color: rgb(253, 253, 253); }.bgd-white-tint-90     { background-color: rgb(254, 254, 254); }.bgd-white-shade-10    { background-color: rgb(222, 222, 222); }.bgd-white-shade-20    { background-color: rgb(198, 198, 198); }.bgd-white-shade-30    { background-color: rgb(173, 173, 173); }.bgd-white-shade-40    { background-color: rgb(148, 148, 148); }.bgd-white-shade-50    { background-color: rgb(124, 124, 124); }.bgd-white-shade-60    { background-color: rgb(99, 99, 99); }.bgd-white-shade-70    { background-color: rgb(74, 74, 74); }.bgd-white-shade-80    { background-color: rgb(49, 49, 49); }.bgd-white-shade-90    { background-color: rgb(25, 25, 25); }.bgd-white-opacity-10  { background-color: rgba(247, 247, 247, 0.1); background-color: rgba(var(--white-rgb), 0.1); }.bgd-white-opacity-20  { background-color: rgba(247, 247, 247, 0.2); background-color: rgba(var(--white-rgb), 0.2); }.bgd-white-opacity-30  { background-color: rgba(247, 247, 247, 0.3); background-color: rgba(var(--white-rgb), 0.3); }.bgd-white-opacity-40  { background-color: rgba(247, 247, 247, 0.4); background-color: rgba(var(--white-rgb), 0.4); }.bgd-white-opacity-50  { background-color: rgba(247, 247, 247, 0.5); background-color: rgba(var(--white-rgb), 0.5); }.bgd-white-opacity-60  { background-color: rgba(247, 247, 247, 0.6); background-color: rgba(var(--white-rgb), 0.6); }.bgd-white-opacity-70  { background-color: rgba(247, 247, 247, 0.7); background-color: rgba(var(--white-rgb), 0.7); }.bgd-white-opacity-80  { background-color: rgba(247, 247, 247, 0.8); background-color: rgba(var(--white-rgb), 0.8); }.bgd-white-opacity-90  { background-color: rgba(247, 247, 247, 0.9); background-color: rgba(var(--white-rgb), 0.9); }/* white svg */body .fill-white,
+body .fill-white svg,
+body .fill-white-h:hover,
+body .fill-white-h:hover svg {
+  fill: #F7F7F7;
+  fill: var(--white);
+}body .stroke-white,
+body .stroke-white svg,
+body .stroke-white-h:hover,
+body .stroke-white-h:hover svg {
+  stroke: #F7F7F7;
+  stroke: var(--white);
+}/* black */.black { color: #0C0C0C; color: var(--black); }/* black borders */.b-black  { border-color: #0C0C0C; border-color: var(--black); }.bt-black { border-top-color: #0C0C0C; border-top-color: var(--black); }.br-black { border-right-color: #0C0C0C; border-right-color: var(--black); }.bb-black { border-bottom-color: #0C0C0C; border-bottom-color: var(--black); }.bl-black { border-left-color: #0C0C0C; border-left-color: var(--black); }/* black backgrounds */.bgd-black             { background-color: #0C0C0C; background-color: var(--black); }.bgd-black-tint-10     { background-color: rgb(36, 36, 36); }.bgd-black-tint-20     { background-color: rgb(61, 61, 61); }.bgd-black-tint-30     { background-color: rgb(85, 85, 85); }.bgd-black-tint-40     { background-color: rgb(109, 109, 109); }.bgd-black-tint-50     { background-color: rgb(134, 134, 134); }.bgd-black-tint-60     { background-color: rgb(158, 158, 158); }.bgd-black-tint-70     { background-color: rgb(182, 182, 182); }.bgd-black-tint-80     { background-color: rgb(206, 206, 206); }.bgd-black-tint-90     { background-color: rgb(231, 231, 231); }.bgd-black-shade-10    { background-color: rgb(11, 11, 11); }.bgd-black-shade-20    { background-color: rgb(10, 10, 10); }.bgd-black-shade-30    { background-color: rgb(8, 8, 8); }.bgd-black-shade-40    { background-color: rgb(7, 7, 7); }.bgd-black-shade-50    { background-color: rgb(6, 6, 6); }.bgd-black-shade-60    { background-color: rgb(5, 5, 5); }.bgd-black-shade-70    { background-color: rgb(4, 4, 4); }.bgd-black-shade-80    { background-color: rgb(2, 2, 2); }.bgd-black-shade-90    { background-color: rgb(1, 1, 1); }.bgd-black-opacity-10  { background-color: rgba(12, 12, 12, 0.1); background-color: rgba(var(--black-rgb), 0.1); }.bgd-black-opacity-20  { background-color: rgba(12, 12, 12, 0.2); background-color: rgba(var(--black-rgb), 0.2); }.bgd-black-opacity-30  { background-color: rgba(12, 12, 12, 0.3); background-color: rgba(var(--black-rgb), 0.3); }.bgd-black-opacity-40  { background-color: rgba(12, 12, 12, 0.4); background-color: rgba(var(--black-rgb), 0.4); }.bgd-black-opacity-50  { background-color: rgba(12, 12, 12, 0.5); background-color: rgba(var(--black-rgb), 0.5); }.bgd-black-opacity-60  { background-color: rgba(12, 12, 12, 0.6); background-color: rgba(var(--black-rgb), 0.6); }.bgd-black-opacity-70  { background-color: rgba(12, 12, 12, 0.7); background-color: rgba(var(--black-rgb), 0.7); }.bgd-black-opacity-80  { background-color: rgba(12, 12, 12, 0.8); background-color: rgba(var(--black-rgb), 0.8); }.bgd-black-opacity-90  { background-color: rgba(12, 12, 12, 0.9); background-color: rgba(var(--black-rgb), 0.9); }/* black svg */body .fill-black,
+body .fill-black svg,
+body .fill-black-h:hover,
+body .fill-black-h:hover svg {
+  fill: #0C0C0C;
+  fill: var(--black);
+}body .stroke-black,
+body .stroke-black svg,
+body .stroke-black-h:hover,
+body .stroke-black-h:hover svg {
+  stroke: #0C0C0C;
+  stroke: var(--black);
+}.main-heading {
+  color: #02738C;
+  color: var(--teal);
+  font-size: 20px;
+  font-family: PT Sans;
+  font-family: var(--pt-sans);
+  font-weight: bold;
+}

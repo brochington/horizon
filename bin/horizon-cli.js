@@ -1,17 +1,18 @@
-#!usr/bin/env node
+#!/usr/bin/env node
 
 const path = require('path');
 const fs = require('fs-extra');
 const chalk = require('chalk');
 const argv = require('yargs').argv;
 const ora = require('ora');
-const cliSpinners = require('cli-spinners');
-const webpack = require('webpacck');
+// const cliSpinners = require('cli-spinners');
+const webpack = require('webpack');
 const docgenWebpackConfig = require('../config/webpack.config.docgen.dist');
 
 const kill = () => process.kill(process.pid, 'SIGTERM');
 
-const configPath = path.resolve(process.cwd(), argv.config || '');
+const configPath = path.resolve(process.cwd(), argv.config || './horizon.config.js');
+console.log('configPath: ', configPath);
 const config = require(configPath);
 
 if (!config) {
@@ -19,13 +20,19 @@ if (!config) {
   kill();
 }
 
+const defaultCSSVariables = {};
+
 const cssFilename = config.filename || 'horizon-styles.css';
 const cssPath = path.join(process.cwd(), config.path || './dist');
-const cssVariables = config.cssVariables || defaultCSSVariables;
+// const cssVariables = config.cssVariables || defaultCSSVariables;
 const docPath = path.join(process.cwd(), config.docPath || './docs/horizon/site')
 const destinationPath = `${cssPath}/${cssFilename}`;
 
 const spinner = ora();
+
+console.log('destinationPath: ', destinationPath);
+console.log('docPath ', docPath);
+
 
 async function generateCSS() {
   try {
@@ -63,7 +70,7 @@ function asyncWebpack(webpackConfig) {
     if (argv.docs) {
       spinner.start('Generating static documentation');
 
-      const webpackErr = await asyncWebpack(docgenWebpackConfig(docPath, cssVariables));
+      const webpackErr = await asyncWebpack(docgenWebpackConfig(docPath, config));
 
       webpackErr
         ? spinner.fail(chalk.red('Documentation generation not successful'))

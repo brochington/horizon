@@ -1,0 +1,248 @@
+.hs1 { height: var(--height-1);}
+.hs2 { height: var(--height-2);}
+.hs3 { height: var(--height-3);}
+.hs4 { height: var(--height-4);}
+.hs5 { height: var(--height-5);}
+.hs6 { height: var(--height-6);}
+.hs7 { height: var(--height-7);}
+.hs8 { height: var(--height-8);}
+.hs9 { height: var(--height-9);}
+
+.h0 { height: 0; }
+.h5 { height: 5%; }
+.h10 { height: 10%; }
+.h15 { height: 15%; }
+.h20 { height: 20%; }
+.h25 { height: 25%; }
+.h30 { height: 30%; }
+.h33 { height: 33%; }
+.h40 { height: 40%; }
+.h50 { height: 50%; }
+.h60 { height: 60%; }
+.h66 { height: 66%; }
+.h70 { height: 70%; }
+.h80 { height: 80%; }
+.h90 { height: 90%; }
+.h100 { height: 100%; }
+
+.vh5 { height: 5vh; }
+.vh10 { height: 10vh; }
+.vh15 { height: 15vh; }
+.vh20 { height: 20vh; }
+.vh25 { height: 25vh; }
+.vh30 { height: 30vh; }
+.vh33 { height: 33vh; }
+.vh40 { height: 40vh; }
+.vh50 { height: 50vh; }
+.vh60 { height: 60vh; }
+.vh66 { height: 66vh; }
+.vh70 { height: 70vh; }
+.vh80 { height: 80vh; }
+.vh90 { height: 90vh; }
+.vh100 { height: 100vh; }
+
+.hrem-p25    { height: .25rem; }
+.hrem-p5     { height: .5rem; }
+.hrem-p75    { height: .75rem; }
+.hrem-1      { height: 1rem; }
+.hrem-1p25   { height: 1.25rem; }
+.hrem-1p5    { height: 1.5rem; }
+.hrem-1p75   { height: 1.75rem; }
+.hrem-2      { height: 2rem; }
+.hrem-2p25   { height: 2.25rem; }
+.hrem-2p5    { height: 2.5rem; }
+.hrem-2p75   { height: 2.75rem; }
+.hrem-3      { height: 3rem; }
+.hrem-3p25   { height: 3.25rem; }
+.hrem-3p5    { height: 3.5rem; }
+.hrem-3p75   { height: 3.75rem; }
+.hrem-4      { height: 4rem; }
+.hrem-4p25   { height: 4.25rem; }
+.hrem-4p5    { height: 4.5rem; }
+.hrem-4p75   { height: 4.75rem; }
+.hrem-5      { height: 5rem; }
+.hrem-5p25   { height: 5.25rem; }
+.hrem-5p5    { height: 5.5rem; }
+.hrem-5p75   { height: 5.75rem; }
+.hrem-6      { height: 6rem; }
+.hrem-6p25   { height: 6.25rem; }
+.hrem-6p5    { height: 6.5rem; }
+.hrem-6p75   { height: 6.75rem; }
+.hrem-7      { height: 7rem; }
+.hrem-7p25   { height: 7.25rem; }
+.hrem-7p5    { height: 7.5rem; }
+.hrem-7p75   { height: 7.75rem; }
+.hrem-8      { height: 8rem; }
+.hrem-8p25   { height: 8.25rem; }
+.hrem-8p5    { height: 8.5rem; }
+.hrem-8p75   { height: 8.75rem; }
+.hrem-9      { height: 9rem; }
+.hrem-9p25   { height: 9.25rem; }
+.hrem-9p5    { height: 9.5rem; }
+.hrem-9p75   { height: 9.75rem; }
+
+.max-hs1 { max-height: var(--max-height-1);}
+.max-hs2 { max-height: var(--max-height-2);}
+.max-hs3 { max-height: var(--max-height-3);}
+.max-hs4 { max-height: var(--max-height-4);}
+.max-hs5 { max-height: var(--max-height-5);}
+.max-hs6 { max-height: var(--max-height-6);}
+.max-hs7 { max-height: var(--max-height-7);}
+.max-hs8 { max-height: var(--max-height-8);}
+.max-hs9 { max-height: var(--max-height-9);}
+
+.max-h0 { max-height: 0; }
+.max-h5 { max-height: 5%; }
+.max-h10 { max-height: 10%; }
+.max-h15 { max-height: 15%; }
+.max-h20 { max-height: 20%; }
+.max-h25 { max-height: 25%; }
+.max-h30 { max-height: 30%; }
+.max-h33 { max-height: 33%; }
+.max-h40 { max-height: 40%; }
+.max-h50 { max-height: 50%; }
+.max-h60 { max-height: 60%; }
+.max-h66 { max-height: 66%; }
+.max-h70 { max-height: 70%; }
+.max-h80 { max-height: 80%; }
+.max-h90 { max-height: 90%; }
+.max-h100 { max-height: 100%; }
+
+.max-vh5 { max-height: 5vh; }
+.max-vh10 { max-height: 10vh; }
+.max-vh15 { max-height: 15vh; }
+.max-vh20 { max-height: 20vh; }
+.max-vh25 { max-height: 25vh; }
+.max-vh30 { max-height: 30vh; }
+.max-vh33 { max-height: 33vh; }
+.max-vh40 { max-height: 40vh; }
+.max-vh50 { max-height: 50vh; }
+.max-vh60 { max-height: 60vh; }
+.max-vh66 { max-height: 66vh; }
+.max-vh70 { max-height: 70vh; }
+.max-vh80 { max-height: 80vh; }
+.max-vh90 { max-height: 90vh; }
+.max-vh100 { max-height: 100vh; }
+
+.max-hrem-p25    { max-height: .25rem; }
+.max-hrem-p5     { max-height: .5rem; }
+.max-hrem-p75    { max-height: .75rem; }
+.max-hrem-1      { max-height: 1rem; }
+.max-hrem-1p25   { max-height: 1.25rem; }
+.max-hrem-1p5    { max-height: 1.5rem; }
+.max-hrem-1p75   { max-height: 1.75rem; }
+.max-hrem-2      { max-height: 2rem; }
+.max-hrem-2p25   { max-height: 2.25rem; }
+.max-hrem-2p5    { max-height: 2.5rem; }
+.max-hrem-2p75   { max-height: 2.75rem; }
+.max-hrem-3      { max-height: 3rem; }
+.max-hrem-3p25   { max-height: 3.25rem; }
+.max-hrem-3p5    { max-height: 3.5rem; }
+.max-hrem-3p75   { max-height: 3.75rem; }
+.max-hrem-4      { max-height: 4rem; }
+.max-hrem-4p25   { max-height: 4.25rem; }
+.max-hrem-4p5    { max-height: 4.5rem; }
+.max-hrem-4p75   { max-height: 4.75rem; }
+.max-hrem-5      { max-height: 5rem; }
+.max-hrem-5p25   { max-height: 5.25rem; }
+.max-hrem-5p5    { max-height: 5.5rem; }
+.max-hrem-5p75   { max-height: 5.75rem; }
+.max-hrem-6      { max-height: 6rem; }
+.max-hrem-6p25   { max-height: 6.25rem; }
+.max-hrem-6p5    { max-height: 6.5rem; }
+.max-hrem-6p75   { max-height: 6.75rem; }
+.max-hrem-7      { max-height: 7rem; }
+.max-hrem-7p25   { max-height: 7.25rem; }
+.max-hrem-7p5    { max-height: 7.5rem; }
+.max-hrem-7p75   { max-height: 7.75rem; }
+.max-hrem-8      { max-height: 8rem; }
+.max-hrem-8p25   { max-height: 8.25rem; }
+.max-hrem-8p5    { max-height: 8.5rem; }
+.max-hrem-8p75   { max-height: 8.75rem; }
+.max-hrem-9      { max-height: 9rem; }
+.max-hrem-9p25   { max-height: 9.25rem; }
+.max-hrem-9p5    { max-height: 9.5rem; }
+.max-hrem-9p75   { max-height: 9.75rem; }
+
+.min-hs1 { min-height: var(--min-height-1);}
+.min-hs2 { min-height: var(--min-height-2);}
+.min-hs3 { min-height: var(--min-height-3);}
+.min-hs4 { min-height: var(--min-height-4);}
+.min-hs5 { min-height: var(--min-height-5);}
+.min-hs6 { min-height: var(--min-height-6);}
+.min-hs7 { min-height: var(--min-height-7);}
+.min-hs8 { min-height: var(--min-height-8);}
+.min-hs9 { min-height: var(--min-height-9);}
+
+.min-h0 { min-height: 0; }
+.min-h5 { min-height: 5%; }
+.min-h10 { min-height: 10%; }
+.min-h15 { min-height: 15%; }
+.min-h20 { min-height: 20%; }
+.min-h25 { min-height: 25%; }
+.min-h30 { min-height: 30%; }
+.min-h33 { min-height: 33%; }
+.min-h40 { min-height: 40%; }
+.min-h50 { min-height: 50%; }
+.min-h60 { min-height: 60%; }
+.min-h66 { min-height: 66%; }
+.min-h70 { min-height: 70%; }
+.min-h80 { min-height: 80%; }
+.min-h90 { min-height: 90%; }
+.min-h100 { min-height: 100%; }
+
+.min-vh5 { min-height: 5vh; }
+.min-vh10 { min-height: 10vh; }
+.min-vh15 { min-height: 15vh; }
+.min-vh20 { min-height: 20vh; }
+.min-vh25 { min-height: 25vh; }
+.min-vh30 { min-height: 30vh; }
+.min-vh33 { min-height: 33vh; }
+.min-vh40 { min-height: 40vh; }
+.min-vh50 { min-height: 50vh; }
+.min-vh60 { min-height: 60vh; }
+.min-vh66 { min-height: 66vh; }
+.min-vh70 { min-height: 70vh; }
+.min-vh80 { min-height: 80vh; }
+.min-vh90 { min-height: 90vh; }
+.min-vh100 { min-height: 100vh; }
+
+.min-hrem-p25    { min-height: .25rem; }
+.min-hrem-p5     { min-height: .5rem; }
+.min-hrem-p75    { min-height: .75rem; }
+.min-hrem-1      { min-height: 1rem; }
+.min-hrem-1p25   { min-height: 1.25rem; }
+.min-hrem-1p5    { min-height: 1.5rem; }
+.min-hrem-1p75   { min-height: 1.75rem; }
+.min-hrem-2      { min-height: 2rem; }
+.min-hrem-2p25   { min-height: 2.25rem; }
+.min-hrem-2p5    { min-height: 2.5rem; }
+.min-hrem-2p75   { min-height: 2.75rem; }
+.min-hrem-3      { min-height: 3rem; }
+.min-hrem-3p25   { min-height: 3.25rem; }
+.min-hrem-3p5    { min-height: 3.5rem; }
+.min-hrem-3p75   { min-height: 3.75rem; }
+.min-hrem-4      { min-height: 4rem; }
+.min-hrem-4p25   { min-height: 4.25rem; }
+.min-hrem-4p5    { min-height: 4.5rem; }
+.min-hrem-4p75   { min-height: 4.75rem; }
+.min-hrem-5      { min-height: 5rem; }
+.min-hrem-5p25   { min-height: 5.25rem; }
+.min-hrem-5p5    { min-height: 5.5rem; }
+.min-hrem-5p75   { min-height: 5.75rem; }
+.min-hrem-6      { min-height: 6rem; }
+.min-hrem-6p25   { min-height: 6.25rem; }
+.min-hrem-6p5    { min-height: 6.5rem; }
+.min-hrem-6p75   { min-height: 6.75rem; }
+.min-hrem-7      { min-height: 7rem; }
+.min-hrem-7p25   { min-height: 7.25rem; }
+.min-hrem-7p5    { min-height: 7.5rem; }
+.min-hrem-7p75   { min-height: 7.75rem; }
+.min-hrem-8      { min-height: 8rem; }
+.min-hrem-8p25   { min-height: 8.25rem; }
+.min-hrem-8p5    { min-height: 8.5rem; }
+.min-hrem-8p75   { min-height: 8.75rem; }
+.min-hrem-9      { min-height: 9rem; }
+.min-hrem-9p25   { min-height: 9.25rem; }
+.min-hrem-9p5    { min-height: 9.5rem; }
+.min-hrem-9p75   { min-height: 9.75rem; }

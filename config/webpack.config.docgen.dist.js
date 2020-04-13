@@ -2,33 +2,35 @@ const path = require('path');
 const webpack = require('webpack');
 const aliases = require('./aliases');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const postcssPresetEnv = require('postcss-preset-env');
+const colorFunction = require('postcss-color-function');
+const { horizon } = require(path.join(__dirname, '../dist/horizon'));
 
-module.exports = (destination /*, cssVars */) => {
+module.exports = (destination, horizonConfig) => {
   return {
     entry: [
-      path.join(__dirname, '../src/site/client/index.ts')
+      path.join(__dirname, '../src/site/client/index.tsx'),
+      path.join(__dirname, '../src/horizon/styles/generation.css')
     ],
     output: {
       path: destination,
       filename: 'horizon_site.js'
     },
-    mode: 'development', // is this right?
+    mode: 'production',
     resolve: {
       alias: {
-        ...aliases
-      }
+        ...aliases,
+      },
+      extensions: ['.js', '.mjs', '.ts', '.tsx']
     },
     module: {
       rules: [{
         test: /\.ts(x?)$/,
         loader: 'babel-loader',
-        include: path.join(__dirname, 'src/site/client'),
+        include: path.join(__dirname, '../src/site/client'),
         options: {
           plugins: [
-            ['@babel/plugin-transform-runtime', {
-              'helpers': false,
-              'regenerator': true
-            }],
             '@babel/plugin-syntax-dynamic-import',
             '@babel/plugin-proposal-class-properties',
             '@babel/plugin-proposal-optional-chaining'
@@ -38,20 +40,35 @@ module.exports = (destination /*, cssVars */) => {
             '@babel/preset-typescript'
           ]
         }
-        // use: [babelLoaderConfig]
-      }, {
-        test: /\.m?js$/,
-        include: path.join(cwd, 'src/site/client'),
-        use: [babelLoaderConfig]
       }, {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [{
+          loader: MiniCssExtractPlugin.loader
+        }, {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              horizon(horizonConfig.config),
+              postcssPresetEnv({ stage: 0 }),
+              colorFunction({ preserveCustomProps: false })
+            ]
+          }
+        }]
       }]
     },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Horizon Docs',
         template: path.join(__dirname, 'index.html')
+      }),
+      new MiniCssExtractPlugin(),
+      new webpack.DefinePlugin({
+        __HORIZON_CONFIG__: JSON.stringify(horizonConfig)
       })
     ]
   }

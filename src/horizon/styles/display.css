@@ -1,0 +1,58 @@
+.hide {
+  display: none;
+}
+
+.su-show,
+.show {
+  display: inherit;
+}
+
+@media (--so) {
+  .so-hide {
+    display: none !important;
+  }
+
+  .mo-show,
+  .mu-show,
+  .lu-show,
+  .lo-show {
+    display: none !important;
+  }
+}
+
+@media (--mu) {
+  .mu-hide {
+    display: none !important;
+  }
+}
+
+@media (--mo) {
+  .mo-hide {
+    display: none !important;
+  }
+
+  .so-show,
+  .lu-show,
+  .lo-show {
+    display: none !important;
+  }
+}
+
+@media (--lu) {
+
+  .lo-hide,
+  .lu-hide {
+    display: none !important;
+  }
+
+  .so-show,
+  .mo-show {
+    display: none !important;
+  }
+}
+
+@media (--lo) {
+  .lo-hide {
+    display: none !important;
+  }
+}

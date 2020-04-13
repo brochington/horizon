@@ -1,0 +1,38 @@
+/* Font Weight */
+.thin       { font-weight: 100; }
+.extra-lite { font-weight: 200; }
+.light      { font-weight: 300; }
+.regular    { font-weight: 400; }
+.normal     { font-weight: normal; }
+.medium     { font-weight: 500; }
+.semi-bold  { font-weight: 600; }
+.bold       { font-weight: 700; }
+.extra-bold { font-weight: 800; }
+.black      { font-weight: 900; }
+
+/* Text Decoration */
+.underline       { text-decoration: underline; }
+.overline        { text-decoration: overline; }
+.strike          { text-decoration: line-through; }
+.decoration-none { text-decoration: none; }
+
+/* Text Transform */
+.uppercase           { text-transform: uppercase; }
+.lowercase           { text-transform: lowercase; }
+.capitalize          { text-transform: capitalize; }
+.text-transform-none { text-transform: none; }
+
+
+/* Word and Line Wrap */
+.nowrap     { white-space: nowrap; }
+.break-word { overflow-wrap: break-word; }
+.break-all  { word-break: break-all; }
+.prewrap    { white-space: pre-wrap; }
+.preline    { white-space: pre-line; }
+
+
+/* Text Align */
+.left    { text-align: left; }
+.center  { text-align: center; }
+.right   { text-align: right; }
+.justify { text-align: justify; }

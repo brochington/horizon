@@ -1,6 +1,7 @@
 const path = require('path');
 
-const pathInClient = endPath => path.join(process.cwd(), 'src/site/client', endPath);
+// const pathInClient = endPath => path.join(process.cwd(), 'src/site/client', endPath);
+const pathInClient = endPath => path.join(__dirname, '../src/site/client', endPath);
 
 module.exports = {
   components: pathInClient('components'),

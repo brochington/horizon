@@ -1,0 +1,248 @@
+.ws1 { width: var(--width-1);}
+.ws2 { width: var(--width-2);}
+.ws3 { width: var(--width-3);}
+.ws4 { width: var(--width-4);}
+.ws5 { width: var(--width-5);}
+.ws6 { width: var(--width-6);}
+.ws7 { width: var(--width-7);}
+.ws8 { width: var(--width-8);}
+.ws9 { width: var(--width-9);}
+
+.w5 { width: 5%; }
+.w10 { width: 10%; }
+.w15 { width: 15%; }
+.w20 { width: 20%; }
+.w25 { width: 25%; }
+.w30 { width: 30%; }
+.w33 { width: 33%; }
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w66 { width: 66%; }
+.w70 { width: 70%; }
+.w80 { width: 80%; }
+.w90 { width: 90%; }
+.w100 { width: 100%; }
+
+.vw5 { width: 5vw; }
+.vw10 { width: 10vw; }
+.vw15 { width: 15vw; }
+.vw20 { width: 20vw; }
+.vw25 { width: 25vw; }
+.vw30 { width: 30vw; }
+.vw33 { width: 33vw; }
+.vw40 { width: 40vw; }
+.vw50 { width: 50vw; }
+.vw60 { width: 60vw; }
+.vw66 { width: 66vw; }
+.vw70 { width: 70vw; }
+.vw80 { width: 80vw; }
+.vw90 { width: 90vw; }
+.vw100 { width: 100vw; }
+
+.wrem-p25    { width: .25rem; }
+.wrem-p5     { width: .5rem; }
+.wrem-p75    { width: .75rem; }
+.wrem-1      { width: 1rem; }
+.wrem-1p25   { width: 1.25rem; }
+.wrem-1p5    { width: 1.5rem; }
+.wrem-1p75   { width: 1.75rem; }
+.wrem-2      { width: 2rem; }
+.wrem-2p25   { width: 2.25rem; }
+.wrem-2p5    { width: 2.5rem; }
+.wrem-2p75   { width: 2.75rem; }
+.wrem-3      { width: 3rem; }
+.wrem-3p25   { width: 3.25rem; }
+.wrem-3p5    { width: 3.5rem; }
+.wrem-3p75   { width: 3.75rem; }
+.wrem-4      { width: 4rem; }
+.wrem-4p25   { width: 4.25rem; }
+.wrem-4p5    { width: 4.5rem; }
+.wrem-4p75   { width: 4.75rem; }
+.wrem-5      { width: 5rem; }
+.wrem-5p25   { width: 5.25rem; }
+.wrem-5p5    { width: 5.5rem; }
+.wrem-5p75   { width: 5.75rem; }
+.wrem-6      { width: 6rem; }
+.wrem-6p25   { width: 6.25rem; }
+.wrem-6p5    { width: 6.5rem; }
+.wrem-6p75   { width: 6.75rem; }
+.wrem-7      { width: 7rem; }
+.wrem-7p25   { width: 7.25rem; }
+.wrem-7p5    { width: 7.5rem; }
+.wrem-7p75   { width: 7.75rem; }
+.wrem-8      { width: 8rem; }
+.wrem-8p25   { width: 8.25rem; }
+.wrem-8p5    { width: 8.5rem; }
+.wrem-8p75   { width: 8.75rem; }
+.wrem-9      { width: 9rem; }
+.wrem-9p25   { width: 9.25rem; }
+.wrem-9p5    { width: 9.5rem; }
+.wrem-9p75   { width: 9.75rem; }
+
+
+.max-ws1 { max-width: var(--max-width-1); }
+.max-ws2 { max-width: var(--max-width-2); }
+.max-ws3 { max-width: var(--max-width-3); }
+.max-ws4 { max-width: var(--max-width-4); }
+.max-ws5 { max-width: var(--max-width-5); }
+.max-ws6 { max-width: var(--max-width-6); }
+.max-ws7 { max-width: var(--max-width-7); }
+.max-ws8 { max-width: var(--max-width-8); }
+.max-ws9 { max-width: var(--max-width-9); }
+
+.max-w0 { max-width: 0; }
+.max-w5 { max-width: 5%; }
+.max-w10 { max-width: 10%; }
+.max-w15 { max-width: 15%; }
+.max-w20 { max-width: 20%; }
+.max-w25 { max-width: 25%; }
+.max-w30 { max-width: 30%; }
+.max-w33 { max-width: 33%; }
+.max-w40 { max-width: 40%; }
+.max-w50 { max-width: 50%; }
+.max-w60 { max-width: 60%; }
+.max-w66 { max-width: 66%; }
+.max-w70 { max-width: 70%; }
+.max-w80 { max-width: 80%; }
+.max-w90 { max-width: 90%; }
+.max-w100 { max-width: 100%; }
+
+.max-vw5 { max-width: 5vw; }
+.max-vw10 { max-width: 10vw; }
+.max-vw15 { max-width: 15vw; }
+.max-vw20 { max-width: 20vw; }
+.max-vw25 { max-width: 25vw; }
+.max-vw30 { max-width: 30vw; }
+.max-vw33 { max-width: 33vw; }
+.max-vw40 { max-width: 40vw; }
+.max-vw50 { max-width: 50vw; }
+.max-vw60 { max-width: 60vw; }
+.max-vw66 { max-width: 66vw; }
+.max-vw70 { max-width: 70vw; }
+.max-vw80 { max-width: 80vw; }
+.max-vw90 { max-width: 90vw; }
+.max-vw100 { max-width: 100vw; }
+
+.max-wrem-p25    { max-width: .25rem; }
+.max-wrem-p5     { max-width: .5rem; }
+.max-wrem-p75    { max-width: .75rem; }
+.max-wrem-1      { max-width: 1rem; }
+.max-wrem-1p25   { max-width: 1.25rem; }
+.max-wrem-1p5    { max-width: 1.5rem; }
+.max-wrem-1p75   { max-width: 1.75rem; }
+.max-wrem-2      { max-width: 2rem; }
+.max-wrem-2p25   { max-width: 2.25rem; }
+.max-wrem-2p5    { max-width: 2.5rem; }
+.max-wrem-2p75   { max-width: 2.75rem; }
+.max-wrem-3      { max-width: 3rem; }
+.max-wrem-3p25   { max-width: 3.25rem; }
+.max-wrem-3p5    { max-width: 3.5rem; }
+.max-wrem-3p75   { max-width: 3.75rem; }
+.max-wrem-4      { max-width: 4rem; }
+.max-wrem-4p25   { max-width: 4.25rem; }
+.max-wrem-4p5    { max-width: 4.5rem; }
+.max-wrem-4p75   { max-width: 4.75rem; }
+.max-wrem-5      { max-width: 5rem; }
+.max-wrem-5p25   { max-width: 5.25rem; }
+.max-wrem-5p5    { max-width: 5.5rem; }
+.max-wrem-5p75   { max-width: 5.75rem; }
+.max-wrem-6      { max-width: 6rem; }
+.max-wrem-6p25   { max-width: 6.25rem; }
+.max-wrem-6p5    { max-width: 6.5rem; }
+.max-wrem-6p75   { max-width: 6.75rem; }
+.max-wrem-7      { max-width: 7rem; }
+.max-wrem-7p25   { max-width: 7.25rem; }
+.max-wrem-7p5    { max-width: 7.5rem; }
+.max-wrem-7p75   { max-width: 7.75rem; }
+.max-wrem-8      { max-width: 8rem; }
+.max-wrem-8p25   { max-width: 8.25rem; }
+.max-wrem-8p5    { max-width: 8.5rem; }
+.max-wrem-8p75   { max-width: 8.75rem; }
+.max-wrem-9      { max-width: 9rem; }
+.max-wrem-9p25   { max-width: 9.25rem; }
+.max-wrem-9p5    { max-width: 9.5rem; }
+.max-wrem-9p75   { max-width: 9.75rem; }
+
+.min-ws1 { min-width: var(--min-width-1);}
+.min-ws2 { min-width: var(--min-width-2);}
+.min-ws3 { min-width: var(--min-width-3);}
+.min-ws4 { min-width: var(--min-width-4);}
+.min-ws5 { min-width: var(--min-width-5);}
+.min-ws6 { min-width: var(--min-width-6);}
+.min-ws7 { min-width: var(--min-width-7);}
+.min-ws8 { min-width: var(--min-width-8);}
+.min-ws9 { min-width: var(--min-width-9);}
+
+.min-w0 { min-width: 0; }
+.min-w5 { min-width: 5%; }
+.min-w10 { min-width: 10%; }
+.min-w15 { min-width: 15%; }
+.min-w20 { min-width: 20%; }
+.min-w25 { min-width: 25%; }
+.min-w30 { min-width: 30%; }
+.min-w33 { min-width: 33%; }
+.min-w40 { min-width: 40%; }
+.min-w50 { min-width: 50%; }
+.min-w60 { min-width: 60%; }
+.min-w66 { min-width: 66%; }
+.min-w70 { min-width: 70%; }
+.min-w80 { min-width: 80%; }
+.min-w90 { min-width: 90%; }
+.min-w100 { min-width: 100%; }
+
+.min-vw5 { min-width: 5vw; }
+.min-vw10 { min-width: 10vw; }
+.min-vw15 { min-width: 15vw; }
+.min-vw20 { min-width: 20vw; }
+.min-vw25 { min-width: 25vw; }
+.min-vw30 { min-width: 30vw; }
+.min-vw33 { min-width: 33vw; }
+.min-vw40 { min-width: 40vw; }
+.min-vw50 { min-width: 50vw; }
+.min-vw60 { min-width: 60vw; }
+.min-vw66 { min-width: 66vw; }
+.min-vw70 { min-width: 70vw; }
+.min-vw80 { min-width: 80vw; }
+.min-vw90 { min-width: 90vw; }
+.min-vw100 { min-width: 100vw; }
+
+.min-wrem-p25    { min-width: .25rem; }
+.min-wrem-p5     { min-width: .5rem; }
+.min-wrem-p75    { min-width: .75rem; }
+.min-wrem-1      { min-width: 1rem; }
+.min-wrem-1p25   { min-width: 1.25rem; }
+.min-wrem-1p5    { min-width: 1.5rem; }
+.min-wrem-1p75   { min-width: 1.75rem; }
+.min-wrem-2      { min-width: 2rem; }
+.min-wrem-2p25   { min-width: 2.25rem; }
+.min-wrem-2p5    { min-width: 2.5rem; }
+.min-wrem-2p75   { min-width: 2.75rem; }
+.min-wrem-3      { min-width: 3rem; }
+.min-wrem-3p25   { min-width: 3.25rem; }
+.min-wrem-3p5    { min-width: 3.5rem; }
+.min-wrem-3p75   { min-width: 3.75rem; }
+.min-wrem-4      { min-width: 4rem; }
+.min-wrem-4p25   { min-width: 4.25rem; }
+.min-wrem-4p5    { min-width: 4.5rem; }
+.min-wrem-4p75   { min-width: 4.75rem; }
+.min-wrem-5      { min-width: 5rem; }
+.min-wrem-5p25   { min-width: 5.25rem; }
+.min-wrem-5p5    { min-width: 5.5rem; }
+.min-wrem-5p75   { min-width: 5.75rem; }
+.min-wrem-6      { min-width: 6rem; }
+.min-wrem-6p25   { min-width: 6.25rem; }
+.min-wrem-6p5    { min-width: 6.5rem; }
+.min-wrem-6p75   { min-width: 6.75rem; }
+.min-wrem-7      { min-width: 7rem; }
+.min-wrem-7p25   { min-width: 7.25rem; }
+.min-wrem-7p5    { min-width: 7.5rem; }
+.min-wrem-7p75   { min-width: 7.75rem; }
+.min-wrem-8      { min-width: 8rem; }
+.min-wrem-8p25   { min-width: 8.25rem; }
+.min-wrem-8p5    { min-width: 8.5rem; }
+.min-wrem-8p75   { min-width: 8.75rem; }
+.min-wrem-9      { min-width: 9rem; }
+.min-wrem-9p25   { min-width: 9.25rem; }
+.min-wrem-9p5    { min-width: 9.5rem; }
+.min-wrem-9p75   { min-width: 9.75rem; }

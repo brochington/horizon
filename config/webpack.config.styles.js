@@ -2,13 +2,11 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const colorFunction = require('postcss-color-function');
-
-// const horizon = {}
-
+const { horizon, defaultConfig } = require(path.join(__dirname, '../dist/horizon'));
 
 module.exports = {
   entry: [
-    path.join(process.cwd(), 'src/styles/generation.css')
+    path.join(process.cwd(), 'src/horizon/styles/generation.css')
   ],
   output: {
     filename: 'delete-me.js',
@@ -29,7 +27,7 @@ module.exports = {
         loader: 'postcss-loader',
         options: {
           plugins: loader => [
-            // horizon,
+            horizon,
             postcssPresetEnv({ stage: 0 }),
             colorFunction({ preserveCustomProps: false })
           ]

@@ -1,0 +1,101 @@
+.b-solid  { border-style: solid; }
+.b-dashed { border-style: dashed; }
+.b-dotted { border-style: dotted; }
+.b-double { border-style: double; }
+.b-groove { border-style: groove; }
+.b-inset  { border-style: inset; }
+.b-outset { border-style: outset; }
+.b-ridge  { border-style: ridge; }
+
+.bt-solid  { border-top-style: solid; }
+.bt-dashed { border-top-style: dashed; }
+.bt-dotted { border-top-style: dotted; }
+.bt-double { border-top-style: double; }
+.bt-groove { border-top-style: groove; }
+.bt-inset  { border-top-style: inset; }
+.bt-outset { border-top-style: outset; }
+.bt-ridge  { border-top-style: ridge; }
+
+.br-solid  { border-right-style: solid; }
+.br-dashed { border-right-style: dashed; }
+.br-dotted { border-right-style: dotted; }
+.br-double { border-right-style: double; }
+.br-groove { border-right-style: groove; }
+.br-inset  { border-right-style: inset; }
+.br-outset { border-right-style: outset; }
+.br-ridge  { border-right-style: ridge; }
+
+.bb-solid  { border-bottom-style: solid; }
+.bb-dashed { border-bottom-style: dashed; }
+.bb-dotted { border-bottom-style: dotted; }
+.bb-double { border-bottom-style: double; }
+.bb-groove { border-bottom-style: groove; }
+.bb-inset  { border-bottom-style: inset; }
+.bb-outset { border-bottom-style: outset; }
+.bb-ridge  { border-bottom-style: ridge; }
+
+.bl-solid  { border-left-style: solid; }
+.bl-dashed { border-left-style: dashed; }
+.bl-dotted { border-left-style: dotted; }
+.bl-double { border-left-style: double; }
+.bl-groove { border-left-style: groove; }
+.bl-inset  { border-left-style: inset; }
+.bl-outset { border-left-style: outset; }
+.bl-ridge  { border-left-style: ridge; }
+
+.b-width-0 { border-width: 0; }
+.b-width-1 { border-width: var(--border-width-1); }
+.b-width-2 { border-width: var(--border-width-2); }
+.b-width-3 { border-width: var(--border-width-3); }
+.b-width-4 { border-width: var(--border-width-4); }
+.b-width-5 { border-width: var(--border-width-5); }
+
+.b-radius-0 { border-radius: 0; }
+.b-radius-1 { border-radius: var(--border-radius-1); }
+.b-radius-2 { border-radius: var(--border-radius-2); }
+.b-radius-3 { border-radius: var(--border-radius-3); }
+.b-radius-4 { border-radius: var(--border-radius-4); }
+.b-radius-5 { border-radius: var(--border-radius-5); }
+.b-radius-100 { border-radius: 100%; }
+.pill {  border-radius: 9999px; }
+
+.b-transparent  { border-color: transparent; }
+.bt-transparent { border-top-color: transparent; }
+.br-transparent { border-right-color: transparent; }
+.bb-transparent { border-bottom-color: transparent; }
+.bl-transparent { border-left-color: transparent; }
+
+/* Border 1 */
+
+/* TODO: make borders configurable, like colors. */
+
+/* .b-1 {
+  border-style: var(--border-1-style);
+  border-width: var(--border-1-width);
+  border-color: var(--border-1-color);
+  border-radius: var(--border-1-radius);
+}
+
+.bt-1 {
+  border-top-style: var(--border-1-style);
+  border-top-width: var(--border-1-width);
+  border-top-color: var(--border-1-color);
+}
+
+.br-1 {
+  border-right-style: var(--border-1-style);
+  border-right-width: var(--border-1-width);
+  border-right-color: var(--border-1-color);
+}
+
+.bb-1 {
+  border-bottom-style: var(--border-1-style);
+  border-bottom-width: var(--border-1-width);
+  border-bottom-color: var(--border-1-color);
+}
+
+.bl-1 {
+  border-left-style: var(--border-1-style);
+  border-left-width: var(--border-1-width);
+  border-left-color: var(--border-1-color);
+} */
