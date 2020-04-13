@@ -131,6 +131,7 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
       color: ${options.body.color};
       background-color: ${options.body.backgroundColor};
       font-family: ${options.body.fontFamily};
+      overflow-behavior-y: none;
     }
     `)
 

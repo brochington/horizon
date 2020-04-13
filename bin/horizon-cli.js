@@ -9,6 +9,11 @@ const ora = require('ora');
 const webpack = require('webpack');
 const docgenWebpackConfig = require('../config/webpack.config.docgen.dist');
 
+const postcss = require('postcss');
+const postcssPresetEnv = require('postcss-preset-env');
+const colorFunction = require('postcss-color-function');
+const { horizon } = require(path.join(__dirname, '../dist/horizon'));
+
 const kill = () => process.kill(process.pid, 'SIGTERM');
 
 const configPath = path.resolve(process.cwd(), argv.config || './horizon.config.js');
@@ -24,7 +29,6 @@ const defaultCSSVariables = {};
 
 const cssFilename = config.filename || 'horizon-styles.css';
 const cssPath = path.join(process.cwd(), config.path || './dist');
-// const cssVariables = config.cssVariables || defaultCSSVariables;
 const docPath = path.join(process.cwd(), config.docPath || './docs/horizon/site')
 const destinationPath = `${cssPath}/${cssFilename}`;
 
@@ -36,7 +40,14 @@ console.log('docPath ', docPath);
 
 async function generateCSS() {
   try {
-    console.log('generating something soon!');
+    const result = await postcss([
+      horizon(config.config),
+      postcssPresetEnv({ stage: 0 }),
+      colorFunction({ preserveCustomProps: false })
+    ])
+    .process('', { from: '', to: destinationPath });
+
+    return result.css;
   } catch (e) {
     console.error(chalk.red('Horizon: Unable to generate CSS'));
     console.error(chalk.red(e));
