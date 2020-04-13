@@ -1,13 +1,3 @@
-.hs1 { height: var(--height-1);}
-.hs2 { height: var(--height-2);}
-.hs3 { height: var(--height-3);}
-.hs4 { height: var(--height-4);}
-.hs5 { height: var(--height-5);}
-.hs6 { height: var(--height-6);}
-.hs7 { height: var(--height-7);}
-.hs8 { height: var(--height-8);}
-.hs9 { height: var(--height-9);}
-
 .h0 { height: 0; }
 .h5 { height: 5%; }
 .h10 { height: 10%; }
@@ -81,16 +71,6 @@
 .hrem-9p5    { height: 9.5rem; }
 .hrem-9p75   { height: 9.75rem; }
 
-.max-hs1 { max-height: var(--max-height-1);}
-.max-hs2 { max-height: var(--max-height-2);}
-.max-hs3 { max-height: var(--max-height-3);}
-.max-hs4 { max-height: var(--max-height-4);}
-.max-hs5 { max-height: var(--max-height-5);}
-.max-hs6 { max-height: var(--max-height-6);}
-.max-hs7 { max-height: var(--max-height-7);}
-.max-hs8 { max-height: var(--max-height-8);}
-.max-hs9 { max-height: var(--max-height-9);}
-
 .max-h0 { max-height: 0; }
 .max-h5 { max-height: 5%; }
 .max-h10 { max-height: 10%; }
@@ -163,16 +143,6 @@
 .max-hrem-9p25   { max-height: 9.25rem; }
 .max-hrem-9p5    { max-height: 9.5rem; }
 .max-hrem-9p75   { max-height: 9.75rem; }
-
-.min-hs1 { min-height: var(--min-height-1);}
-.min-hs2 { min-height: var(--min-height-2);}
-.min-hs3 { min-height: var(--min-height-3);}
-.min-hs4 { min-height: var(--min-height-4);}
-.min-hs5 { min-height: var(--min-height-5);}
-.min-hs6 { min-height: var(--min-height-6);}
-.min-hs7 { min-height: var(--min-height-7);}
-.min-hs8 { min-height: var(--min-height-8);}
-.min-hs9 { min-height: var(--min-height-9);}
 
 .min-h0 { min-height: 0; }
 .min-h5 { min-height: 5%; }

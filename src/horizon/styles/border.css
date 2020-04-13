@@ -44,18 +44,6 @@
 .bl-ridge  { border-left-style: ridge; }
 
 .b-width-0 { border-width: 0; }
-.b-width-1 { border-width: var(--border-width-1); }
-.b-width-2 { border-width: var(--border-width-2); }
-.b-width-3 { border-width: var(--border-width-3); }
-.b-width-4 { border-width: var(--border-width-4); }
-.b-width-5 { border-width: var(--border-width-5); }
-
-.b-radius-0 { border-radius: 0; }
-.b-radius-1 { border-radius: var(--border-radius-1); }
-.b-radius-2 { border-radius: var(--border-radius-2); }
-.b-radius-3 { border-radius: var(--border-radius-3); }
-.b-radius-4 { border-radius: var(--border-radius-4); }
-.b-radius-5 { border-radius: var(--border-radius-5); }
 .b-radius-100 { border-radius: 100%; }
 .pill {  border-radius: 9999px; }
 
@@ -64,38 +52,3 @@
 .br-transparent { border-right-color: transparent; }
 .bb-transparent { border-bottom-color: transparent; }
 .bl-transparent { border-left-color: transparent; }
-
-/* Border 1 */
-
-/* TODO: make borders configurable, like colors. */
-
-/* .b-1 {
-  border-style: var(--border-1-style);
-  border-width: var(--border-1-width);
-  border-color: var(--border-1-color);
-  border-radius: var(--border-1-radius);
-}
-
-.bt-1 {
-  border-top-style: var(--border-1-style);
-  border-top-width: var(--border-1-width);
-  border-top-color: var(--border-1-color);
-}
-
-.br-1 {
-  border-right-style: var(--border-1-style);
-  border-right-width: var(--border-1-width);
-  border-right-color: var(--border-1-color);
-}
-
-.bb-1 {
-  border-bottom-style: var(--border-1-style);
-  border-bottom-width: var(--border-1-width);
-  border-bottom-color: var(--border-1-color);
-}
-
-.bl-1 {
-  border-left-style: var(--border-1-style);
-  border-left-width: var(--border-1-width);
-  border-left-color: var(--border-1-color);
-} */

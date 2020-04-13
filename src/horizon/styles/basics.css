@@ -4,16 +4,23 @@ html {
   height: 100%;
 }
 
-body {
-  color: var(--color-text-primary);
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-regular);
-  font-size: 16px; /* Fixed to maintain grid that is rem based */
-  line-height: var(--line-height-3);
-  background-color: var(--color-white);
-}
-
 *:before,
 *:after {
   box-sizing: inherit;
 }
+
+/* Position */
+
+.pos-s      { position: static; }
+.pos-r      { position: relative; }
+.pos-a      { position: absolute; }
+.pos-f      { position: fixed; }
+.pos-sticky { position: sticky; }
+
+/* Object-Fit */
+
+.of-fill { object-fit: fill; }
+.of-contain { object-fit: contain; }
+.of-cover { object-fit: cover; }
+.of-none { object-fit: none; }
+.of-scale-down { object-fit: scale-down; }
