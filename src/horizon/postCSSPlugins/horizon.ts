@@ -209,8 +209,6 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
       )
     });
 
-
-
     // Borders
     options.borders.forEach(b => {
       cssRoot.append(

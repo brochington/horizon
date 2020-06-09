@@ -19,8 +19,22 @@ html {
 
 /* Object-Fit */
 
-.of-fill { object-fit: fill; }
-.of-contain { object-fit: contain; }
-.of-cover { object-fit: cover; }
-.of-none { object-fit: none; }
+.of-fill       { object-fit: fill; }
+.of-contain    { object-fit: contain; }
+.of-cover      { object-fit: cover; }
+.of-none       { object-fit: none; }
 .of-scale-down { object-fit: scale-down; }
+
+/* Object Position */
+
+.op-top           { object-position: left; }
+.op-right         { object-position: right; }
+.op-bottom        { object-position: bottom; }
+.op-left          { object-position: left; }
+.op-center        { object-position: center; }
+.op-left-top      { object-position: left top; }
+.op-center-top    { object-position: center top; }
+.op-right-top     { object-position: center top; }
+.op-left-bottom   { object-position: left bottom; }
+.op-center-bottom { object-position: center bottom; }
+.op-right-bottom  { object-position: center bottom; }
