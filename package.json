@@ -1,6 +1,6 @@
 {
   "name": "@brochington/horizon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "CSS generator and CLI",
   "main": "dist/horizon.js",
   "scripts": {

@@ -1,12 +1,20 @@
-import React from 'react';
-import { hot } from 'react-hot-loader/root';
+import React from "react";
+import { hot } from "react-hot-loader/root";
+
+import SideNav from "./SideNav";
+import Routes from './Routes';
+
+
 
 class App extends React.Component {
   render(): React.ReactNode {
     return (
-      <h1 className="main-heading">
-        Horizon
-      </h1>
+      <div className="column">
+        <div className="row grow-1">
+          <SideNav />
+          <Routes />
+        </div>
+      </div>
     );
   }
 }

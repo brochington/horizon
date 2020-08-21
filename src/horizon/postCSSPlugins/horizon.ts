@@ -226,25 +226,25 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
           border-top-color: ${b.color};
         }
 
-        .br-1 {
+        .br-${b.key} {
           border-right-style: ${b.style};
           border-right-width: ${b.width};
           border-right-color: ${b.color};
         }
 
-        .bb-1 {
+        .bb-${b.key} {
           border-bottom-style: ${b.style};
           border-bottom-width: ${b.width};
           border-bottom-color: ${b.color};
         }
 
-        .bl-1 {
+        .bl-${b.key} {
           border-left-style: ${b.style};
           border-left-width: ${b.width};
           border-left-color: ${b.color};
         }
         `
-      )
+      );
     })
 
     // Add the rest of the css
