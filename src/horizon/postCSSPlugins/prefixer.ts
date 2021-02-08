@@ -12,7 +12,6 @@ const prefixer = postcss.plugin('prefixer', (mediaQueries: Record<string, string
 
       cssRoot.walkRules(rule => {
         const currentSelector = rule.selector.substring(1, rule.selector.length);
-        // const currentSelector = rule.selector.split('.')[1];
 
         if (currentSelector) {
           const newRule = rule.clone({

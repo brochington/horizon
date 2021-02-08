@@ -68,16 +68,16 @@ const defaultConfig: HorizonConfig = {
     mo: "screen and (min-width: 40rem) and (max-width: 63.9375rem)",
     lu: "screen and (min-width: 64rem)",
     lo: "screen and (min-width: 64rem) and (max-width: 74.9375rem)",
-    // foo: {
-    //   media: "screen and (max-width: 88rem)",
-    //   css: `
-    //   .hello {
-    //     height: 27px;
-    //     width: 33px;
-    //     color: orange;
-    //   }
-    //   `
-    // }
+    foob: {
+      media: "screen and (max-width: 88rem)",
+      css: `
+      .hello {
+        height: 27px;
+        width: 33px;
+        color: orange;
+      }
+      `
+    }
     // light: 'screen and (prefers-color-scheme: light)',
     // dark: 'screen and (prefers-color-scheme: dark)'
   },

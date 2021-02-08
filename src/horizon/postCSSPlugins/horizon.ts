@@ -1,5 +1,4 @@
 import postcss from "postcss";
-import map from 'lodash/map';
 import entries from "lodash/entries";
 import isString from "lodash/isString";
 
@@ -353,7 +352,7 @@ const horizon = postcss.plugin(
         allCSS.map(
           async (css): Promise<string> => {
             const cssWithMQ = (await prefix(
-              options.mediaQueries,
+              mqStringsRec,
               css
             )) as string;
             return cssWithMQ;
