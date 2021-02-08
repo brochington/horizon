@@ -1,6 +1,6 @@
 {
   "name": "@brochington/horizon",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "CSS generator and CLI",
   "main": "dist/horizon.js",
   "scripts": {
@@ -25,7 +25,6 @@
   "homepage": "https://github.com/brochington/horizon#readme",
   "devDependencies": {
     "express": "^4.17.1",
-    "postcss-modules": "^4.0.0",
     "rimraf": "^3.0.2",
     "webpack": "^4.46.0",
     "webpack-dev-middleware": "^3.7.3",
@@ -58,7 +57,6 @@
     "ora": "^4.1.1",
     "postcss": "^7.0.35",
     "postcss-color-function": "^4.1.0",
-    "postcss-composes": "^0.1.0",
     "postcss-hexrgba": "^2.0.1",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",

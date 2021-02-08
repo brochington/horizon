@@ -20,11 +20,20 @@ export interface BorderConfig {
   radius: string;
 }
 
+export interface MediaQueryConfig { 
+  media: string;
+  css?: string;
+}
+
+export interface MediaQueriesConfig {
+  [key: string]: string | MediaQueryConfig;
+}
+
 export interface HorizonConfig {
   variables: { [key: string]: string };
   colors: { [key: string]: string };
   fonts: FontConfig[];
-  mediaQueries: { [key: string]: string };
+  mediaQueries?: MediaQueriesConfig;
   body: { color: string; fontFamily: string; backgroundColor: string };
   headings: HeadingConfig[];
   margins: { [key: string]: string };
@@ -32,7 +41,7 @@ export interface HorizonConfig {
   borders: BorderConfig[];
   widths: { [key: string]: string };
   heights: { [key: string]: string };
-  compose: { [key: string]: string };
+  compose?: { [key: string]: string };
 }
 
 const defaultConfig: HorizonConfig = {
@@ -59,6 +68,16 @@ const defaultConfig: HorizonConfig = {
     mo: "screen and (min-width: 40rem) and (max-width: 63.9375rem)",
     lu: "screen and (min-width: 64rem)",
     lo: "screen and (min-width: 64rem) and (max-width: 74.9375rem)",
+    // foo: {
+    //   media: "screen and (max-width: 88rem)",
+    //   css: `
+    //   .hello {
+    //     height: 27px;
+    //     width: 33px;
+    //     color: orange;
+    //   }
+    //   `
+    // }
     // light: 'screen and (prefers-color-scheme: light)',
     // dark: 'screen and (prefers-color-scheme: dark)'
   },
@@ -117,6 +136,7 @@ const defaultConfig: HorizonConfig = {
   },
   compose: {
     something: "m1 wrem-3.5 bgd-dark-teal",
+    foo: 'bar hrem-3.5 lo:ws1'
   },
 };
 

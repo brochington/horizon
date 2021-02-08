@@ -21,19 +21,15 @@ export const composer = postcss.plugin('composer', (comps: CompositionRecord) =>
     cssRoot.walkRules(rule => {
       const cn = rule.selector
         .substring(1, rule.selector.length)
-        .replace(/(\\.)/g, '.');
+        .replace(/(\\)/g, '');
 
       _comps.forEach(c => {
        if (c.classes.includes(cn)) {
-        //  console.log(rule.nodes);
          const copiedNodes = [...rule.nodes.map(n => n.clone())];
-         console.log(copiedNodes);
-         c.styles.push(rule.nodes)
+         c.styles.push(copiedNodes)
        }
       });
     });
-
-    console.log('_comps', _comps);
 
     _comps.forEach(c => {
       const { className, styles, classes } = c;
@@ -43,15 +39,12 @@ export const composer = postcss.plugin('composer', (comps: CompositionRecord) =>
 
       styles.forEach(s => newRule.append(s));
 
-      console.log(newRule, newRule.toString());
-
-      // cssRoot.insertAfter(cssRoot, newRule);
       cssRoot.append(newRule);
     });
   }
 });
 
-const compose = (comps: CompositionRecord, rawCSS: string) => {
+const compose = (comps: CompositionRecord, rawCSS: string | postcss.Root) => {
   return new Promise((resolve) => {
     postcss([composer(comps)])
       .process(rawCSS)

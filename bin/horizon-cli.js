@@ -13,7 +13,7 @@ const postcss = require('postcss');
 const postcssPresetEnv = require('postcss-preset-env');
 const colorFunction = require('postcss-color-function');
 // const postcssModules = require('postcss-modules');
-const postcssComposes = require('postcss-composes');
+// const postcssComposes = require('postcss-composes');
 const { horizon } = require(path.join(__dirname, '../dist/horizon'));
 
 const kill = () => process.kill(process.pid, 'SIGTERM');
@@ -46,8 +46,6 @@ async function generateCSS() {
       horizon(config.config),
       postcssPresetEnv({ stage: 0 }),
       colorFunction({ preserveCustomProps: false }),
-      // postcssModules({ scopeBehavior: 'global'})
-      postcssComposes,
     ])
     .process('', { from: '', to: destinationPath });
 

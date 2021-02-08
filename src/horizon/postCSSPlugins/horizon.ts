@@ -1,12 +1,18 @@
 import postcss from "postcss";
+import map from 'lodash/map';
 import entries from "lodash/entries";
+import isString from "lodash/isString";
 
 import colorString from "color-string";
 import prefix from "./prefixer";
-import compose from './composer';
+import compose from "./composer";
 
 import variableFormatter from "../utils/variableFormatter";
-import defaultConfig, { HorizonConfig } from "../defaultConfig";
+import defaultConfig, {
+  HorizonConfig,
+  MediaQueryConfig,
+  MediaQueriesConfig,
+} from "../defaultConfig";
 
 //@ts-ignore
 import sanitizeCSS from "!raw-loader!sanitize.css";
@@ -47,17 +53,41 @@ const appendCSSWithMQ = async (
   const cssArrWithMQs = await Promise.all(
     cssArr.map(async (css) => {
       const cssMQ = await prefix(mediaQueries, css);
-      return '' + cssMQ;
+      return "" + cssMQ;
     })
   );
 
-  cssArrWithMQs.forEach(a => cssRoot.append(a));
+  cssArrWithMQs.forEach((a) => cssRoot.append(a));
+};
+
+const getMediaQueriesStringRec = (mqs: MediaQueriesConfig = {}) => {
+  let rec = {}
+
+  for (const [k, v] of Object.entries(mqs)) {
+    rec[k] = isString(v) ? v : v.media
+  }
+
+  return rec;
+};
+
+const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
+  let rec: Record<string, MediaQueryConfig> = {}
+
+  for (const [k, v] of Object.entries(mqs)) {
+    if (!isString(v)) {
+      rec[k] = v;
+    }
+  }
+
+  return rec;
 }
 
 const horizon = postcss.plugin(
   "horizon",
   (options: HorizonConfig = defaultConfig) => {
     return async (cssRoot) => {
+      const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries)
+
       // Add Sanitize CSS
       cssRoot.append(sanitizeCSS);
 
@@ -167,8 +197,7 @@ const horizon = postcss.plugin(
         }
       );
 
-      await appendCSSWithMQ(bgdCSS, options.mediaQueries, cssRoot);
-
+      await appendCSSWithMQ(bgdCSS, mqStringsRec, cssRoot);
 
       // Body
       cssRoot.append(`
@@ -216,7 +245,7 @@ const horizon = postcss.plugin(
         `;
       });
 
-      await appendCSSWithMQ(marginCSS, options.mediaQueries, cssRoot);
+      await appendCSSWithMQ(marginCSS, mqStringsRec, cssRoot);
 
       // Padding
       const paddingCSS = entries(options.paddings).map(([key, value]) => {
@@ -231,7 +260,7 @@ const horizon = postcss.plugin(
         `;
       });
 
-      await appendCSSWithMQ(paddingCSS, options.mediaQueries, cssRoot);
+      await appendCSSWithMQ(paddingCSS, mqStringsRec, cssRoot);
 
       // Widths
       const customWidthCSS = entries(options.widths).map(([key, value]) => {
@@ -242,7 +271,7 @@ const horizon = postcss.plugin(
         `;
       });
 
-      await appendCSSWithMQ(customWidthCSS, options.mediaQueries, cssRoot);
+      await appendCSSWithMQ(customWidthCSS, mqStringsRec, cssRoot);
 
       // Heights
       const customHeightCSS = entries(options.widths).map(([key, value]) => {
@@ -253,7 +282,7 @@ const horizon = postcss.plugin(
         `;
       });
 
-      await appendCSSWithMQ(customHeightCSS, options.mediaQueries, cssRoot);
+      await appendCSSWithMQ(customHeightCSS, mqStringsRec, cssRoot);
 
       // Borders
       const customborderCSS = options.borders.map((b) => {
@@ -291,18 +320,21 @@ const horizon = postcss.plugin(
         `;
       });
 
-      await appendCSSWithMQ(customborderCSS, options.mediaQueries, cssRoot);
+      await appendCSSWithMQ(customborderCSS, mqStringsRec, cssRoot);
 
-      // What do I need to add here....
-      // entries(options.mediaQueries).forEach(([key, mqString]) => {
-      //   cssRoot.append(
-      //     `
-      //   @media ${mqString} {
-          
-      //   }
-      //   `
-      //   );
-      // });
+      // Add any extra css from media query config.
+      entries(getMediaQueryConfigs(options.mediaQueries)).forEach(([key, mq]) => {
+        if (mq.css) {
+          cssRoot.append(
+            `
+          /* for "${key}" media query */
+          @media ${mq.media} {
+            ${mq.css}
+          }
+          `
+          );
+        }
+      });
 
       const allCSS = [
         basicsCSS,
@@ -318,18 +350,23 @@ const horizon = postcss.plugin(
       ];
 
       const allCSSWithMQ = await Promise.all(
-        allCSS.map(async (css): Promise<string> => {
-          const cssWithMQ = await prefix(options.mediaQueries, css) as string;
-          return cssWithMQ;
-        })
+        allCSS.map(
+          async (css): Promise<string> => {
+            const cssWithMQ = (await prefix(
+              options.mediaQueries,
+              css
+            )) as string;
+            return cssWithMQ;
+          }
+        )
       );
 
-      const allCSSString = allCSSWithMQ.join("\n")
+      const allCSSString = allCSSWithMQ.join("\n");
       cssRoot.append(allCSSString);
 
-      const a = await compose(options.compose, cssRoot.toString());
-      cssRoot.removeAll(); // I feel like I shouldn't have to do this....
-      cssRoot.append(a.toString());
+      if (options.compose) {
+        await compose(options.compose, cssRoot);
+      }
     };
   }
 );
