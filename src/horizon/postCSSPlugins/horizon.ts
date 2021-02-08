@@ -60,17 +60,17 @@ const appendCSSWithMQ = async (
 };
 
 const getMediaQueriesStringRec = (mqs: MediaQueriesConfig = {}) => {
-  let rec = {}
+  let rec = {};
 
   for (const [k, v] of Object.entries(mqs)) {
-    rec[k] = isString(v) ? v : v.media
+    rec[k] = isString(v) ? v : v.media;
   }
 
   return rec;
 };
 
 const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
-  let rec: Record<string, MediaQueryConfig> = {}
+  let rec: Record<string, MediaQueryConfig> = {};
 
   for (const [k, v] of Object.entries(mqs)) {
     if (!isString(v)) {
@@ -79,13 +79,13 @@ const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
   }
 
   return rec;
-}
+};
 
 const horizon = postcss.plugin(
   "horizon",
   (options: HorizonConfig = defaultConfig) => {
     return async (cssRoot) => {
-      const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries)
+      const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries);
 
       // Add Sanitize CSS
       cssRoot.append(sanitizeCSS);
@@ -322,18 +322,20 @@ const horizon = postcss.plugin(
       await appendCSSWithMQ(customborderCSS, mqStringsRec, cssRoot);
 
       // Add any extra css from media query config.
-      entries(getMediaQueryConfigs(options.mediaQueries)).forEach(([key, mq]) => {
-        if (mq.css) {
-          cssRoot.append(
-            `
+      entries(getMediaQueryConfigs(options.mediaQueries)).forEach(
+        ([key, mq]) => {
+          if (mq.css) {
+            cssRoot.append(
+              `
           /* for "${key}" media query */
           @media ${mq.media} {
             ${mq.css}
           }
           `
-          );
+            );
+          }
         }
-      });
+      );
 
       const allCSS = [
         basicsCSS,
@@ -351,10 +353,7 @@ const horizon = postcss.plugin(
       const allCSSWithMQ = await Promise.all(
         allCSS.map(
           async (css): Promise<string> => {
-            const cssWithMQ = (await prefix(
-              mqStringsRec,
-              css
-            )) as string;
+            const cssWithMQ = (await prefix(mqStringsRec, css)) as string;
             return cssWithMQ;
           }
         )
