@@ -1,67 +1,110 @@
-import postcss from 'postcss';
-import entries from 'lodash/entries';
+import postcss from "postcss";
+import entries from "lodash/entries";
 
-import colorString from 'color-string';
+import colorString from "color-string";
+import prefix from "./prefixer";
+import compose from './composer';
 
-import variableFormatter from '../utils/variableFormatter';
-import defaultConfig, { HorizonConfig } from '../defaultConfig';
+import variableFormatter from "../utils/variableFormatter";
+import defaultConfig, { HorizonConfig } from "../defaultConfig";
 
-import sanitizeCSS from '!raw-loader!sanitize.css';
-import basicsCSS from '!raw-loader!../styles/basics.css';
-import borderCSS from '!raw-loader!../styles/border.css';
-import displayCSS from '!raw-loader!../styles/display.css';
-import flexboxCSS from '!raw-loader!../styles/flexbox.css';
-import overflowCSS from '!raw-loader!../styles/overflow.css';
-import typographyCSS from '!raw-loader!../styles/typography.css';
-import visibilityCSS from '!raw-loader!../styles/visibility.css';
-import widthCSS from '!raw-loader!../styles/width.css';
-import heightCSS from '!raw-loader!../styles/height.css';
+//@ts-ignore
+import sanitizeCSS from "!raw-loader!sanitize.css";
+//@ts-ignore
+import basicsCSS from "!raw-loader!../styles/basics.css";
+//@ts-ignore
+import borderCSS from "!raw-loader!../styles/border.css";
+//@ts-ignore
+import displayCSS from "!raw-loader!../styles/display.css";
+//@ts-ignore
+import flexboxCSS from "!raw-loader!../styles/flexbox.css";
+//@ts-ignore
+import overflowCSS from "!raw-loader!../styles/overflow.css";
+//@ts-ignore
+import typographyCSS from "!raw-loader!../styles/typography.css";
+//@ts-ignore
+import visibilityCSS from "!raw-loader!../styles/visibility.css";
+//@ts-ignore
+import widthCSS from "!raw-loader!../styles/width.css";
+//@ts-ignore
+import heightCSS from "!raw-loader!../styles/height.css";
+//@ts-ignore
+import cursorCSS from "!raw-loader!../styles/cursor.css";
 
 const createRGBVariables = (coloroptions) => {
   return entries(coloroptions).map(([colorName, hexValue]) => {
     const [red, green, blue] = colorString.get.rgb(hexValue);
 
     return `--${colorName}-rgb: ${red}, ${green}, ${blue};`;
-  })
+  });
+};
+
+const appendCSSWithMQ = async (
+  cssArr: string[],
+  mediaQueries: Record<string, string>,
+  cssRoot: postcss.Root
+): Promise<void> => {
+  const cssArrWithMQs = await Promise.all(
+    cssArr.map(async (css) => {
+      const cssMQ = await prefix(mediaQueries, css);
+      return '' + cssMQ;
+    })
+  );
+
+  cssArrWithMQs.forEach(a => cssRoot.append(a));
 }
 
-const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfig) => {
-  return async cssRoot => {
+const horizon = postcss.plugin(
+  "horizon",
+  (options: HorizonConfig = defaultConfig) => {
+    return async (cssRoot) => {
+      // Add Sanitize CSS
+      cssRoot.append(sanitizeCSS);
 
-    // Add Sanitize CSS
-    cssRoot.append(sanitizeCSS);
+      // Add fonts
+      options.fonts.forEach((f) => {
+        cssRoot.append(`@import url(${f.url});\n`);
+        cssRoot.append(`.${f.key} { font-family: var(--${f.key})}`);
+      });
 
-    // Add fonts
-    options.fonts.forEach(f => {
-      cssRoot.append(`@import url(${f.url});\n`);
-      cssRoot.append(`.${f.key} { font-family: var(--${f.key})}`);
-    })
-
-    // Create css variables
-    const rootContent = `
+      // Create css variables
+      const rootContent = `
       :root {
-      ${variableFormatter(options.variables).join('\n')}
-      ${variableFormatter(options.colors).join('\n')}
-      ${createRGBVariables(options.colors).join('\n')}
-      ${options.fonts.map(f => `--${f.key}: ${f.name};`).join('\n')}
-      ${entries(options.margins).map(([k, v]) => `--margin-${k}: ${v};`).join('\n')}
-      ${entries(options.paddings).map(([k, v]) => `--padding-${k}: ${v};`).join('\n')}
-      ${options.borders.map(b => `
+      ${variableFormatter(options.variables).join("\n")}
+      ${variableFormatter(options.colors).join("\n")}
+      ${createRGBVariables(options.colors).join("\n")}
+      ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join("\n")}
+      ${entries(options.margins)
+        .map(([k, v]) => `--margin-${k}: ${v};`)
+        .join("\n")}
+      ${entries(options.paddings)
+        .map(([k, v]) => `--padding-${k}: ${v};`)
+        .join("\n")}
+      ${options.borders
+        .map(
+          (b) => `
       --border-${b.key}-style: ${b.style};
       --border-${b.key}-width: ${b.width};
       --border-${b.key}-color: ${b.color};
       --border-${b.key}-radius: ${b.radius};
-      `).join('\n')}
-      ${entries(options.widths).map(([k, v]) => `--width-${k}: ${v};`).join('\n')}
-      ${entries(options.heights).map(([k, v]) => `--height-${k}: ${v};`).join('\n')}
+      `
+        )
+        .join("\n")}
+      ${entries(options.widths)
+        .map(([k, v]) => `--width-${k}: ${v};`)
+        .join("\n")}
+      ${entries(options.heights)
+        .map(([k, v]) => `--height-${k}: ${v};`)
+        .join("\n")}
       }
       `;
 
-    cssRoot.append(rootContent);
+      cssRoot.append(rootContent);
 
-    // add color classes...
-    entries(options.colors).forEach(([colorName, hexValue]) => {
-      cssRoot.append(`
+      // add color classes...
+      const bgdCSS = entries(options.colors).map(
+        ([colorName, hexValue]): string => {
+          return `
         /* ${colorName} */
 
         .${colorName} { color: var(--${colorName}); }
@@ -120,12 +163,15 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
         body .stroke-${colorName}-h:hover svg {
           stroke: var(--${colorName});
         }
-        `
+        `;
+        }
       );
-    });
 
-    // Body
-    cssRoot.append(`
+      await appendCSSWithMQ(bgdCSS, options.mediaQueries, cssRoot);
+
+
+      // Body
+      cssRoot.append(`
     body {
       font-size: 16px; /* Fixed to maintain grid that is rem based */
       color: ${options.body.color};
@@ -133,12 +179,12 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
       font-family: ${options.body.fontFamily};
       overflow-behavior-y: none;
     }
-    `)
+    `);
 
-    // headings
-    options.headings.forEach(h => {
-      cssRoot.append(
-        `
+      // headings
+      options.headings.forEach((h) => {
+        cssRoot.append(
+          `
         .${h.key} {
           color: ${h.color};
           font-size: ${h.size};
@@ -154,13 +200,12 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
           font-size: calc(${h.size} + 20%);
         }
         `
-      )
-    });
+        );
+      });
 
-    // Margin
-    entries(options.margins).forEach(([key, value]) => {
-      cssRoot.append(
-        `
+      // Margin
+      const marginCSS = entries(options.margins).map(([key, value]) => {
+        return `
         .m${key}  { margin:        ${value}; }
         .mt${key} { margin-top:    ${value}; }
         .mr${key} { margin-right:  ${value}; }
@@ -168,14 +213,14 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
         .ml${key} { margin-left:   ${value}; }
         .mx${key} { margin-left:   ${value}; margin-right:  ${value}; }
         .my${key} { margin-top:    ${value}; margin-bottom: ${value}; }
-        `
-      )
-    });
+        `;
+      });
 
-    // Padding
-    entries(options.paddings).forEach(([key, value]) => {
-      cssRoot.append(
-        `
+      await appendCSSWithMQ(marginCSS, options.mediaQueries, cssRoot);
+
+      // Padding
+      const paddingCSS = entries(options.paddings).map(([key, value]) => {
+        return `
         .p${key}  { padding:        ${value}; }
         .pt${key} { padding-top:    ${value}; }
         .pr${key} { padding-right:  ${value}; }
@@ -183,36 +228,36 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
         .pl${key} { padding-left:   ${value}; }
         .px${key} { padding-left:   ${value}; padding-right:  ${value}; }
         .py${key} { padding-top:    ${value}; padding-bottom: ${value}; }
-        `
-      )
-    });
+        `;
+      });
 
-    // Widths
-    entries(options.widths).forEach(([key, value]) => {
-      cssRoot.append(
-        `
+      await appendCSSWithMQ(paddingCSS, options.mediaQueries, cssRoot);
+
+      // Widths
+      const customWidthCSS = entries(options.widths).map(([key, value]) => {
+        return `
         .w${key}     { width: ${value}; }
         .max-w${key} { max-width: ${value}; }
         .min-w${key} { min-width: ${value}; }
-        `
-      )
-    });
+        `;
+      });
 
-    // Heights
-    entries(options.widths).forEach(([key, value]) => {
-      cssRoot.append(
-        `
+      await appendCSSWithMQ(customWidthCSS, options.mediaQueries, cssRoot);
+
+      // Heights
+      const customHeightCSS = entries(options.widths).map(([key, value]) => {
+        return `
         .h${key}     { height: ${value}; }
         .max-h${key} { max-height: ${value}; }
         .min-h${key} { min-height: ${value}; }
-        `
-      )
-    });
+        `;
+      });
 
-    // Borders
-    options.borders.forEach(b => {
-      cssRoot.append(
-        `
+      await appendCSSWithMQ(customHeightCSS, options.mediaQueries, cssRoot);
+
+      // Borders
+      const customborderCSS = options.borders.map((b) => {
+        return `
         .b-${b.key} {
           border-style: ${b.style};
           border-width: ${b.width};
@@ -243,24 +288,50 @@ const horizon = postcss.plugin('horizon', (options: HorizonConfig = defaultConfi
           border-left-width: ${b.width};
           border-left-color: ${b.color};
         }
-        `
+        `;
+      });
+
+      await appendCSSWithMQ(customborderCSS, options.mediaQueries, cssRoot);
+
+      // What do I need to add here....
+      // entries(options.mediaQueries).forEach(([key, mqString]) => {
+      //   cssRoot.append(
+      //     `
+      //   @media ${mqString} {
+          
+      //   }
+      //   `
+      //   );
+      // });
+
+      const allCSS = [
+        basicsCSS,
+        typographyCSS,
+        displayCSS,
+        overflowCSS,
+        flexboxCSS,
+        borderCSS,
+        widthCSS,
+        heightCSS,
+        cursorCSS,
+        visibilityCSS,
+      ];
+
+      const allCSSWithMQ = await Promise.all(
+        allCSS.map(async (css): Promise<string> => {
+          const cssWithMQ = await prefix(options.mediaQueries, css) as string;
+          return cssWithMQ;
+        })
       );
-    })
 
-    // Add the rest of the css
-    cssRoot.append([
-      basicsCSS,
-      typographyCSS,
-      displayCSS,
-      overflowCSS,
-      flexboxCSS,
-      borderCSS,
-      widthCSS,
-      heightCSS,
-      visibilityCSS
-    ].join('\n'));
+      const allCSSString = allCSSWithMQ.join("\n")
+      cssRoot.append(allCSSString);
 
+      const a = await compose(options.compose, cssRoot.toString());
+      cssRoot.removeAll(); // I feel like I shouldn't have to do this....
+      cssRoot.append(a.toString());
+    };
   }
-})
+);
 
 export default horizon;

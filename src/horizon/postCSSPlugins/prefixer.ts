@@ -1,22 +1,22 @@
 import map from 'lodash/fp/map';
 import toPairs from 'lodash/fp/toPairs';
 import postcss from 'postcss';
-import curry from 'lodash/fp/curry';
 
 /**
- * Creates classes that are prefixed and scoped to a media queries
+ * Creates classes that are prefixed and scoped to media queries
  */
-const prefixer = postcss.plugin('prefixer', (mediaQueries: any) => {
+const prefixer = postcss.plugin('prefixer', (mediaQueries: Record<string, string>) => {
   return cssRoot => {
     const newAtRules = map(([prefixKey, mediaQuery]) => {
       const atRule = postcss.parse(`@media ${mediaQuery} {}`);
 
       cssRoot.walkRules(rule => {
-        const currentSelector = rule.selector.split('.')[1];
+        const currentSelector = rule.selector.substring(1, rule.selector.length);
+        // const currentSelector = rule.selector.split('.')[1];
 
         if (currentSelector) {
           const newRule = rule.clone({
-            selector: `.${prefixKey}-${currentSelector}`
+            selector: `.${prefixKey}\\:${currentSelector}`
           });
 
           atRule.first.append(newRule);
@@ -30,12 +30,12 @@ const prefixer = postcss.plugin('prefixer', (mediaQueries: any) => {
   }
 });
 
-const prefix = curry((mediaQueries, rawCSS) => {
+const prefix = (mediaQueries, rawCSS) => {
   return new Promise((resolve) => {
     postcss([prefixer(mediaQueries)])
       .process(rawCSS)
       .then(result => resolve(result));
   });
-});
+};
 
 export default prefix;

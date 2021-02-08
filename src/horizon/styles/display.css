@@ -2,12 +2,11 @@
   display: none;
 }
 
-.su-show,
 .show {
   display: inherit;
 }
 
-@media (--so) {
+/* @media (--so) {
   .so-hide {
     display: none !important;
   }
@@ -55,4 +54,4 @@
   .lo-hide {
     display: none !important;
   }
-}
+} */
