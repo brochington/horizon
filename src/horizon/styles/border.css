@@ -1,3 +1,5 @@
+/* Border Style */
+
 .b-solid  { border-style: solid; }
 .b-dashed { border-style: dashed; }
 .b-dotted { border-style: dotted; }
@@ -44,11 +46,88 @@
 .bl-ridge  { border-left-style: ridge; }
 
 .b-width-0 { border-width: 0; }
-.b-radius-100 { border-radius: 100%; }
-.pill {  border-radius: 9999px; }
+
+/* Border Color */
+/* 
+Note that most of these colors will be generated
+by colors set in the config.
+*/
 
 .b-transparent  { border-color: transparent; }
 .bt-transparent { border-top-color: transparent; }
 .br-transparent { border-right-color: transparent; }
 .bb-transparent { border-bottom-color: transparent; }
 .bl-transparent { border-left-color: transparent; }
+
+.b-currentcolor  { border-color: currentColor; }
+.bt-currentcolor { border-top-color: currentColor; }
+.br-currentcolor { border-right-color: currentColor; }
+.bb-currentcolor { border-bottom-color: currentColor; }
+.bl-currentcolor { border-left-color: currentColor }
+
+/* Border Radius */
+
+.b-radius-100 { border-radius: 100%; }
+.pill {  border-radius: 9999px; }
+
+.b-radius-none  {
+  border-radius: initial;
+}
+.bt-radius-none {
+  border-top-left-radius: initial;
+  border-top-right-radius: initial;
+}
+.br-radius-none {
+  border-top-right-radius: initial;
+  border-bottom-right-radius: initial;
+}
+.bb-radius-none {
+  border-bottom-left-radius: initial;
+  border-bottom-right-radius: initial;
+}
+.bl-radius-none {
+  border-top-left-radius: initial;
+  border-bottom-left-radius: initial;
+}
+
+/* TODO: should I add more hardcoded radius classes??? */
+
+.b-radius-0  {
+  border-radius: 0px;
+}
+.bt-radius-0 {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.br-radius-0 {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.bb-radius-0 {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.bl-radius-0 {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.b-radius-1  {
+  border-radius: 0px;
+}
+.bt-radius-1 {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.br-radius-1 {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.bb-radius-1 {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.bl-radius-1 {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}

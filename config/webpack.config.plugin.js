@@ -16,6 +16,7 @@ module.exports = {
     extensions: ['.js', '.mjs', '.ts', '.tsx']
   },
   mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.ts$/,

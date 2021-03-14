@@ -12,7 +12,8 @@ module.exports = {
     filename: 'delete-me.js',
     path: path.join(process.cwd(), 'dist')
   },
-  mode: 'development',
+  mode: 'production',
+  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.css$/,

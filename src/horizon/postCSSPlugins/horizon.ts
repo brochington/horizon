@@ -1,40 +1,42 @@
-import postcss from "postcss";
-import entries from "lodash/entries";
-import isString from "lodash/isString";
+import postcss from 'postcss';
+import entries from 'lodash/entries';
+import isString from 'lodash/isString';
 
-import colorString from "color-string";
-import prefix from "./prefixer";
-import compose from "./composer";
+import colorString from 'color-string';
+import prefix from './prefixer';
+import compose from './composer';
 
-import variableFormatter from "../utils/variableFormatter";
+import variableFormatter from '../utils/variableFormatter';
 import defaultConfig, {
   HorizonConfig,
   MediaQueryConfig,
   MediaQueriesConfig,
-} from "../defaultConfig";
+} from '../defaultConfig';
 
 //@ts-ignore
-import sanitizeCSS from "!raw-loader!sanitize.css";
+import sanitizeCSS from '!raw-loader!sanitize.css';
 //@ts-ignore
-import basicsCSS from "!raw-loader!../styles/basics.css";
+import basicsCSS from '!raw-loader!../styles/basics.css';
 //@ts-ignore
-import borderCSS from "!raw-loader!../styles/border.css";
+import borderCSS from '!raw-loader!../styles/border.css';
 //@ts-ignore
-import displayCSS from "!raw-loader!../styles/display.css";
+import backgroundCSS from '!raw-loader!../styles/background.css';
 //@ts-ignore
-import flexboxCSS from "!raw-loader!../styles/flexbox.css";
+import displayCSS from '!raw-loader!../styles/display.css';
 //@ts-ignore
-import overflowCSS from "!raw-loader!../styles/overflow.css";
+import flexboxCSS from '!raw-loader!../styles/flexbox.css';
 //@ts-ignore
-import typographyCSS from "!raw-loader!../styles/typography.css";
+import overflowCSS from '!raw-loader!../styles/overflow.css';
 //@ts-ignore
-import visibilityCSS from "!raw-loader!../styles/visibility.css";
+import typographyCSS from '!raw-loader!../styles/typography.css';
 //@ts-ignore
-import widthCSS from "!raw-loader!../styles/width.css";
+import visibilityCSS from '!raw-loader!../styles/visibility.css';
 //@ts-ignore
-import heightCSS from "!raw-loader!../styles/height.css";
+import widthCSS from '!raw-loader!../styles/width.css';
 //@ts-ignore
-import cursorCSS from "!raw-loader!../styles/cursor.css";
+import heightCSS from '!raw-loader!../styles/height.css';
+//@ts-ignore
+import cursorCSS from '!raw-loader!../styles/cursor.css';
 
 const createRGBVariables = (coloroptions) => {
   return entries(coloroptions).map(([colorName, hexValue]) => {
@@ -52,7 +54,7 @@ const appendCSSWithMQ = async (
   const cssArrWithMQs = await Promise.all(
     cssArr.map(async (css) => {
       const cssMQ = await prefix(mediaQueries, css);
-      return "" + cssMQ;
+      return '' + cssMQ;
     })
   );
 
@@ -82,7 +84,7 @@ const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
 };
 
 const horizon = postcss.plugin(
-  "horizon",
+  'horizon',
   (options: HorizonConfig = defaultConfig) => {
     return async (cssRoot) => {
       const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries);
@@ -99,16 +101,16 @@ const horizon = postcss.plugin(
       // Create css variables
       const rootContent = `
       :root {
-      ${variableFormatter(options.variables).join("\n")}
-      ${variableFormatter(options.colors).join("\n")}
-      ${createRGBVariables(options.colors).join("\n")}
-      ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join("\n")}
+      ${variableFormatter(options.variables).join('\n')}
+      ${variableFormatter(options.colors).join('\n')}
+      ${createRGBVariables(options.colors).join('\n')}
+      ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join('\n')}
       ${entries(options.margins)
         .map(([k, v]) => `--margin-${k}: ${v};`)
-        .join("\n")}
+        .join('\n')}
       ${entries(options.paddings)
         .map(([k, v]) => `--padding-${k}: ${v};`)
-        .join("\n")}
+        .join('\n')}
       ${options.borders
         .map(
           (b) => `
@@ -118,13 +120,13 @@ const horizon = postcss.plugin(
       --border-${b.key}-radius: ${b.radius};
       `
         )
-        .join("\n")}
+        .join('\n')}
       ${entries(options.widths)
         .map(([k, v]) => `--width-${k}: ${v};`)
-        .join("\n")}
+        .join('\n')}
       ${entries(options.heights)
         .map(([k, v]) => `--height-${k}: ${v};`)
-        .join("\n")}
+        .join('\n')}
       }
       `;
 
@@ -177,21 +179,36 @@ const horizon = postcss.plugin(
         .bgd-${colorName}-opacity-80  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
         .bgd-${colorName}-opacity-90  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
 
+        /* ${colorName} hover backgrounds */
 
-        /* ${colorName} svg */
-        body .fill-${colorName},
-        body .fill-${colorName} svg,
-        body .fill-${colorName}-h:hover,
-        body .fill-${colorName}-h:hover svg {
-          fill: var(--${colorName});
-        }
-
-        body .stroke-${colorName},
-        body .stroke-${colorName} svg,
-        body .stroke-${colorName}-h:hover,
-        body .stroke-${colorName}-h:hover svg {
-          stroke: var(--${colorName});
-        }
+        .bgd-${colorName}-h:hover             { background-color: var(--${colorName}); }
+        .bgd-${colorName}-tint-10-h:hover     { background-color: color(var(--${colorName}) tint(10%)); }
+        .bgd-${colorName}-tint-20-h:hover     { background-color: color(var(--${colorName}) tint(20%)); }
+        .bgd-${colorName}-tint-30-h:hover     { background-color: color(var(--${colorName}) tint(30%)); }
+        .bgd-${colorName}-tint-40-h:hover     { background-color: color(var(--${colorName}) tint(40%)); }
+        .bgd-${colorName}-tint-50-h:hover     { background-color: color(var(--${colorName}) tint(50%)); }
+        .bgd-${colorName}-tint-60-h:hover     { background-color: color(var(--${colorName}) tint(60%)); }
+        .bgd-${colorName}-tint-70-h:hover     { background-color: color(var(--${colorName}) tint(70%)); }
+        .bgd-${colorName}-tint-80-h:hover     { background-color: color(var(--${colorName}) tint(80%)); }
+        .bgd-${colorName}-tint-90-h:hover     { background-color: color(var(--${colorName}) tint(90%)); }
+        .bgd-${colorName}-shade-10-h:hover    { background-color: color(var(--${colorName}) shade(10%)); }
+        .bgd-${colorName}-shade-20-h:hover    { background-color: color(var(--${colorName}) shade(20%)); }
+        .bgd-${colorName}-shade-30-h:hover    { background-color: color(var(--${colorName}) shade(30%)); }
+        .bgd-${colorName}-shade-40-h:hover    { background-color: color(var(--${colorName}) shade(40%)); }
+        .bgd-${colorName}-shade-50-h:hover    { background-color: color(var(--${colorName}) shade(50%)); }
+        .bgd-${colorName}-shade-60-h:hover    { background-color: color(var(--${colorName}) shade(60%)); }
+        .bgd-${colorName}-shade-70-h:hover    { background-color: color(var(--${colorName}) shade(70%)); }
+        .bgd-${colorName}-shade-80-h:hover    { background-color: color(var(--${colorName}) shade(80%)); }
+        .bgd-${colorName}-shade-90-h:hover    { background-color: color(var(--${colorName}) shade(90%)); }
+        .bgd-${colorName}-opacity-10-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
+        .bgd-${colorName}-opacity-20-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
+        .bgd-${colorName}-opacity-30-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
+        .bgd-${colorName}-opacity-40-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.4); }
+        .bgd-${colorName}-opacity-50-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.5); }
+        .bgd-${colorName}-opacity-60-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.6); }
+        .bgd-${colorName}-opacity-70-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.7); }
+        .bgd-${colorName}-opacity-80-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
+        .bgd-${colorName}-opacity-90-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
         `;
         }
       );
@@ -246,6 +263,16 @@ const horizon = postcss.plugin(
 
       await appendCSSWithMQ(marginCSS, mqStringsRec, cssRoot);
 
+      const marginAutoCSS = `
+      .m-auto  { margin: auto; }
+      .ml-auto { margin-left: auto; }
+      .mr-auto { margin-right: auto; }
+      .mx-auto { margin-left: auto; margin-right: auto; }
+      .my-auto { margin-top: auto; margin-bottom: auto; }
+      `;
+
+      await appendCSSWithMQ([marginAutoCSS], mqStringsRec, cssRoot);
+
       // Padding
       const paddingCSS = entries(options.paddings).map(([key, value]) => {
         return `
@@ -293,7 +320,21 @@ const horizon = postcss.plugin(
           border-radius: ${b.radius};
         }
 
+        .b-${b.key}-no-radius {
+          border-style: ${b.style};
+          border-width: ${b.width};
+          border-color: ${b.color};
+        }
+
         .bt-${b.key} {
+          border-top-style: ${b.style};
+          border-top-width: ${b.width};
+          border-top-color: ${b.color};
+          border-top-left-radius: ${b.radius};
+          border-top-right-radius: ${b.radius};
+        }
+
+        .bt-${b.key}-no-radius {
           border-top-style: ${b.style};
           border-top-width: ${b.width};
           border-top-color: ${b.color};
@@ -303,15 +344,39 @@ const horizon = postcss.plugin(
           border-right-style: ${b.style};
           border-right-width: ${b.width};
           border-right-color: ${b.color};
+          border-top-right-radius: ${b.radius};
+          border-bottom-right-radius: ${b.radius};
+        }
+
+        .br-${b.key}-no-radius {
+          border-right-style: ${b.style};
+          border-right-width: ${b.width};
+          border-right-color: ${b.color};
         }
 
         .bb-${b.key} {
           border-bottom-style: ${b.style};
           border-bottom-width: ${b.width};
           border-bottom-color: ${b.color};
+          border-bottom-left-radius: ${b.radius};
+          border-bottom-right-radius: ${b.radius};
+        }
+
+        .bb-${b.key}-no-radius {
+          border-bottom-style: ${b.style};
+          border-bottom-width: ${b.width};
+          border-bottom-color: ${b.color};
         }
 
         .bl-${b.key} {
+          border-left-style: ${b.style};
+          border-left-width: ${b.width};
+          border-left-color: ${b.color};
+          border-top-left-radius: ${b.radius};
+          border-bottom-left-radius: ${b.radius};
+        }
+
+        .bl-${b.key}-no-radius {
           border-left-style: ${b.style};
           border-left-width: ${b.width};
           border-left-color: ${b.color};
@@ -322,6 +387,7 @@ const horizon = postcss.plugin(
       await appendCSSWithMQ(customborderCSS, mqStringsRec, cssRoot);
 
       // Add any extra css from media query config.
+      // would be cool to add some container types here....
       entries(getMediaQueryConfigs(options.mediaQueries)).forEach(
         ([key, mq]) => {
           if (mq.css) {
@@ -329,6 +395,10 @@ const horizon = postcss.plugin(
               `
           /* for "${key}" media query */
           @media ${mq.media} {
+            ${key}:container {
+
+            }
+
             ${mq.css}
           }
           `
@@ -344,6 +414,7 @@ const horizon = postcss.plugin(
         overflowCSS,
         flexboxCSS,
         borderCSS,
+        backgroundCSS,
         widthCSS,
         heightCSS,
         cursorCSS,
@@ -359,7 +430,7 @@ const horizon = postcss.plugin(
         )
       );
 
-      const allCSSString = allCSSWithMQ.join("\n");
+      const allCSSString = allCSSWithMQ.join('\n');
       cssRoot.append(allCSSString);
 
       if (options.compose) {

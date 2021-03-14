@@ -5,35 +5,41 @@ import postcss from 'postcss';
 /**
  * Creates classes that are prefixed and scoped to media queries
  */
-const prefixer = postcss.plugin('prefixer', (mediaQueries: Record<string, string>) => {
-  return cssRoot => {
-    const newAtRules = map(([prefixKey, mediaQuery]) => {
-      const atRule = postcss.parse(`@media ${mediaQuery} {}`);
+const prefixer = postcss.plugin(
+  'prefixer',
+  (mediaQueries: Record<string, string>) => {
+    return (cssRoot) => {
+      const newAtRules = map(([prefixKey, mediaQuery]) => {
+        const atRule = postcss.parse(`@media ${mediaQuery} {}`);
 
-      cssRoot.walkRules(rule => {
-        const currentSelector = rule.selector.substring(1, rule.selector.length);
+        cssRoot.walkRules((rule) => {
+          const currentSelector = rule.selector.substring(
+            1,
+            rule.selector.length
+          );
 
-        if (currentSelector) {
-          const newRule = rule.clone({
-            selector: `.${prefixKey}\\:${currentSelector}`
-          });
+          if (currentSelector) {
+            const newRule = rule.clone({
+              selector: `.${prefixKey}\\:${currentSelector}`,
+            });
 
-          atRule.first.append(newRule);
-        }
-      })
+            atRule.first.append(newRule);
+          }
+        });
 
-      return atRule;
-    }, toPairs(mediaQueries));
+        return atRule;
+      }, toPairs(mediaQueries));
 
-    cssRoot.insertAfter(cssRoot, newAtRules);
+      cssRoot.insertAfter(cssRoot, newAtRules);
+    };
   }
-});
+);
 
 const prefix = (mediaQueries, rawCSS) => {
   return new Promise((resolve) => {
     postcss([prefixer(mediaQueries)])
       .process(rawCSS)
-      .then(result => resolve(result));
+      .then((result) => resolve(result));
   });
 };
 
