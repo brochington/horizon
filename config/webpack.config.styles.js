@@ -1,8 +1,11 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const postcssPresetEnv = require('postcss-preset-env');
 const colorFunction = require('postcss-color-function');
-const { horizon, defaultConfig } = require(path.join(__dirname, '../dist/horizon'));
+const horizon = require('../src/horizon/postCSSPlugins/horizon');
+
+console.log('horizon', horizon);
 
 module.exports = {
   entry: [
@@ -10,10 +13,10 @@ module.exports = {
   ],
   output: {
     filename: 'delete-me.js',
-    path: path.join(process.cwd(), 'dist')
+    path: path.join(process.cwd(), 'dist'),
+    clean: true,
   },
   mode: 'production',
-  devtool: 'source-map',
   module: {
     rules: [{
       test: /\.css$/,
@@ -27,16 +30,19 @@ module.exports = {
       }, {
         loader: 'postcss-loader',
         options: {
-          plugins: loader => [
-            horizon,
-            postcssPresetEnv({ stage: 0 }),
-            colorFunction({ preserveCustomProps: false })
-          ]
+          postcssOptions: {
+            plugins: [
+              horizon,
+              postcssPresetEnv({ stage: 0 }),
+              colorFunction({ preserveCustomProps: false })
+            ]
+          }
         }
       }]
     }]
   },
   plugins: [
+    new RemoveEmptyScriptsPlugin(),
     new MiniCssExtractPlugin({
       filename: 'horizon-default-styles.css'
     })

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const postcssPresetEnv = require('postcss-preset-env');
 const colorFunction = require('postcss-color-function');
-const { horizon } = require(path.join(__dirname, '../dist/horizon'));
+const horizon = require('../src/horizon/postCSSPlugins/horizon');
 
 module.exports = (destination, horizonConfig) => {
   return {

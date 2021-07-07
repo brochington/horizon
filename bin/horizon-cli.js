@@ -7,14 +7,15 @@ const argv = require('yargs').argv;
 const ora = require('ora');
 // const cliSpinners = require('cli-spinners');
 const webpack = require('webpack');
-const docgenWebpackConfig = require('../config/webpack.config.docgen.dist');
+// const docgenWebpackConfig = require('../config/webpack.config.docgen.dist');
 
 const postcss = require('postcss');
 const postcssPresetEnv = require('postcss-preset-env');
 const colorFunction = require('postcss-color-function');
 // const postcssModules = require('postcss-modules');
 // const postcssComposes = require('postcss-composes');
-const { horizon } = require(path.join(__dirname, '../dist/horizon'));
+// const { horizon } = require(path.join(__dirname, '../dist/horizon'));
+const horizon = require('../src/horizon/postCSSPlugins/horizon');
 
 const kill = () => process.kill(process.pid, 'SIGTERM');
 
@@ -42,6 +43,7 @@ console.log('docPath ', docPath);
 
 async function generateCSS() {
   try {
+    console.log('generateCSS');
     const result = await postcss([
       horizon(config.config),
       postcssPresetEnv({ stage: 0 }),
@@ -80,15 +82,15 @@ function asyncWebpack(webpackConfig) {
     await fs.outputFile(destinationPath, css);
     spinner.succeed(chalk.green(`${cssFilename} generated at ${cssPath}`))
 
-    if (argv.docs) {
-      spinner.start('Generating static documentation');
+    // if (argv.docs) {
+    //   spinner.start('Generating static documentation');
 
-      const webpackErr = await asyncWebpack(docgenWebpackConfig(docPath, config));
+    //   const webpackErr = await asyncWebpack(docgenWebpackConfig(docPath, config));
 
-      webpackErr
-        ? spinner.fail(chalk.red('Documentation generation not successful'))
-        : spinner.succeed(chalk.green('Documenation generation successful'));
-    }
+    //   webpackErr
+    //     ? spinner.fail(chalk.red('Documentation generation not successful'))
+    //     : spinner.succeed(chalk.green('Documenation generation successful'));
+    // }
 
   } catch (e) {
     spinner.fail('something went wrong...')

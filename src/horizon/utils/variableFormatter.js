@@ -1,10 +1,10 @@
-import map from 'lodash/fp/map';
-import toPairs from 'lodash/fp/toPairs';
-import flatten from 'lodash/fp/flatten';
-import reduce from 'lodash/fp/reduce';
-import flow from 'lodash/fp/flow';
+const map = require('lodash/fp/map');
+const toPairs = require('lodash/fp/toPairs');
+const flatten = require('lodash/fp/flatten');
+const reduce = require('lodash/fp/reduce');
+const flow = require('lodash/fp/flow');
 
-import colorString from 'color-string';
+// import colorString from 'color-string';
 
 const format = acc => flow(
   toPairs,
@@ -34,4 +34,4 @@ const format = acc => flow(
 
 const variableFormatter = format('-');
 
-export default variableFormatter;
+module.exports = variableFormatter;

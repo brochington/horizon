@@ -1,50 +1,50 @@
-export interface FontConfig {
-  url: string; // link to google font, probably
-  name: string; // 'pt-sans'
-  key: string; // 'PT Sans'
-}
+// export interface FontConfig {
+//   url: string; // link to google font, probably
+//   name: string; // 'pt-sans'
+//   key: string; // 'PT Sans'
+// }
 
-export interface HeadingConfig {
-  key: string; // like .h1
-  size: string;
-  style: string;
-  color: string;
-  weight: string;
-}
+// export interface HeadingConfig {
+//   key: string; // like .h1
+//   size: string;
+//   style: string;
+//   color: string;
+//   weight: string;
+// }
 
-export interface BorderConfig {
-  key: string;
-  style: string;
-  color: string;
-  width: string;
-  radius: string;
-}
+// export interface BorderConfig {
+//   key: string;
+//   style: string;
+//   color: string;
+//   width: string;
+//   radius: string;
+// }
 
-export interface MediaQueryConfig { 
-  media: string;
-  css?: string;
-}
+// export interface MediaQueryConfig { 
+//   media: string;
+//   css?: string;
+// }
 
-export interface MediaQueriesConfig {
-  [key: string]: string | MediaQueryConfig;
-}
+// export interface MediaQueriesConfig {
+//   [key: string]: string | MediaQueryConfig;
+// }
 
-export interface HorizonConfig {
-  variables: { [key: string]: string };
-  colors: { [key: string]: string };
-  fonts: FontConfig[];
-  mediaQueries?: MediaQueriesConfig;
-  body: { color: string; fontFamily: string; backgroundColor: string };
-  headings: HeadingConfig[];
-  margins: { [key: string]: string };
-  paddings: { [key: string]: string };
-  borders: BorderConfig[];
-  widths: { [key: string]: string };
-  heights: { [key: string]: string };
-  compose?: { [key: string]: string };
-}
+// export interface HorizonConfig {
+//   variables: { [key: string]: string };
+//   colors: { [key: string]: string };
+//   fonts: FontConfig[];
+//   mediaQueries?: MediaQueriesConfig;
+//   body: { color: string; fontFamily: string; backgroundColor: string };
+//   headings: HeadingConfig[];
+//   margins: { [key: string]: string };
+//   paddings: { [key: string]: string };
+//   borders: BorderConfig[];
+//   widths: { [key: string]: string };
+//   heights: { [key: string]: string };
+//   compose?: { [key: string]: string };
+// }
 
-const defaultConfig: HorizonConfig = {
+const defaultConfig = {
   variables: {},
   colors: {
     "dark-blue": "#001426",
@@ -53,6 +53,14 @@ const defaultConfig: HorizonConfig = {
     "slate-gray": "#788C8C",
     white: "#F7F7F7",
     black: "#0C0C0C",
+  },
+  themes: { // Not implemented yet.
+    light: {
+      primary: 'white'
+    },
+    dark: {
+      primary: 'black'
+    }
   },
   fonts: [
     {
@@ -68,7 +76,7 @@ const defaultConfig: HorizonConfig = {
     mo: "screen and (min-width: 40rem) and (max-width: 63.9375rem)",
     lu: "screen and (min-width: 64rem)",
     lo: "screen and (min-width: 64rem) and (max-width: 74.9375rem)",
-    foob: {
+    faab: {
       media: "screen and (max-width: 88rem)",
       css: `
       .hello {
@@ -130,6 +138,7 @@ const defaultConfig: HorizonConfig = {
   ],
   widths: {
     s1: "1rem",
+    
   },
   heights: {
     s1: "1rem",
@@ -140,4 +149,4 @@ const defaultConfig: HorizonConfig = {
   },
 };
 
-export default defaultConfig;
+module.exports = defaultConfig;

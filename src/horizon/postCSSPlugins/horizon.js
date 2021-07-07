@@ -1,42 +1,39 @@
-import postcss from 'postcss';
-import entries from 'lodash/entries';
-import isString from 'lodash/isString';
+const fs = require('fs');
+const path = require('path');
+const entries = require('lodash/entries');
+const isString = require('lodash/isString');
 
-import colorString from 'color-string';
-import prefix from './prefixer';
-import compose from './composer';
+const { runPostCSS } = require('../utils/postcss');
+const colorString = require('color-string');
+const prefixer = require('./prefixer');
+const composer = require('./composer');
 
-import variableFormatter from '../utils/variableFormatter';
-import defaultConfig, {
-  HorizonConfig,
-  MediaQueryConfig,
-  MediaQueriesConfig,
-} from '../defaultConfig';
+const variableFormatter = require('../utils/variableFormatter');
+const defaultConfig = require('../defaultConfig');
 
-//@ts-ignore
-import sanitizeCSS from '!raw-loader!sanitize.css';
-//@ts-ignore
-import basicsCSS from '!raw-loader!../styles/basics.css';
-//@ts-ignore
-import borderCSS from '!raw-loader!../styles/border.css';
-//@ts-ignore
-import backgroundCSS from '!raw-loader!../styles/background.css';
-//@ts-ignore
-import displayCSS from '!raw-loader!../styles/display.css';
-//@ts-ignore
-import flexboxCSS from '!raw-loader!../styles/flexbox.css';
-//@ts-ignore
-import overflowCSS from '!raw-loader!../styles/overflow.css';
-//@ts-ignore
-import typographyCSS from '!raw-loader!../styles/typography.css';
-//@ts-ignore
-import visibilityCSS from '!raw-loader!../styles/visibility.css';
-//@ts-ignore
-import widthCSS from '!raw-loader!../styles/width.css';
-//@ts-ignore
-import heightCSS from '!raw-loader!../styles/height.css';
-//@ts-ignore
-import cursorCSS from '!raw-loader!../styles/cursor.css';
+
+const sanitizeCSS = fs.readFileSync(path.resolve(process.cwd(), 'node_modules/sanitize.css/sanitize.css'), 'utf8');
+const basicsCSS = fs.readFileSync(path.resolve(__dirname, '../styles/basics.css'), 'utf8');
+const borderCSS = fs.readFileSync(path.resolve(__dirname, '../styles/border.css'), 'utf8');
+const backgroundCSS = fs.readFileSync(path.resolve(__dirname, '../styles/background.css'), 'utf8');
+const displayCSS = fs.readFileSync(path.resolve(__dirname, '../styles/display.css'), 'utf8');
+const flexboxCSS = fs.readFileSync(path.resolve(__dirname, '../styles/flexbox.css'), 'utf8');
+const overflowCSS = fs.readFileSync(path.resolve(__dirname, '../styles/overflow.css'), 'utf8');
+const typographyCSS = fs.readFileSync(path.resolve(__dirname, '../styles/typography.css'), 'utf8');
+const visibilityCSS = fs.readFileSync(path.resolve(__dirname, '../styles/visibility.css'), 'utf8');
+const widthCSS = fs.readFileSync(path.resolve(__dirname, '../styles/width.css'), 'utf8');
+const heightCSS = fs.readFileSync(path.resolve(__dirname, '../styles/height.css'), 'utf8');
+const cursorCSS = fs.readFileSync(path.resolve(__dirname, '../styles/cursor.css'), 'utf8');
+
+async function prefix(mediaQueries, css) {
+  const result = await runPostCSS(prefixer(mediaQueries), css);
+  return result;
+}
+
+async function compose(comps, css) {
+  const result = await runPostCSS(composer(comps), css);
+  return result;
+}
 
 const createRGBVariables = (coloroptions) => {
   return entries(coloroptions).map(([colorName, hexValue]) => {
@@ -46,22 +43,22 @@ const createRGBVariables = (coloroptions) => {
   });
 };
 
-const appendCSSWithMQ = async (
-  cssArr: string[],
-  mediaQueries: Record<string, string>,
-  cssRoot: postcss.Root
-): Promise<void> => {
-  const cssArrWithMQs = await Promise.all(
-    cssArr.map(async (css) => {
-      const cssMQ = await prefix(mediaQueries, css);
-      return '' + cssMQ;
-    })
-  );
-
-  cssArrWithMQs.forEach((a) => cssRoot.append(a));
+const appendCSSWithMQ = async (cssArr, mediaQueries, cssRoot) => {
+  try {
+    const cssArrWithMQs = await Promise.all(
+      cssArr.map(async (css) => {
+        const cssMQ = await prefix(mediaQueries, css);
+        return '' + cssMQ;
+      })
+    );
+  
+    cssArrWithMQs.forEach((a) => cssRoot.append(a));
+  } catch (e) {
+    console.error(e);
+  }
 };
 
-const getMediaQueriesStringRec = (mqs: MediaQueriesConfig = {}) => {
+const getMediaQueriesStringRec = (mqs = {}) => {
   let rec = {};
 
   for (const [k, v] of Object.entries(mqs)) {
@@ -71,8 +68,8 @@ const getMediaQueriesStringRec = (mqs: MediaQueriesConfig = {}) => {
   return rec;
 };
 
-const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
-  let rec: Record<string, MediaQueryConfig> = {};
+const getMediaQueryConfigs = (mqs) => {
+  let rec = {};
 
   for (const [k, v] of Object.entries(mqs)) {
     if (!isString(v)) {
@@ -83,10 +80,10 @@ const getMediaQueryConfigs = (mqs: MediaQueriesConfig) => {
   return rec;
 };
 
-const horizon = postcss.plugin(
-  'horizon',
-  (options: HorizonConfig = defaultConfig) => {
-    return async (cssRoot) => {
+const horizon = (options = defaultConfig) => {
+  return {
+    postcssPlugin: 'horizon',
+    async Once(cssRoot) {
       const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries);
 
       // Add Sanitize CSS
@@ -134,7 +131,7 @@ const horizon = postcss.plugin(
 
       // add color classes...
       const bgdCSS = entries(options.colors).map(
-        ([colorName, hexValue]): string => {
+        ([colorName, hexValue]) => {
           return `
         /* ${colorName} */
 
@@ -214,6 +211,20 @@ const horizon = postcss.plugin(
       );
 
       await appendCSSWithMQ(bgdCSS, mqStringsRec, cssRoot);
+
+      // Themes
+      // NOTE: This needs to be built out a lot more.
+      entries(options.themes).forEach(([themeName, props]) => {
+        cssRoot.append(
+          `
+          .${themeName} {
+            ${entries(props).map(([key, val]) => {
+              return `--${key}: ${val}`
+            })}
+          }
+          `
+        )
+      });
 
       // Body
       cssRoot.append(`
@@ -423,8 +434,8 @@ const horizon = postcss.plugin(
 
       const allCSSWithMQ = await Promise.all(
         allCSS.map(
-          async (css): Promise<string> => {
-            const cssWithMQ = (await prefix(mqStringsRec, css)) as string;
+          async (css) => {
+            const cssWithMQ = (await prefix(mqStringsRec, css));
             return cssWithMQ;
           }
         )
@@ -436,8 +447,9 @@ const horizon = postcss.plugin(
       if (options.compose) {
         await compose(options.compose, cssRoot);
       }
-    };
+    }
   }
-);
+}
 
-export default horizon;
+module.exports = horizon;
+module.exports.postcss = true;
