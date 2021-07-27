@@ -2,11 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const entries = require('lodash/entries');
 const isString = require('lodash/isString');
+const postcssLib = require('postcss');
 
 const { runPostCSS } = require('../utils/postcss');
 const colorString = require('color-string');
 const prefixer = require('./prefixer');
 const composer = require('./composer');
+const postcssColorMod = require('postcss-color-mod-function');
 
 const variableFormatter = require('../utils/variableFormatter');
 const defaultConfig = require('../defaultConfig');
@@ -32,6 +34,16 @@ async function prefix(mediaQueries, css) {
 
 async function compose(comps, css) {
   const result = await runPostCSS(composer(comps), css);
+  return result;
+}
+
+async function colorMod(css) {
+  const result = await runPostCSS(postcssColorMod({ transformVars: true }), css);
+  // const result = postcssColorMod.process(css /*, processOptions, pluginOptions */);
+  // const result = postcssLib([
+  //   postcssColorMod({ transformVars: true })
+  // ]).process(css /*, processOptions */);
+
   return result;
 }
 
@@ -129,11 +141,23 @@ const horizon = (options = defaultConfig) => {
 
       cssRoot.append(rootContent);
 
-      // add color classes...
-      const bgdCSS = entries(options.colors).map(
+      // Regular colors
+      const colorCSS = entries(options.colors).map(([colorName, hexValue]) => {
+        return `
+        .${colorName} { color: var(--${colorName}); }
+        .bgd-${colorName}             { background-color: var(--${colorName}); }
+        .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
+        `
+      });
+
+      cssRoot.append(colorCSS.join(''));
+
+      // add "auto spectrum" color classes. The colors have gradient (tint/color)
+      // classes programatically determined.
+      const bgdCSS = entries(options.autoSpectrumColors).map(
         ([colorName, hexValue]) => {
           return `
-        /* ${colorName} */
+        /* ${colorName} spectrum color */
 
         .${colorName} { color: var(--${colorName}); }
 
@@ -148,24 +172,24 @@ const horizon = (options = defaultConfig) => {
         /* ${colorName} backgrounds */
 
         .bgd-${colorName}             { background-color: var(--${colorName}); }
-        .bgd-${colorName}-tint-10     { background-color: color(var(--${colorName}) tint(10%)); }
-        .bgd-${colorName}-tint-20     { background-color: color(var(--${colorName}) tint(20%)); }
-        .bgd-${colorName}-tint-30     { background-color: color(var(--${colorName}) tint(30%)); }
-        .bgd-${colorName}-tint-40     { background-color: color(var(--${colorName}) tint(40%)); }
-        .bgd-${colorName}-tint-50     { background-color: color(var(--${colorName}) tint(50%)); }
-        .bgd-${colorName}-tint-60     { background-color: color(var(--${colorName}) tint(60%)); }
-        .bgd-${colorName}-tint-70     { background-color: color(var(--${colorName}) tint(70%)); }
-        .bgd-${colorName}-tint-80     { background-color: color(var(--${colorName}) tint(80%)); }
-        .bgd-${colorName}-tint-90     { background-color: color(var(--${colorName}) tint(90%)); }
-        .bgd-${colorName}-shade-10    { background-color: color(var(--${colorName}) shade(10%)); }
-        .bgd-${colorName}-shade-20    { background-color: color(var(--${colorName}) shade(20%)); }
-        .bgd-${colorName}-shade-30    { background-color: color(var(--${colorName}) shade(30%)); }
-        .bgd-${colorName}-shade-40    { background-color: color(var(--${colorName}) shade(40%)); }
-        .bgd-${colorName}-shade-50    { background-color: color(var(--${colorName}) shade(50%)); }
-        .bgd-${colorName}-shade-60    { background-color: color(var(--${colorName}) shade(60%)); }
-        .bgd-${colorName}-shade-70    { background-color: color(var(--${colorName}) shade(70%)); }
-        .bgd-${colorName}-shade-80    { background-color: color(var(--${colorName}) shade(80%)); }
-        .bgd-${colorName}-shade-90    { background-color: color(var(--${colorName}) shade(90%)); }
+        .bgd-${colorName}-tint-10     { background-color: color-mod(${hexValue} tint(10%)); }
+        .bgd-${colorName}-tint-20     { background-color: color-mod(${hexValue} tint(20%)); }
+        .bgd-${colorName}-tint-30     { background-color: color-mod(${hexValue} tint(30%)); }
+        .bgd-${colorName}-tint-40     { background-color: color-mod(${hexValue} tint(40%)); }
+        .bgd-${colorName}-tint-50     { background-color: color-mod(${hexValue} tint(50%)); }
+        .bgd-${colorName}-tint-60     { background-color: color-mod(${hexValue} tint(60%)); }
+        .bgd-${colorName}-tint-70     { background-color: color-mod(${hexValue} tint(70%)); }
+        .bgd-${colorName}-tint-80     { background-color: color-mod(${hexValue} tint(80%)); }
+        .bgd-${colorName}-tint-90     { background-color: color-mod(${hexValue} tint(90%)); }
+        .bgd-${colorName}-shade-10    { background-color: color-mod(${hexValue} shade(10%)); }
+        .bgd-${colorName}-shade-20    { background-color: color-mod(${hexValue} shade(20%)); }
+        .bgd-${colorName}-shade-30    { background-color: color-mod(${hexValue} shade(30%)); }
+        .bgd-${colorName}-shade-40    { background-color: color-mod(${hexValue} shade(40%)); }
+        .bgd-${colorName}-shade-50    { background-color: color-mod(${hexValue} shade(50%)); }
+        .bgd-${colorName}-shade-60    { background-color: color-mod(${hexValue} shade(60%)); }
+        .bgd-${colorName}-shade-70    { background-color: color-mod(${hexValue} shade(70%)); }
+        .bgd-${colorName}-shade-80    { background-color: color-mod(${hexValue} shade(80%)); }
+        .bgd-${colorName}-shade-90    { background-color: color-mod(${hexValue} shade(90%)); }
         .bgd-${colorName}-opacity-10  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
         .bgd-${colorName}-opacity-20  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
         .bgd-${colorName}-opacity-30  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
@@ -179,24 +203,24 @@ const horizon = (options = defaultConfig) => {
         /* ${colorName} hover backgrounds */
 
         .bgd-${colorName}-h:hover             { background-color: var(--${colorName}); }
-        .bgd-${colorName}-tint-10-h:hover     { background-color: color(var(--${colorName}) tint(10%)); }
-        .bgd-${colorName}-tint-20-h:hover     { background-color: color(var(--${colorName}) tint(20%)); }
-        .bgd-${colorName}-tint-30-h:hover     { background-color: color(var(--${colorName}) tint(30%)); }
-        .bgd-${colorName}-tint-40-h:hover     { background-color: color(var(--${colorName}) tint(40%)); }
-        .bgd-${colorName}-tint-50-h:hover     { background-color: color(var(--${colorName}) tint(50%)); }
-        .bgd-${colorName}-tint-60-h:hover     { background-color: color(var(--${colorName}) tint(60%)); }
-        .bgd-${colorName}-tint-70-h:hover     { background-color: color(var(--${colorName}) tint(70%)); }
-        .bgd-${colorName}-tint-80-h:hover     { background-color: color(var(--${colorName}) tint(80%)); }
-        .bgd-${colorName}-tint-90-h:hover     { background-color: color(var(--${colorName}) tint(90%)); }
-        .bgd-${colorName}-shade-10-h:hover    { background-color: color(var(--${colorName}) shade(10%)); }
-        .bgd-${colorName}-shade-20-h:hover    { background-color: color(var(--${colorName}) shade(20%)); }
-        .bgd-${colorName}-shade-30-h:hover    { background-color: color(var(--${colorName}) shade(30%)); }
-        .bgd-${colorName}-shade-40-h:hover    { background-color: color(var(--${colorName}) shade(40%)); }
-        .bgd-${colorName}-shade-50-h:hover    { background-color: color(var(--${colorName}) shade(50%)); }
-        .bgd-${colorName}-shade-60-h:hover    { background-color: color(var(--${colorName}) shade(60%)); }
-        .bgd-${colorName}-shade-70-h:hover    { background-color: color(var(--${colorName}) shade(70%)); }
-        .bgd-${colorName}-shade-80-h:hover    { background-color: color(var(--${colorName}) shade(80%)); }
-        .bgd-${colorName}-shade-90-h:hover    { background-color: color(var(--${colorName}) shade(90%)); }
+        .bgd-${colorName}-tint-10-h:hover     { background-color: color-mod(${hexValue} tint(10%)); }
+        .bgd-${colorName}-tint-20-h:hover     { background-color: color-mod(${hexValue} tint(20%)); }
+        .bgd-${colorName}-tint-30-h:hover     { background-color: color-mod(${hexValue} tint(30%)); }
+        .bgd-${colorName}-tint-40-h:hover     { background-color: color-mod(${hexValue} tint(40%)); }
+        .bgd-${colorName}-tint-50-h:hover     { background-color: color-mod(${hexValue} tint(50%)); }
+        .bgd-${colorName}-tint-60-h:hover     { background-color: color-mod(${hexValue} tint(60%)); }
+        .bgd-${colorName}-tint-70-h:hover     { background-color: color-mod(${hexValue} tint(70%)); }
+        .bgd-${colorName}-tint-80-h:hover     { background-color: color-mod(${hexValue} tint(80%)); }
+        .bgd-${colorName}-tint-90-h:hover     { background-color: color-mod(${hexValue} tint(90%)); }
+        .bgd-${colorName}-shade-10-h:hover    { background-color: color-mod(${hexValue} shade(10%)); }
+        .bgd-${colorName}-shade-20-h:hover    { background-color: color-mod(${hexValue} shade(20%)); }
+        .bgd-${colorName}-shade-30-h:hover    { background-color: color-mod(${hexValue} shade(30%)); }
+        .bgd-${colorName}-shade-40-h:hover    { background-color: color-mod(${hexValue} shade(40%)); }
+        .bgd-${colorName}-shade-50-h:hover    { background-color: color-mod(${hexValue} shade(50%)); }
+        .bgd-${colorName}-shade-60-h:hover    { background-color: color-mod(${hexValue} shade(60%)); }
+        .bgd-${colorName}-shade-70-h:hover    { background-color: color-mod(${hexValue} shade(70%)); }
+        .bgd-${colorName}-shade-80-h:hover    { background-color: color-mod(${hexValue} shade(80%)); }
+        .bgd-${colorName}-shade-90-h:hover    { background-color: color-mod(${hexValue} shade(90%)); }
         .bgd-${colorName}-opacity-10-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
         .bgd-${colorName}-opacity-20-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
         .bgd-${colorName}-opacity-30-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
@@ -215,9 +239,23 @@ const horizon = (options = defaultConfig) => {
       // Themes
       // NOTE: This needs to be built out a lot more.
       entries(options.themes).forEach(([themeName, props]) => {
+        if (['light', 'dark'].includes(themeName)) {
+            cssRoot.append(
+              `
+              @media (prefers-color-scheme: ${themeName}) {
+                :root {
+                  ${entries(props).map(([key, val]) => {
+                    return `--${key}: ${val}`
+                  })}
+                }
+              }
+              `
+            )
+        }
+
         cssRoot.append(
           `
-          .${themeName} {
+          [data-theme="${themeName}"] {
             ${entries(props).map(([key, val]) => {
               return `--${key}: ${val}`
             })}
@@ -441,8 +479,13 @@ const horizon = (options = defaultConfig) => {
         )
       );
 
-      const allCSSString = allCSSWithMQ.join('\n');
+      const allCSSWithColorMod = await colorMod(cssRoot);
+      // console.log(allCSSWithColorMod.toString());
+      const allCSSString = allCSSWithColorMod.toString();
+      // const allCSSString = allCSSWithMQ.join('\n');
+      // console.log(allCSSString);
       cssRoot.append(allCSSString);
+      // cssRoot.append(allCSSWithColorMod);
 
       if (options.compose) {
         await compose(options.compose, cssRoot);
