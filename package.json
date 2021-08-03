@@ -1,6 +1,6 @@
 {
   "name": "@brochington/horizon",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "CSS generator and CLI",
   "main": "dist/horizon.js",
   "scripts": {
@@ -57,6 +57,7 @@
     "mini-css-extract-plugin": "^1.6.2",
     "ora": "^5.4.1",
     "postcss": "^8.3.6",
+    "postcss-color-function": "^4.1.0",
     "postcss-color-mod-function": "^3.0.3",
     "postcss-hexrgba": "^2.0.1",
     "postcss-import": "^14.0.2",

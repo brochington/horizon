@@ -112,6 +112,7 @@ const horizon = (options = defaultConfig) => {
       :root {
       ${variableFormatter(options.variables).join('\n')}
       ${variableFormatter(options.colors).join('\n')}
+      ${variableFormatter(options.autoSpectrumColors).join('\n')}
       ${createRGBVariables(options.colors).join('\n')}
       ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join('\n')}
       ${entries(options.margins)
@@ -234,7 +235,17 @@ const horizon = (options = defaultConfig) => {
         }
       );
 
-      await appendCSSWithMQ(bgdCSS, mqStringsRec, cssRoot);
+      const colorModdedBgdCSS = await Promise.all(
+        bgdCSS.map(
+          async (css) => {
+            const newCSS = (await colorMod(css));
+            return newCSS;
+          }
+        )
+      );
+
+      await appendCSSWithMQ(colorModdedBgdCSS, mqStringsRec, cssRoot);
+      // await appendCSSWithMQ(bgdCSS, mqStringsRec, cssRoot);
 
       // Themes
       // NOTE: This needs to be built out a lot more.
@@ -479,13 +490,8 @@ const horizon = (options = defaultConfig) => {
         )
       );
 
-      const allCSSWithColorMod = await colorMod(cssRoot);
-      // console.log(allCSSWithColorMod.toString());
-      const allCSSString = allCSSWithColorMod.toString();
-      // const allCSSString = allCSSWithMQ.join('\n');
-      // console.log(allCSSString);
+      const allCSSString = allCSSWithMQ.join('\n');
       cssRoot.append(allCSSString);
-      // cssRoot.append(allCSSWithColorMod);
 
       if (options.compose) {
         await compose(options.compose, cssRoot);
