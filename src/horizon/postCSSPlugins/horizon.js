@@ -390,31 +390,43 @@ const horizon = (options = defaultConfig) => {
           border-top-style: ${b.style};
           border-top-width: ${b.width};
           border-top-color: ${b.color};
-          border-top-left-radius: ${b.radius};
-          border-top-right-radius: ${b.radius};
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
         }
 
-        .bt-${b.key}-no-radius {
+        .bt-${b.key}-w-radius {
           border-top-style: ${b.style};
           border-top-width: ${b.width};
           border-top-color: ${b.color};
+          border-top-left-radius: ${b.radius};
+          border-top-right-radius: ${b.radius};
         }
 
         .br-${b.key} {
           border-right-style: ${b.style};
           border-right-width: ${b.width};
           border-right-color: ${b.color};
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
+        
+        .br-${b.key}-w-radius {
+          border-right-style: ${b.style};
+          border-right-width: ${b.width};
+          border-right-color: ${b.color};
           border-top-right-radius: ${b.radius};
           border-bottom-right-radius: ${b.radius};
         }
 
-        .br-${b.key}-no-radius {
-          border-right-style: ${b.style};
-          border-right-width: ${b.width};
-          border-right-color: ${b.color};
+        .bb-${b.key} {
+          border-bottom-style: ${b.style};
+          border-bottom-width: ${b.width};
+          border-bottom-color: ${b.color};
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
         }
 
-        .bb-${b.key} {
+        .bb-${b.key}-w-radius {
           border-bottom-style: ${b.style};
           border-bottom-width: ${b.width};
           border-bottom-color: ${b.color};
@@ -422,13 +434,15 @@ const horizon = (options = defaultConfig) => {
           border-bottom-right-radius: ${b.radius};
         }
 
-        .bb-${b.key}-no-radius {
-          border-bottom-style: ${b.style};
-          border-bottom-width: ${b.width};
-          border-bottom-color: ${b.color};
+        .bl-${b.key} {
+          border-left-style: ${b.style};
+          border-left-width: ${b.width};
+          border-left-color: ${b.color};
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
         }
 
-        .bl-${b.key} {
+        .bl-${b.key}-w-radius {
           border-left-style: ${b.style};
           border-left-width: ${b.width};
           border-left-color: ${b.color};
@@ -436,10 +450,30 @@ const horizon = (options = defaultConfig) => {
           border-bottom-left-radius: ${b.radius};
         }
 
-        .bl-${b.key}-no-radius {
+        .bx-${b.key} {
           border-left-style: ${b.style};
           border-left-width: ${b.width};
           border-left-color: ${b.color};
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+          border-right-style: ${b.style};
+          border-right-width: ${b.width};
+          border-right-color: ${b.color};
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
+
+        .by-${b.key} {
+          border-top-style: ${b.style};
+          border-top-width: ${b.width};
+          border-top-color: ${b.color};
+          border-top-left-radius: 0px;
+          border-top-right-radius: 0px;
+          border-bottom-style: ${b.style};
+          border-bottom-width: ${b.width};
+          border-bottom-color: ${b.color};
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
         }
         `;
       });
