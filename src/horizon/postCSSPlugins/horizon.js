@@ -12,20 +12,57 @@ const postcssColorMod = require('postcss-color-mod-function');
 
 const variableFormatter = require('../utils/variableFormatter');
 const defaultConfig = require('../defaultConfig');
+const { isArray } = require('lodash');
+const { props } = require('lodash/fp');
 
-
-const sanitizeCSS = fs.readFileSync(path.resolve(process.cwd(), 'node_modules/sanitize.css/sanitize.css'), 'utf8');
-const basicsCSS = fs.readFileSync(path.resolve(__dirname, '../styles/basics.css'), 'utf8');
-const borderCSS = fs.readFileSync(path.resolve(__dirname, '../styles/border.css'), 'utf8');
-const backgroundCSS = fs.readFileSync(path.resolve(__dirname, '../styles/background.css'), 'utf8');
-const displayCSS = fs.readFileSync(path.resolve(__dirname, '../styles/display.css'), 'utf8');
-const flexboxCSS = fs.readFileSync(path.resolve(__dirname, '../styles/flexbox.css'), 'utf8');
-const overflowCSS = fs.readFileSync(path.resolve(__dirname, '../styles/overflow.css'), 'utf8');
-const typographyCSS = fs.readFileSync(path.resolve(__dirname, '../styles/typography.css'), 'utf8');
-const visibilityCSS = fs.readFileSync(path.resolve(__dirname, '../styles/visibility.css'), 'utf8');
-const widthCSS = fs.readFileSync(path.resolve(__dirname, '../styles/width.css'), 'utf8');
-const heightCSS = fs.readFileSync(path.resolve(__dirname, '../styles/height.css'), 'utf8');
-const cursorCSS = fs.readFileSync(path.resolve(__dirname, '../styles/cursor.css'), 'utf8');
+const sanitizeCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/sanitize.css'),
+  'utf8'
+);
+const basicsCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/basics.css'),
+  'utf8'
+);
+const borderCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/border.css'),
+  'utf8'
+);
+const backgroundCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/background.css'),
+  'utf8'
+);
+const displayCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/display.css'),
+  'utf8'
+);
+const flexboxCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/flexbox.css'),
+  'utf8'
+);
+const overflowCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/overflow.css'),
+  'utf8'
+);
+const typographyCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/typography.css'),
+  'utf8'
+);
+const visibilityCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/visibility.css'),
+  'utf8'
+);
+const widthCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/width.css'),
+  'utf8'
+);
+const heightCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/height.css'),
+  'utf8'
+);
+const cursorCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/cursor.css'),
+  'utf8'
+);
 
 async function prefix(mediaQueries, css) {
   const result = await runPostCSS(prefixer(mediaQueries), css);
@@ -38,7 +75,10 @@ async function compose(comps, css) {
 }
 
 async function colorMod(css) {
-  const result = await runPostCSS(postcssColorMod({ transformVars: true }), css);
+  const result = await runPostCSS(
+    postcssColorMod({ transformVars: true }),
+    css
+  );
   // const result = postcssColorMod.process(css /*, processOptions, pluginOptions */);
   // const result = postcssLib([
   //   postcssColorMod({ transformVars: true })
@@ -63,7 +103,7 @@ const appendCSSWithMQ = async (cssArr, mediaQueries, cssRoot) => {
         return '' + cssMQ;
       })
     );
-  
+
     cssArrWithMQs.forEach((a) => cssRoot.append(a));
   } catch (e) {
     console.error(e);
@@ -148,7 +188,7 @@ const horizon = (options = defaultConfig) => {
         .${colorName} { color: var(--${colorName}); }
         .bgd-${colorName}             { background-color: var(--${colorName}); }
         .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
-        `
+        `;
       });
 
       cssRoot.append(colorCSS.join(''));
@@ -236,12 +276,10 @@ const horizon = (options = defaultConfig) => {
       );
 
       const colorModdedBgdCSS = await Promise.all(
-        bgdCSS.map(
-          async (css) => {
-            const newCSS = (await colorMod(css));
-            return newCSS;
-          }
-        )
+        bgdCSS.map(async (css) => {
+          const newCSS = await colorMod(css);
+          return newCSS;
+        })
       );
 
       await appendCSSWithMQ(colorModdedBgdCSS, mqStringsRec, cssRoot);
@@ -251,28 +289,28 @@ const horizon = (options = defaultConfig) => {
       // NOTE: This needs to be built out a lot more.
       entries(options.themes).forEach(([themeName, props]) => {
         if (['light', 'dark'].includes(themeName)) {
-            cssRoot.append(
-              `
+          cssRoot.append(
+            `
               @media (prefers-color-scheme: ${themeName}) {
                 :root {
                   ${entries(props).map(([key, val]) => {
-                    return `--${key}: ${val}`
+                    return `--${key}: ${val}`;
                   })}
                 }
               }
               `
-            )
+          );
         }
 
         cssRoot.append(
           `
           [data-theme="${themeName}"] {
             ${entries(props).map(([key, val]) => {
-              return `--${key}: ${val}`
+              return `--${key}: ${val}`;
             })}
           }
           `
-        )
+        );
       });
 
       // Body
@@ -288,13 +326,22 @@ const horizon = (options = defaultConfig) => {
 
       // headings
       options.headings.forEach((h) => {
+        const { key, color, size, style, weight, ...rest } = h;
+
+        const cssProps = Object.entries(rest)
+          .map(([property, value]) => {
+            return `${property}: ${value};`;
+          })
+          .join('\n');
+
         cssRoot.append(
           `
-        .${h.key} {
-          color: ${h.color};
-          font-size: ${h.size};
-          font-family: ${h.style};
-          font-weight: ${h.weight};
+        .${key} {
+          color: ${color};
+          font-size: ${size};
+          font-family: ${style};
+          font-weight: ${weight};
+          ${cssProps}
         }
 
         .${h.key}.smaller {
@@ -307,6 +354,27 @@ const horizon = (options = defaultConfig) => {
         `
         );
       });
+
+      // CSS Classes
+      if (options.classes && isArray(options.classes)) {
+        options.classes.forEach((props) => {
+          const { key, ...rest } = props;
+
+          const cssProps = Object.entries(rest)
+            .map(([property, value]) => {
+              return `${property}: ${value};`;
+            })
+            .join('\n');
+  
+          cssRoot.append(
+            `
+          .${key} {
+            ${cssProps}
+          }
+          `
+          );
+        });
+      }
 
       // Margin
       const marginCSS = entries(options.margins).map(([key, value]) => {
@@ -369,6 +437,15 @@ const horizon = (options = defaultConfig) => {
       });
 
       await appendCSSWithMQ(customHeightCSS, mqStringsRec, cssRoot);
+
+      // Gaps
+      const customGapCSS = entries(options.gaps).map(([key, value]) => {
+        return `
+        .gap${key} { gap: ${value}; }
+        `;
+      });
+
+      await appendCSSWithMQ(customGapCSS, mqStringsRec, cssRoot);
 
       // Borders
       const customborderCSS = options.borders.map((b) => {
@@ -516,12 +593,10 @@ const horizon = (options = defaultConfig) => {
       ];
 
       const allCSSWithMQ = await Promise.all(
-        allCSS.map(
-          async (css) => {
-            const cssWithMQ = (await prefix(mqStringsRec, css));
-            return cssWithMQ;
-          }
-        )
+        allCSS.map(async (css) => {
+          const cssWithMQ = await prefix(mqStringsRec, css);
+          return cssWithMQ;
+        })
       );
 
       const allCSSString = allCSSWithMQ.join('\n');
@@ -530,9 +605,9 @@ const horizon = (options = defaultConfig) => {
       if (options.compose) {
         await compose(options.compose, cssRoot);
       }
-    }
-  }
-}
+    },
+  };
+};
 
 module.exports = horizon;
 module.exports.postcss = true;
