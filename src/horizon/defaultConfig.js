@@ -224,10 +224,12 @@ const defaultConfig = {
   themes: {
     // Not implemented yet.
     light: {
-      primary: 'var(--gray-0)',
+      primary: '#fff',
+      primary2: '#bbb',
     },
     dark: {
-      primary: 'var(--gray-11)',
+      primary: '#000',
+      primary2: '#333',
     },
   },
   fonts: [

@@ -293,9 +293,7 @@ const horizon = (options = defaultConfig) => {
             `
               @media (prefers-color-scheme: ${themeName}) {
                 :root {
-                  ${entries(props).map(([key, val]) => {
-                    return `--${key}: ${val}`;
-                  })}
+                  ${variableFormatter(props).join('\n')}
                 }
               }
               `
@@ -305,9 +303,7 @@ const horizon = (options = defaultConfig) => {
         cssRoot.append(
           `
           [data-theme="${themeName}"] {
-            ${entries(props).map(([key, val]) => {
-              return `--${key}: ${val}`;
-            })}
+            ${variableFormatter(props).join('\n')}
           }
           `
         );
