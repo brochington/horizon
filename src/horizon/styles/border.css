@@ -45,7 +45,71 @@
 .bl-outset { border-left-style: outset; }
 .bl-ridge  { border-left-style: ridge; }
 
-.b-width-0 { border-width: 0; }
+.b-width-0  { border-width: 0; }
+.bt-width-0 { border-top-width: 0; }
+.br-width-0 { border-right-width: 0; }
+.bb-width-0 { border-bottom-width: 0; }
+.bl-width-0 { border-left-width: 0; }
+
+.b-width-1  { border-width: 1px; }
+.bt-width-1 { border-top-width: 1px; }
+.br-width-1 { border-right-width: 1px; }
+.bb-width-1 { border-bottom-width: 1px; }
+.bl-width-1 { border-left-width: 1px; }
+
+.b-width-2  { border-width: 2px; }
+.bt-width-2 { border-top-width: 2px; }
+.br-width-2 { border-right-width: 2px; }
+.bb-width-2 { border-bottom-width: 2px; }
+.bl-width-2 { border-left-width: 2px; }
+
+.b-width-3  { border-width: 3px; }
+.bt-width-3 { border-top-width: 3px; }
+.br-width-3 { border-right-width: 3px; }
+.bb-width-3 { border-bottom-width: 3px; }
+.bl-width-3 { border-left-width: 3px; }
+
+.b-width-4  { border-width: 4px; }
+.bt-width-4 { border-top-width: 4px; }
+.br-width-4 { border-right-width: 4px; }
+.bb-width-4 { border-bottom-width: 4px; }
+.bl-width-4 { border-left-width: 4px; }
+
+.b-width-5  { border-width: 5px; }
+.bt-width-5 { border-top-width: 5px; }
+.br-width-5 { border-right-width: 5px; }
+.bb-width-5 { border-bottom-width: 5px; }
+.bl-width-5 { border-left-width: 5px; }
+
+.b-width-6  { border-width: 6px; }
+.bt-width-6 { border-top-width: 6px; }
+.br-width-6 { border-right-width: 6px; }
+.bb-width-6 { border-bottom-width: 6px; }
+.bl-width-6 { border-left-width: 6px; }
+
+.b-width-7  { border-width: 7px; }
+.bt-width-7 { border-top-width: 7px; }
+.br-width-7 { border-right-width: 7px; }
+.bb-width-7 { border-bottom-width: 7px; }
+.bl-width-7 { border-left-width: 7px; }
+
+.b-width-8  { border-width: 8px; }
+.bt-width-8 { border-top-width: 8px; }
+.br-width-8 { border-right-width: 8px; }
+.bb-width-8 { border-bottom-width: 8px; }
+.bl-width-8 { border-left-width: 8px; }
+
+.b-width-9  { border-width: 9px; }
+.bt-width-9 { border-top-width: 9px; }
+.br-width-9 { border-right-width: 9px; }
+.bb-width-9 { border-bottom-width: 9px; }
+.bl-width-9 { border-left-width: 9px; }
+
+.b-width-10  { border-width: 10px; }
+.bt-width-10 { border-top-width: 10px; }
+.br-width-10 { border-right-width: 10px; }
+.bb-width-10 { border-bottom-width: 10px; }
+.bl-width-10 { border-left-width: 10px; }
 
 /* Border Color */
 /* 
@@ -131,3 +195,4 @@ by colors set in the config.
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+
