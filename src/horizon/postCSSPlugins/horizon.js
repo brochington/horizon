@@ -64,6 +64,11 @@ const cursorCSS = fs.readFileSync(
   'utf8'
 );
 
+const miscCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/misc.css'),
+  'utf8'
+);
+
 async function prefix(mediaQueries, css) {
   const result = await runPostCSS(prefixer(mediaQueries), css);
   return result;
@@ -185,7 +190,8 @@ const horizon = (options = defaultConfig) => {
       // Regular colors
       const colorCSS = entries(options.colors).map(([colorName, hexValue]) => {
         return `
-        .${colorName} { color: var(--${colorName}); }
+        .${colorName}                 { color: var(--${colorName}); }
+        .${colorName}-h:hover         { color: var(--${colorName}); }
         .bgd-${colorName}             { background-color: var(--${colorName}); }
         .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
         `;
@@ -586,6 +592,7 @@ const horizon = (options = defaultConfig) => {
         heightCSS,
         cursorCSS,
         visibilityCSS,
+        miscCSS
       ];
 
       const allCSSWithMQ = await Promise.all(

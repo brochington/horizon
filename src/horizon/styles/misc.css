@@ -106,3 +106,43 @@
 .z-800  { z-index: 800; }
 .z-900  { z-index: 900; }
 .z-1000 { z-index: 1000; }
+
+/* Transforms */
+.rotate-45  { transform: rotate(45deg);}
+.rotate-90  { transform: rotate(90deg);}
+.rotate-135 { transform: rotate(135deg);}
+.rotate-180 { transform: rotate(180deg);}
+.rotate-225 { transform: rotate(225deg);}
+.rotate-270 { transform: rotate(270deg);}
+.rotate-315 { transform: rotate(315deg);}
+
+.scale-10  { transform: scale(10%);}
+.scale-20  { transform: scale(20%);}
+.scale-30  { transform: scale(30%);}
+.scale-40  { transform: scale(40%);}
+.scale-50  { transform: scale(50%);}
+.scale-60  { transform: scale(60%);}
+.scale-70  { transform: scale(70%);}
+.scale-80  { transform: scale(80%);}
+.scale-90  { transform: scale(90%);}
+.scale-100 { transform: scale(100%);}
+.scale-110 { transform: scale(110%);}
+.scale-120 { transform: scale(120%);}
+.scale-130 { transform: scale(130%);}
+.scale-140 { transform: scale(140%);}
+.scale-150 { transform: scale(150%);}
+.scale-160 { transform: scale(160%);}
+.scale-170 { transform: scale(170%);}
+.scale-180 { transform: scale(180%);}
+.scale-190 { transform: scale(190%);}
+.scale-200 { transform: scale(200%);}
+.scale-210 { transform: scale(210%);}
+.scale-220 { transform: scale(220%);}
+.scale-230 { transform: scale(230%);}
+.scale-240 { transform: scale(240%);}
+.scale-250 { transform: scale(250%);}
+.scale-260 { transform: scale(260%);}
+.scale-270 { transform: scale(270%);}
+.scale-280 { transform: scale(280%);}
+.scale-290 { transform: scale(290%);}
+.scale-300 { transform: scale(300%);}
