@@ -177,22 +177,22 @@ by colors set in the config.
 }
 
 .b-radius-1  {
-  border-radius: 0px;
+  border-radius: 1px;
 }
 .bt-radius-1 {
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
 }
 .br-radius-1 {
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
 }
 .bb-radius-1 {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 1px;
+  border-bottom-right-radius: 1px;
 }
 .bl-radius-1 {
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-top-left-radius: 1px;
+  border-bottom-left-radius: 1px;
 }
 
