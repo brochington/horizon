@@ -9,14 +9,6 @@ html {
   box-sizing: inherit;
 }
 
-/* Position */
-
-.pos-s      { position: static; }
-.pos-r      { position: relative; }
-.pos-a      { position: absolute; }
-.pos-f      { position: fixed; }
-.pos-sticky { position: sticky; }
-
 /* Object-Fit */
 
 .of-fill       { object-fit: fill; }

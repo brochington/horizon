@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const entries = require('lodash/entries');
 const isString = require('lodash/isString');
+const has = require('lodash/has');
+const omit = require('lodash/omit');
 const postcssLib = require('postcss');
 
 const { runPostCSS } = require('../utils/postcss');
@@ -64,6 +66,11 @@ const cursorCSS = fs.readFileSync(
   'utf8'
 );
 
+const positionCSS = fs.readFileSync(
+  path.resolve(__dirname, '../styles/position.css'),
+  'utf-8'
+);
+
 const miscCSS = fs.readFileSync(
   path.resolve(__dirname, '../styles/misc.css'),
   'utf8'
@@ -93,10 +100,13 @@ async function colorMod(css) {
 }
 
 const createRGBVariables = (coloroptions) => {
-  return entries(coloroptions).map(([colorName, hexValue]) => {
-    const [red, green, blue] = colorString.get.rgb(hexValue);
+  return entries(coloroptions)
+  .filter(([_, val]) => val.match(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})\b/ig)) // fitler out anything not a color hex.
+  .map(([colorName, hexValue]) => {
+    const [red, green, blue, alpha] = colorString.get.rgb(hexValue);
 
-    return `--${colorName}-rgb: ${red}, ${green}, ${blue};`;
+    return `--${colorName}-rgb: ${red}, ${green}, ${blue};
+--${colorName}-rgba: ${red}, ${green}, ${blue}, ${alpha};`;
   });
 };
 
@@ -294,12 +304,15 @@ const horizon = (options = defaultConfig) => {
       // Themes
       // NOTE: This needs to be built out a lot more.
       entries(options.themes).forEach(([themeName, props]) => {
+
+        // Temp disabling prefers-color-scheme because it doesn't allow setting from UI.
         if (['light', 'dark'].includes(themeName)) {
           cssRoot.append(
             `
               @media (prefers-color-scheme: ${themeName}) {
                 :root {
-                  ${variableFormatter(props).join('\n')}
+                  color-scheme: ${themeName};
+                  ${variableFormatter(omit(props, ['colorScheme'])).join('\n')}
                 }
               }
               `
@@ -309,6 +322,7 @@ const horizon = (options = defaultConfig) => {
         cssRoot.append(
           `
           [data-theme="${themeName}"] {
+            ${has(props, 'colorScheme') ? `color-scheme: ${props.colorScheme};` : ''}
             ${variableFormatter(props).join('\n')}
           }
           `
@@ -568,10 +582,6 @@ const horizon = (options = defaultConfig) => {
               `
           /* for "${key}" media query */
           @media ${mq.media} {
-            ${key}:container {
-
-            }
-
             ${mq.css}
           }
           `
@@ -582,6 +592,7 @@ const horizon = (options = defaultConfig) => {
 
       const allCSS = [
         basicsCSS,
+        positionCSS,
         typographyCSS,
         displayCSS,
         overflowCSS,
