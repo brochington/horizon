@@ -978,19 +978,7 @@ textarea {
 --surface-shadow: var(--surface-shadow-light);
 --shadow-strength: var(--shadow-strength-light);
                 }
-              }[data-theme="light"] {
-            color-scheme: light;
-            --colorScheme: light;
---brand: var(--brand-light);
---text1: var(--text1-light);
---text2: var(--text2-light);
---surface1: var(--surface1-light);
---surface2: var(--surface2-light);
---surface3: var(--surface3-light);
---surface4: var(--surface4-light);
---surface-shadow: var(--surface-shadow-light);
---shadow-strength: var(--shadow-strength-light);
-          }@media (color-index: 48) {
+              }@media (color-index: 48) {
                 :root {
                   color-scheme: dark;
                   --brand: var(--brand-dark);
@@ -1016,7 +1004,19 @@ textarea {
 --surface-shadow: var(--surface-shadow-dark);
 --shadow-strength: var(--shadow-strength-dark);
                 }
-              }[data-theme="dark"] {
+              }[data-theme="light"] {
+            color-scheme: light;
+            --colorScheme: light;
+--brand: var(--brand-light);
+--text1: var(--text1-light);
+--text2: var(--text2-light);
+--surface1: var(--surface1-light);
+--surface2: var(--surface2-light);
+--surface3: var(--surface3-light);
+--surface4: var(--surface4-light);
+--surface-shadow: var(--surface-shadow-light);
+--shadow-strength: var(--shadow-strength-light);
+          }[data-theme="dark"] {
             color-scheme: dark;
             --colorScheme: dark;
 --brand: var(--brand-dark);
@@ -2923,10 +2923,6 @@ display: grid;
           border-bottom-left-radius: 0px;
           border-bottom-right-radius: 0px;
         }/* for "faab" media query */@media screen and (max-width: 88rem) {
-            faab:container {
-
-            }
-
             
       .hello {
         height: 27px;

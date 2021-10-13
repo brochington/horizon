@@ -318,7 +318,9 @@ const horizon = (options = defaultConfig) => {
               `
           );
         }
+      });
 
+      entries(options.themes).forEach(([themeName, props]) => {
         cssRoot.append(
           `
           [data-theme="${themeName}"] {
