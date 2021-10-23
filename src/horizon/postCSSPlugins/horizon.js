@@ -335,10 +335,10 @@ const horizon = (options = defaultConfig) => {
       cssRoot.append(`
     body {
       font-size: 16px; /* Fixed to maintain grid that is rem based */
-      color: ${options.body.color ?? 'black'};
-      background-color: ${options.body.backgroundColor ?? 'white'};
-      font-family: ${options.body.fontFamily ?? 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'};
-      overflow-behavior-y: none;
+      ${options?.body?.color ? `color: ${options.body.color};` : ''}
+      ${options?.body?.backgroundColor ? `background-color: ${options.body.backgroundColor};` : ''}
+      font-family: ${options?.body?.fontFamily ?? 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'};
+      overscroll-behavior-y: none;
     }
     `);
 

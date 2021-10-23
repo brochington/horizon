@@ -1030,13 +1030,10 @@ textarea {
 --shadow-strength: var(--shadow-strength-dark);
           }body {
       font-size: 16px; /* Fixed to maintain grid that is rem based */
-      color: #000000;
-      color: var(--black);
-      background-color: #ffffff;
-      background-color: var(--white);
-      font-family: PT Sans;
-      font-family: var(--pt-sans);
-      overflow-behavior-y: none;
+      
+      
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      overscroll-behavior-y: none;
     }.main-heading {
           color: var(--teal);
           font-size: 20px;

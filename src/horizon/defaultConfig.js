@@ -310,11 +310,6 @@ const defaultConfig = {
       `,
     },
   },
-  body: {
-    color: 'var(--black)',
-    backgroundColor: 'var(--white)',
-    fontFamily: 'var(--pt-sans)',
-  },
   headings: [
     {
       key: 'main-heading',
