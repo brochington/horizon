@@ -110,17 +110,17 @@ const createColorVariables = (coloroptions) => {
         const [hue, saturation, lightness, alpha] = hsl.array();
 
         return `
-        --${colorName}-hue: ${hue};
-        --${colorName}-saturation: ${saturation}%;
-        --${colorName}-lightness: ${lightness}%;
-        ${alpha ? `--${colorName}-alpha: ${alpha};` : ''}
+        --${colorName}-h: ${hue};
+        --${colorName}-s: ${saturation}%;
+        --${colorName}-l: ${lightness}%;
+        ${alpha ? `--${colorName}-a: ${alpha};` : ''}
         ${
           alpha
-            ? `--${colorName}: hsla(var(--${colorName}-hue), var(--${colorName}-saturation), var(--${colorName}-lightness), var(--${colorName}-alpha));`
-            : `--${colorName}: hsl(var(--${colorName}-hue), var(--${colorName}-saturation), var(--${colorName}-lightness));`
+            ? `--${colorName}: hsla(var(--${colorName}-h), var(--${colorName}-s), var(--${colorName}-l), var(--${colorName}-a));`
+            : `--${colorName}: hsl(var(--${colorName}-h), var(--${colorName}-s), var(--${colorName}-l));`
         }
         
-        --${colorName}-text: calc((var(--${colorName}-lightness) - 60%) * -100);;
+        --${colorName}-tl: hsl(0, 0%, calc((var(--${colorName}-l) - var(--contrast-threshold)) * -100));
         `;
       } catch (e) {
         console.error(e);
@@ -185,6 +185,7 @@ const horizon = (options = defaultConfig) => {
       // Create css variables
       const rootContent = `
       :root {
+      --contrast-threshold: 60%;
       ${variableFormatter(options.variables).join('\n')}
       ${variableFormatter(options.autoSpectrumColors).join('\n')}
       ${createColorVariables(options.colors).join('\n')}
@@ -223,7 +224,7 @@ const horizon = (options = defaultConfig) => {
         .${colorName}-h:hover         { color: var(--${colorName}); }
         .bgd-${colorName}             { 
           background-color: var(--${colorName}); 
-          color: var(--${colorName}-text);
+          color: var(--${colorName}-tl);
         }
         .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
         `;
