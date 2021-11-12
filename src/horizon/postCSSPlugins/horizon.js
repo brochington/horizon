@@ -7,15 +7,15 @@ const omit = require('lodash/omit');
 const postcssLib = require('postcss');
 
 const { runPostCSS } = require('../utils/postcss');
-const colorString = require('color-string');
+// const colorString = require('color-string');
+const Color = require('color');
 const prefixer = require('./prefixer');
 const composer = require('./composer');
 const postcssColorMod = require('postcss-color-mod-function');
 
 const variableFormatter = require('../utils/variableFormatter');
 const defaultConfig = require('../defaultConfig');
-const { isArray } = require('lodash');
-const { props } = require('lodash/fp');
+const isArray = require('lodash/isArray');
 
 const sanitizeCSS = fs.readFileSync(
   path.resolve(__dirname, '../styles/sanitize.css'),
@@ -99,14 +99,34 @@ async function colorMod(css) {
   return result;
 }
 
-const createRGBVariables = (coloroptions) => {
-  return entries(coloroptions)
-  .filter(([_, val]) => val.match(/(?:#|0x)(?:[a-f0-9]{3}|[a-f0-9]{6}|[a-f0-9]{8})\b/ig)) // fitler out anything not a color hex.
-  .map(([colorName, hexValue]) => {
-    const [red, green, blue, alpha] = colorString.get.rgb(hexValue);
+const createColorVariables = (coloroptions) => {
+  return entries(coloroptions).map(([colorName, colorVal]) => {
+    if (colorVal.includes('var')) {
+      return `--${colorName}: ${colorVal};`;
+    } else {
+      try {
+        const color = Color(colorVal);
+        const hsl = color.hsl();
+        const [hue, saturation, lightness, alpha] = hsl.array();
 
-    return `--${colorName}-rgb: ${red}, ${green}, ${blue};
---${colorName}-rgba: ${red}, ${green}, ${blue}, ${alpha};`;
+        return `
+        --${colorName}-hue: ${hue};
+        --${colorName}-saturation: ${saturation}%;
+        --${colorName}-lightness: ${lightness}%;
+        ${alpha ? `--${colorName}-alpha: ${alpha};` : ''}
+        ${
+          alpha
+            ? `--${colorName}: hsla(var(--${colorName}-hue), var(--${colorName}-saturation), var(--${colorName}-lightness), var(--${colorName}-alpha));`
+            : `--${colorName}: hsl(var(--${colorName}-hue), var(--${colorName}-saturation), var(--${colorName}-lightness));`
+        }
+        
+        --${colorName}-text: calc((var(--${colorName}-lightness) - 60%) * -100);;
+        `;
+      } catch (e) {
+        console.error(e);
+        return `--${colorName}: ${colorVal};`;
+      }
+    }
   });
 };
 
@@ -166,9 +186,8 @@ const horizon = (options = defaultConfig) => {
       const rootContent = `
       :root {
       ${variableFormatter(options.variables).join('\n')}
-      ${variableFormatter(options.colors).join('\n')}
       ${variableFormatter(options.autoSpectrumColors).join('\n')}
-      ${createRGBVariables(options.colors).join('\n')}
+      ${createColorVariables(options.colors).join('\n')}
       ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join('\n')}
       ${entries(options.margins)
         .map(([k, v]) => `--margin-${k}: ${v};`)
@@ -202,7 +221,10 @@ const horizon = (options = defaultConfig) => {
         return `
         .${colorName}                 { color: var(--${colorName}); }
         .${colorName}-h:hover         { color: var(--${colorName}); }
-        .bgd-${colorName}             { background-color: var(--${colorName}); }
+        .bgd-${colorName}             { 
+          background-color: var(--${colorName}); 
+          color: var(--${colorName}-text);
+        }
         .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
         `;
       });
@@ -304,7 +326,6 @@ const horizon = (options = defaultConfig) => {
       // Themes
       // NOTE: This needs to be built out a lot more.
       entries(options.themes).forEach(([themeName, props]) => {
-
         // Temp disabling prefers-color-scheme because it doesn't allow setting from UI.
         if (['light', 'dark'].includes(themeName)) {
           cssRoot.append(
@@ -323,8 +344,12 @@ const horizon = (options = defaultConfig) => {
       entries(options.themes).forEach(([themeName, props]) => {
         cssRoot.append(
           `
-          [data-theme="${themeName}"] {
-            ${has(props, 'colorScheme') ? `color-scheme: ${props.colorScheme};` : ''}
+          [color-scheme="${themeName}"] {
+            ${
+              has(props, 'colorScheme')
+                ? `color-scheme: ${props.colorScheme};`
+                : ''
+            }
             ${variableFormatter(props).join('\n')}
           }
           `
@@ -336,8 +361,15 @@ const horizon = (options = defaultConfig) => {
     body {
       font-size: 16px; /* Fixed to maintain grid that is rem based */
       ${options?.body?.color ? `color: ${options.body.color};` : ''}
-      ${options?.body?.backgroundColor ? `background-color: ${options.body.backgroundColor};` : ''}
-      font-family: ${options?.body?.fontFamily ?? 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'};
+      ${
+        options?.body?.backgroundColor
+          ? `background-color: ${options.body.backgroundColor};`
+          : ''
+      }
+      font-family: ${
+        options?.body?.fontFamily ??
+        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+      };
       overscroll-behavior-y: none;
     }
     `);
@@ -383,7 +415,7 @@ const horizon = (options = defaultConfig) => {
               return `${property}: ${value};`;
             })
             .join('\n');
-  
+
           cssRoot.append(
             `
           .${key} {
@@ -605,7 +637,7 @@ const horizon = (options = defaultConfig) => {
         heightCSS,
         cursorCSS,
         visibilityCSS,
-        miscCSS
+        miscCSS,
       ];
 
       const allCSSWithMQ = await Promise.all(
