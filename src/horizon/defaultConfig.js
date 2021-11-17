@@ -371,6 +371,15 @@ const defaultConfig = {
     2: '2rem',
     3: '3rem',
   },
+  shadows: {
+    1: `0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.31), 0.8px 1.6px 2px -2.5px hsl(var(--shadow-color) / 0.31)`,
+    2: `0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.41), 0.5px 1px 1.4px -1px hsl(var(--shadow-color) / 0.48), 1.3px 2.5px 3.4px -1.9px hsl(var(--shadow-color) / 0.56);`,
+    3: `0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.29), 1.1px 2.2px 2.8px -1.2px hsl(var(--shadow-color) / 0.29), 4px 8.1px 10.2px -2.5px hsl(var(--shadow-color) / 0.29)`,
+    // 3: `0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.4), 2.1px 4.1px 5.2px -0.8px hsl(var(--shadow-color) / 0.4), 5.9px 11.9px 14.9px -1.7px hsl(var(--shadow-color) / 0.4), 15.3px 30.5px 38.4px -2.5px hsl(var(--shadow-color) / 0.4)`,
+    4: `0.3px 0.5px 0.4px hsl(var(--shadow-color) / 0.53), 0.3px 0.6px 0.5px -0.7px hsl(var(--shadow-color) / 0.47), 0.7px 1.4px 1.2px -1.4px hsl(var(--shadow-color) / 0.4), 1.8px 3.6px 3px -2.1px hsl(var(--shadow-color) / 0.33), 3.9px 7.9px 6.6px -2.9px hsl(var(--shadow-color) / 0.27), 7.4px 14.9px 12.5px -3.6px hsl(var(--shadow-color) / 0.2), 12.7px 25.4px 21.3px -4.3px hsl(var(--shadow-color) / 0.13), 20px 40px 33.5px -5px hsl(var(--shadow-color) / 0.07);`,
+    // 4: `0.3px 0.5px 0.5px hsl(var(--shadow-color) / 0.49), 0.5px 1px 0.9px -0.6px hsl(var(--shadow-color) / 0.43), 1px 2px 1.8px -1.3px hsl(var(--shadow-color) / 0.38), 2.2px 4.4px 4.1px -1.9px hsl(var(--shadow-color) / 0.32), 4.3px 8.7px 8px -2.6px hsl(var(--shadow-color) / 0.27), 7.8px 15.7px 14.5px -3.2px hsl(var(--shadow-color) / 0.22), 13px 26.1px 24.1px -3.9px hsl(var(--shadow-color) / 0.16), 20.3px 40.5px 37.4px -4.5px hsl(var(--shadow-color) / 0.11)`,
+    5: `0.3px 0.5px 0.4px hsl(var(--shadow-color) / 0.75), 0.3px 0.7px 0.6px -0.7px hsl(var(--shadow-color) / 0.65), 0.9px 1.8px 1.5px -1.4px hsl(var(--shadow-color) / 0.56), 2.4px 4.8px 4px -2.1px hsl(var(--shadow-color) / 0.47), 5.4px 10.8px 9.1px -2.9px hsl(var(--shadow-color) / 0.37), 10.3px 20.5px 17.2px -3.6px hsl(var(--shadow-color) / 0.28), 17.6px 35.1px 29.4px -4.3px hsl(var(--shadow-color) / 0.19), 27.8px 55.5px 46.6px -5px hsl(var(--shadow-color) / 0.09);`,
+  },
   compose: {
     something: 'm1 wrem-3.5 bgd-dark-teal',
     foo: 'bar hrem-3.5 lo:ws1',

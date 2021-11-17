@@ -76,6 +76,37 @@ const miscCSS = fs.readFileSync(
   'utf8'
 );
 
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+// generously gifted code from Josh W Comeau
+function normalize(x, minX, maxX, a, b) {
+  return (b - a) * ((x - minX) / (maxX - minX)) + a;
+}
+
+function clamp(num, min, max) {
+  return Math.min(Math.max(num, min), max);
+}
+
+function getShadowBackgroundHslValues(colorString, oomph) {
+  const color = Color(colorString);
+  const hsl = color.hsl();
+  let [hue, sat, lit] = hsl.array();
+
+  const maxLightness = normalize(oomph, 0, 1, 85, 50);
+
+  
+  const saturationEnhancement = normalize(lit, 50, 100, 1, 0.25);
+  
+  sat = Math.round(clamp(sat * saturationEnhancement, 0, 100));
+  lit = Math.round(
+    clamp(normalize(lit, 0, 100, 0, maxLightness) - 5, 0, 100)
+  );
+
+  return `${hue}deg ${sat}% ${lit}%`
+}
+
 async function prefix(mediaQueries, css) {
   const result = await runPostCSS(prefixer(mediaQueries), css);
   return result;
@@ -212,6 +243,10 @@ const horizon = (options = defaultConfig) => {
       ${entries(options.heights)
         .map(([k, v]) => `--height-${k}: ${v};`)
         .join('\n')}
+      --shadow-color: 0deg 0% 76%; 
+      ${entries(options.shadows)
+        .map(([k, v]) => `--shadow-${k}: ${v};`)
+        .join('\n')}
       }
       `;
 
@@ -219,10 +254,12 @@ const horizon = (options = defaultConfig) => {
 
       // Regular colors
       const colorCSS = entries(options.colors).map(([colorName, hexValue]) => {
+        let a = getShadowBackgroundHslValues(hexValue, 0.5)
         return `
         .${colorName}                 { color: var(--${colorName}); }
         .${colorName}-h:hover         { color: var(--${colorName}); }
-        .bgd-${colorName}             { 
+        .bgd-${colorName}             {
+          --shadow-color: ${a};
           background-color: var(--${colorName}); 
           color: var(--${colorName}-tl);
         }
@@ -607,6 +644,17 @@ const horizon = (options = defaultConfig) => {
       });
 
       await appendCSSWithMQ(customborderCSS, mqStringsRec, cssRoot);
+
+      // Shadows
+      // https://www.joshwcomeau.com/shadow-palette/
+
+      const shadowsCSS = entries(options.shadows).map(([key, value]) => {
+        return `
+        .shadow-${key} { box-shadow: ${value}; }
+        `;
+      });
+
+      cssRoot.append(shadowsCSS.join(''));
 
       // Add any extra css from media query config.
       // would be cool to add some container types here....

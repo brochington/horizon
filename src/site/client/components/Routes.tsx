@@ -4,19 +4,18 @@ import {
   Switch,
   Route,
   useParams,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 import ColorPage from '../pages/ColorPage';
-
+import ShadowPage from 'pages/ShadowPage';
 
 const Routes = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path="/color" component={ColorPage} />
-      </Switch>
-    </Router>
-  )
-}
+    <Switch>
+      <Route path="/color" component={ColorPage} />
+      <Route path="/shadows" component={ShadowPage} />
+    </Switch>
+  );
+};
 
 export default Routes;

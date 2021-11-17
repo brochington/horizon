@@ -1,6 +1,8 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const aliases = require('./aliases');
+
 const cwd = process.cwd();
 
 const babelLoaderConfig = {
@@ -9,13 +11,14 @@ const babelLoaderConfig = {
     plugins: [
       '@babel/plugin-syntax-dynamic-import',
       '@babel/plugin-proposal-class-properties',
+      '@babel/plugin-proposal-object-rest-spread',
       '@babel/plugin-proposal-optional-chaining',
-      // '@babel/plugin-proposal-object-rest-spread',
-      'react-hot-loader/babel'
+      '@babel/plugin-proposal-nullish-coalescing-operator',
+      'react-refresh/babel'
     ],
     presets: [
+      '@babel/preset-typescript',
       '@babel/preset-react',
-      '@babel/preset-typescript'
     ]
   }
 };
@@ -26,18 +29,17 @@ module.exports = {
     path.resolve(cwd, 'src/site/client/index.tsx')
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(process.cwd(), 'dist'),
-    publicPath: '/static/'
+    clean: true,
   },
   mode: 'development',
-  devtool: 'eval-source-map',
+  devtool: 'inline-source-map',
   resolve: {
     alias: {
       ...aliases,
-      'react-dom': '@hot-loader/react-dom'
     },
-    extensions: ['.js', '.mjs', '.ts', '.tsx'],
+    extensions: ['.js', '.mjs', '.ts', '.tsx', '.wasm'],
   },
   module: {
     rules: [{
@@ -54,6 +56,17 @@ module.exports = {
     }]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+    new ReactRefreshWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Primordial',
+      template: path.join(process.cwd(), 'config/indexTemplate.html'),
+      filename: 'index.html',
+    }),
+  ],
+  devServer: {
+    historyApiFallback: true,
+    compress: true,
+    port: 9010,
+    hot: true
+  },
 }
