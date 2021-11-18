@@ -90,21 +90,22 @@ function clamp(num, min, max) {
 }
 
 function getShadowBackgroundHslValues(colorString, oomph) {
+  if (colorString.includes('var')) {
+    return '0deg 0% 54%';
+  }
+
   const color = Color(colorString);
   const hsl = color.hsl();
   let [hue, sat, lit] = hsl.array();
 
   const maxLightness = normalize(oomph, 0, 1, 85, 50);
 
-  
   const saturationEnhancement = normalize(lit, 50, 100, 1, 0.25);
-  
-  sat = Math.round(clamp(sat * saturationEnhancement, 0, 100));
-  lit = Math.round(
-    clamp(normalize(lit, 0, 100, 0, maxLightness) - 5, 0, 100)
-  );
 
-  return `${hue}deg ${sat}% ${lit}%`
+  sat = Math.round(clamp(sat * saturationEnhancement, 0, 100));
+  lit = Math.round(clamp(normalize(lit, 0, 100, 0, maxLightness) - 5, 0, 100));
+
+  return `${hue}deg ${sat}% ${lit}%`;
 }
 
 async function prefix(mediaQueries, css) {
@@ -254,7 +255,7 @@ const horizon = (options = defaultConfig) => {
 
       // Regular colors
       const colorCSS = entries(options.colors).map(([colorName, hexValue]) => {
-        let a = getShadowBackgroundHslValues(hexValue, 0.5)
+        let a = getShadowBackgroundHslValues(hexValue, 0.5);
         return `
         .${colorName}                 { color: var(--${colorName}); }
         .${colorName}-h:hover         { color: var(--${colorName}); }
@@ -364,14 +365,15 @@ const horizon = (options = defaultConfig) => {
       // Themes
       // NOTE: This needs to be built out a lot more.
       entries(options.themes).forEach(([themeName, props]) => {
-        // Temp disabling prefers-color-scheme because it doesn't allow setting from UI.
         if (['light', 'dark'].includes(themeName)) {
           cssRoot.append(
             `
               @media (prefers-color-scheme: ${themeName}) {
                 :root {
                   color-scheme: ${themeName};
-                  ${variableFormatter(omit(props, ['colorScheme'])).join('\n')}
+                  ${variableFormatter(
+                    omit(props, ['colorScheme', 'surfaces'])
+                  ).join('\n')}
                 }
               }
               `
@@ -391,6 +393,34 @@ const horizon = (options = defaultConfig) => {
             ${variableFormatter(props).join('\n')}
           }
           `
+        );
+      });
+
+
+      // Surfaces
+      entries(options.surfaces).forEach(([themeName, surfacesObj]) => {
+        let a = entries(surfacesObj)
+        .map(([surfaceName, surfaceProps]) => { return [`surface-${surfaceName}-${themeName}`, surfaceProps]; })
+
+        let b = Object.fromEntries(a)
+
+        let c = createColorVariables(b);
+
+        cssRoot.append(
+          `
+          :root {
+            ${c.join('\n')}
+          }
+        ${entries(surfacesObj).map(([surfaceColorName, surfaceColorValue]) => {
+          return `
+          [color-scheme="${themeName}"] .surface-${surfaceColorName} {
+            background-color: var(--surface-${surfaceColorName}-${themeName});
+            color: var(--surface-${surfaceColorName}-${themeName}-tl);
+            --shadow-color: ${getShadowBackgroundHslValues(surfaceColorValue, 0.5)}
+          }
+          `;
+        }).join('\n')}
+        `
         );
       });
 

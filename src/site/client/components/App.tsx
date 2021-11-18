@@ -10,6 +10,7 @@ import {
 
 import SideNav from './SideNav';
 import Routes from './Routes';
+import ColorSchemeToggle from './ColorSchemeToggle';
 
 type NavbarProps = {};
 
@@ -20,6 +21,7 @@ const Navbar: FC<NavbarProps> = (props: NavbarProps) => {
     <MNavbar width={{ base: 300 }} height="100vh" padding="xs">
       <Link to="/color">Color</Link>
       <Link to="/shadows">Shadows</Link>
+      <Link to="/surfaces">Surfaces</Link>
     </MNavbar>
   );
 };
@@ -31,7 +33,7 @@ const Header: FC<HeaderProps> = (props: HeaderProps) => {
 
   return (
     <MHeader height={60} padding="xs">
-      Header
+      <ColorSchemeToggle />
     </MHeader>
   );
 };
