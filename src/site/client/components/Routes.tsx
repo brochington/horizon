@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
   useParams,
 } from 'react-router-dom';
@@ -10,14 +10,14 @@ import ColorPage from '../pages/ColorPage';
 import ShadowPage from 'pages/ShadowPage';
 import SurfacePage from 'pages/SurfacePage';
 
-const Routes = () => {
+const AppRoutes = () => {
   return (
-    <Switch>
-      <Route path="/color" component={ColorPage} />
-      <Route path="/shadows" component={ShadowPage} />
-      <Route path="/surfaces" component={SurfacePage} />
-    </Switch>
+    <Routes>
+      <Route path="/color" element={<ColorPage />} />
+      <Route path="/shadows" element={<ShadowPage />} />
+      <Route path="/surfaces" element={<SurfacePage />} />
+    </Routes>
   );
 };
 
-export default Routes;
+export default AppRoutes;
