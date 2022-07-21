@@ -19,37 +19,22 @@ const horizon = require('../src/horizon/postCSSPlugins/horizon');
 
 const kill = () => process.kill(process.pid, 'SIGTERM');
 
-const configPath = path.resolve(process.cwd(), argv.config || './horizon.config.js');
+const configPath = path.resolve(
+  process.cwd(),
+  argv.config || './horizon.config.js'
+);
 console.log('configPath: ', configPath);
-const config = require(configPath);
-
-if (!config) {
-  console.log(chalk.red('Horizon: no config detected.'));
-  kill();
-}
-
-const defaultCSSVariables = {};
-
-const cssFilename = config.filename || 'horizon-styles.css';
-const cssPath = path.join(process.cwd(), config.path || './dist');
-const docPath = path.join(process.cwd(), config.docPath || './docs/horizon/site')
-const destinationPath = `${cssPath}/${cssFilename}`;
-
+// const config = require(configPath);
 const spinner = ora();
 
-console.log('destinationPath: ', destinationPath);
-console.log('docPath ', docPath);
-
-
-async function generateCSS() {
+async function generateCSS(config, destinationPath) {
   try {
     console.log('generateCSS');
     const result = await postcss([
       horizon(config.config),
       postcssPresetEnv({ stage: 0 }),
       colorFunction({ preserveCustomProps: false }),
-    ])
-    .process('', { from: '', to: destinationPath });
+    ]).process('', { from: '', to: destinationPath });
 
     return result.css;
   } catch (e) {
@@ -68,19 +53,43 @@ function asyncWebpack(webpackConfig) {
       }
 
       resolve();
-    })
-  })
+    });
+  });
 }
 
 (async function run() {
   try {
+    const confingImport = await import(configPath);
+    const config = confingImport.default;
+
+    console.log('config: ', config);
+
+    if (!config) {
+      console.log(chalk.red('Horizon: no config detected.'));
+      kill();
+    }
+
+    const defaultCSSVariables = {};
+
+    const cssFilename = config.filename || 'horizon-styles.css';
+    const cssPath = path.join(process.cwd(), config.path || './dist');
+    const docPath = path.join(
+      process.cwd(),
+      config.docPath || './docs/horizon/site'
+    );
+    const destinationPath = `${cssPath}/${cssFilename}`;
+
+    console.log('destinationPath: ', destinationPath);
+    console.log('docPath ', docPath);
+
+    // 
     spinner.start('Generating CSS');
-    const css = await generateCSS();
+    const css = await generateCSS(config, destinationPath);
     spinner.succeed(chalk.green('CSS compilation complete'));
 
     spinner.start('Writing CSS file');
     await fs.outputFile(destinationPath, css);
-    spinner.succeed(chalk.green(`${cssFilename} generated at ${cssPath}`))
+    spinner.succeed(chalk.green(`${cssFilename} generated at ${cssPath}`));
 
     // if (argv.docs) {
     //   spinner.start('Generating static documentation');
@@ -91,9 +100,8 @@ function asyncWebpack(webpackConfig) {
     //     ? spinner.fail(chalk.red('Documentation generation not successful'))
     //     : spinner.succeed(chalk.green('Documenation generation successful'));
     // }
-
   } catch (e) {
-    spinner.fail('something went wrong...')
+    spinner.fail('something went wrong...');
     console.error('Horizon: Something went wrong...');
     console.error(e);
   }
