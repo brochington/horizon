@@ -11,8 +11,10 @@ const ColorRow: FC<ColorRowProps> = (props: ColorRowProps) => {
   return (
     <>
       <div>{colorName}</div>
-      {range(12).map(num => (
-        <div key={num} className={`bgd-${colorName}-${num}`} />
+      {range(10).map(num => (
+        <div key={num} className="flex-center">
+          <div className={`bgd-${colorName}-${num} hrem-3 wrem-3 b-1`}></div>
+        </div>
       ))}
     </>
   );
@@ -25,26 +27,23 @@ const ColorPage: FC = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: '12rem repeat(12, 1fr)',
-          gridTemplateRows: 'repeat(25, 2rem)',
+          gridTemplateColumns: 'repeat(11, 1fr)',
+          gridTemplateRows: 'repeat(13, 4rem)',
           gridGap: '.25rem',
         }}
       >
         <div className="spacer" />
-        {range(12).map(num => (
+        {range(10).map(num => (
           <div key={num} className="flex-center">
             {num}
           </div>
         ))}
         <ColorRow colorName="gray" />
-        <ColorRow colorName="blue-gray" />
         <ColorRow colorName="blue" />
         <ColorRow colorName="indigo" />
         <ColorRow colorName="violet" />
-        <ColorRow colorName="magenta" />
         <ColorRow colorName="red" />
         <ColorRow colorName="orange" />
-        <ColorRow colorName="gold" />
         <ColorRow colorName="yellow" />
         <ColorRow colorName="lime" />
         <ColorRow colorName="green" />

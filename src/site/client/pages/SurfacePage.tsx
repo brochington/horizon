@@ -7,28 +7,24 @@ type SurfaceTileProps = {
 const SurfaceTile: FC<SurfaceTileProps> = (props: SurfaceTileProps) => {
   const { num } = props;
 
-  return (
-    <div className={`surface-${num} shadow-3`}>SurfaceTile</div>
-  );
+  return <div className={`surface-${num} shadow-3`}>SurfaceTile</div>;
 };
 
-
-type Props = {
-  
-};
+type Props = {};
 
 const SurfacePage: FC<Props> = (props: Props) => {
-  const {  } = props;
+  const {} = props;
 
   return (
-    <div 
+    <div
       className="m3"
-    style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, 8rem)',
-      gridAutoRows: '8rem',
-      gap: '1rem',
-    }}>
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, 8rem)',
+        gridAutoRows: '8rem',
+        gap: '1rem',
+      }}
+    >
       <SurfaceTile num={1} />
       <SurfaceTile num={2} />
       <SurfaceTile num={3} />

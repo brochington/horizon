@@ -11,9 +11,9 @@ const { runPostCSS } = require('../utils/postcss');
 const Color = require('color');
 const prefixer = require('./prefixer');
 const composer = require('./composer');
-const postcssColorMod = require('postcss-color-mod-function');
 
 const variableFormatter = require('../utils/variableFormatter');
+const { formatColors } = require('../utils/colorFormatter');
 const defaultConfig = require('../defaultConfig');
 const isArray = require('lodash/isArray');
 
@@ -118,30 +118,19 @@ async function compose(comps, css) {
   return result;
 }
 
-async function colorMod(css) {
-  const result = await runPostCSS(
-    postcssColorMod({ transformVars: true }),
-    css
-  );
-  // const result = postcssColorMod.process(css /*, processOptions, pluginOptions */);
-  // const result = postcssLib([
-  //   postcssColorMod({ transformVars: true })
-  // ]).process(css /*, processOptions */);
-
-  return result;
-}
-
 const createColorVariables = (coloroptions) => {
-  return entries(coloroptions).map(([colorName, colorVal]) => {
-    if (colorVal.includes('var')) {
-      return `--${colorName}: ${colorVal};`;
-    } else {
-      try {
-        const color = Color(colorVal);
-        const hsl = color.hsl();
-        const [hue, saturation, lightness, alpha] = hsl.array();
+  return entries(coloroptions)
+    .flatMap(formatColors)
+    .map(([colorName, colorVal]) => {
+      if (colorVal.includes('var')) {
+        return `--${colorName}: ${colorVal};`;
+      } else {
+        try {
+          const color = Color(colorVal);
+          const hsl = color.hsl();
+          const [hue, saturation, lightness, alpha] = hsl.array();
 
-        return `
+          return `
         --${colorName}-h: ${hue};
         --${colorName}-s: ${saturation}%;
         --${colorName}-l: ${lightness}%;
@@ -154,12 +143,12 @@ const createColorVariables = (coloroptions) => {
         
         --${colorName}-tl: hsl(0, 0%, calc((var(--${colorName}-l) - var(--contrast-threshold)) * -100));
         `;
-      } catch (e) {
-        console.error(e);
-        return `--${colorName}: ${colorVal};`;
+        } catch (e) {
+          console.error(e);
+          return `--${colorName}: ${colorVal};`;
+        }
       }
-    }
-  });
+    });
 };
 
 const appendCSSWithMQ = async (cssArr, mediaQueries, cssRoot) => {
@@ -206,7 +195,7 @@ const horizon = (options = defaultConfig) => {
       const mqStringsRec = getMediaQueriesStringRec(options.mediaQueries);
 
       // Add Sanitize CSS
-      cssRoot.append(sanitizeCSS);
+      // cssRoot.append(sanitizeCSS);
 
       // Add fonts
       options.fonts.forEach((f) => {
@@ -219,7 +208,6 @@ const horizon = (options = defaultConfig) => {
       :root {
       --contrast-threshold: 60%;
       ${variableFormatter(options.variables).join('\n')}
-      ${variableFormatter(options.autoSpectrumColors).join('\n')}
       ${createColorVariables(options.colors).join('\n')}
       ${options.fonts.map((f) => `--${f.key}: ${f.name};`).join('\n')}
       ${entries(options.margins)
@@ -254,9 +242,16 @@ const horizon = (options = defaultConfig) => {
       cssRoot.append(rootContent);
 
       // Regular colors
-      const colorCSS = entries(options.colors).map(([colorName, hexValue]) => {
-        let a = getShadowBackgroundHslValues(hexValue, 0.5);
-        return `
+      const colorCSS = entries(options.colors)
+        .flatMap(formatColors)
+        // .flatMap((v) => colorFormatter([])(v))
+        .map(c => {
+          console.log(c);
+          return c;
+        })
+        .map(([colorName, hexValue]) => {
+          let a = getShadowBackgroundHslValues(hexValue, 0.5);
+          return `
         .${colorName}                 { color: var(--${colorName}); }
         .${colorName}-h:hover         { color: var(--${colorName}); }
         .bgd-${colorName}             {
@@ -266,100 +261,56 @@ const horizon = (options = defaultConfig) => {
         }
         .bgd-${colorName}-h:hover     { background-color: var(--${colorName}); }
         `;
-      });
+        });
 
       cssRoot.append(colorCSS.join(''));
 
       // add "auto spectrum" color classes. The colors have gradient (tint/color)
       // classes programatically determined.
-      const bgdCSS = entries(options.autoSpectrumColors).map(
-        ([colorName, hexValue]) => {
-          return `
-        /* ${colorName} spectrum color */
+      // const bgdCSS = entries(options.autoSpectrumColors).map(
+      //   ([colorName, hexValue]) => {
+      //     return `
+      //   /* ${colorName} spectrum color */
 
-        .${colorName} { color: var(--${colorName}); }
+      //   .${colorName} { color: var(--${colorName}); }
 
-        /* ${colorName} borders */
+      //   /* ${colorName} borders */
 
-        .b-${colorName}  { border-color: var(--${colorName}); }
-        .bt-${colorName} { border-top-color: var(--${colorName}); }
-        .br-${colorName} { border-right-color: var(--${colorName}); }
-        .bb-${colorName} { border-bottom-color: var(--${colorName}); }
-        .bl-${colorName} { border-left-color: var(--${colorName}); }
+      //   .b-${colorName}  { border-color: var(--${colorName}); }
+      //   .bt-${colorName} { border-top-color: var(--${colorName}); }
+      //   .br-${colorName} { border-right-color: var(--${colorName}); }
+      //   .bb-${colorName} { border-bottom-color: var(--${colorName}); }
+      //   .bl-${colorName} { border-left-color: var(--${colorName}); }
 
-        /* ${colorName} backgrounds */
+      //   /* ${colorName} backgrounds */
 
-        .bgd-${colorName}             { background-color: var(--${colorName}); }
-        .bgd-${colorName}-tint-10     { background-color: color-mod(${hexValue} tint(10%)); }
-        .bgd-${colorName}-tint-20     { background-color: color-mod(${hexValue} tint(20%)); }
-        .bgd-${colorName}-tint-30     { background-color: color-mod(${hexValue} tint(30%)); }
-        .bgd-${colorName}-tint-40     { background-color: color-mod(${hexValue} tint(40%)); }
-        .bgd-${colorName}-tint-50     { background-color: color-mod(${hexValue} tint(50%)); }
-        .bgd-${colorName}-tint-60     { background-color: color-mod(${hexValue} tint(60%)); }
-        .bgd-${colorName}-tint-70     { background-color: color-mod(${hexValue} tint(70%)); }
-        .bgd-${colorName}-tint-80     { background-color: color-mod(${hexValue} tint(80%)); }
-        .bgd-${colorName}-tint-90     { background-color: color-mod(${hexValue} tint(90%)); }
-        .bgd-${colorName}-shade-10    { background-color: color-mod(${hexValue} shade(10%)); }
-        .bgd-${colorName}-shade-20    { background-color: color-mod(${hexValue} shade(20%)); }
-        .bgd-${colorName}-shade-30    { background-color: color-mod(${hexValue} shade(30%)); }
-        .bgd-${colorName}-shade-40    { background-color: color-mod(${hexValue} shade(40%)); }
-        .bgd-${colorName}-shade-50    { background-color: color-mod(${hexValue} shade(50%)); }
-        .bgd-${colorName}-shade-60    { background-color: color-mod(${hexValue} shade(60%)); }
-        .bgd-${colorName}-shade-70    { background-color: color-mod(${hexValue} shade(70%)); }
-        .bgd-${colorName}-shade-80    { background-color: color-mod(${hexValue} shade(80%)); }
-        .bgd-${colorName}-shade-90    { background-color: color-mod(${hexValue} shade(90%)); }
-        .bgd-${colorName}-opacity-10  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
-        .bgd-${colorName}-opacity-20  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
-        .bgd-${colorName}-opacity-30  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
-        .bgd-${colorName}-opacity-40  { background-color: rgba(var(--${colorName}-rgb), 0.4); }
-        .bgd-${colorName}-opacity-50  { background-color: rgba(var(--${colorName}-rgb), 0.5); }
-        .bgd-${colorName}-opacity-60  { background-color: rgba(var(--${colorName}-rgb), 0.6); }
-        .bgd-${colorName}-opacity-70  { background-color: rgba(var(--${colorName}-rgb), 0.7); }
-        .bgd-${colorName}-opacity-80  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
-        .bgd-${colorName}-opacity-90  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
+      //   .bgd-${colorName}             { background-color: var(--${colorName}); }
+      //   .bgd-${colorName}-opacity-10  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
+      //   .bgd-${colorName}-opacity-20  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
+      //   .bgd-${colorName}-opacity-30  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
+      //   .bgd-${colorName}-opacity-40  { background-color: rgba(var(--${colorName}-rgb), 0.4); }
+      //   .bgd-${colorName}-opacity-50  { background-color: rgba(var(--${colorName}-rgb), 0.5); }
+      //   .bgd-${colorName}-opacity-60  { background-color: rgba(var(--${colorName}-rgb), 0.6); }
+      //   .bgd-${colorName}-opacity-70  { background-color: rgba(var(--${colorName}-rgb), 0.7); }
+      //   .bgd-${colorName}-opacity-80  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
+      //   .bgd-${colorName}-opacity-90  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
 
-        /* ${colorName} hover backgrounds */
+      //   /* ${colorName} hover backgrounds */
 
-        .bgd-${colorName}-h:hover             { background-color: var(--${colorName}); }
-        .bgd-${colorName}-tint-10-h:hover     { background-color: color-mod(${hexValue} tint(10%)); }
-        .bgd-${colorName}-tint-20-h:hover     { background-color: color-mod(${hexValue} tint(20%)); }
-        .bgd-${colorName}-tint-30-h:hover     { background-color: color-mod(${hexValue} tint(30%)); }
-        .bgd-${colorName}-tint-40-h:hover     { background-color: color-mod(${hexValue} tint(40%)); }
-        .bgd-${colorName}-tint-50-h:hover     { background-color: color-mod(${hexValue} tint(50%)); }
-        .bgd-${colorName}-tint-60-h:hover     { background-color: color-mod(${hexValue} tint(60%)); }
-        .bgd-${colorName}-tint-70-h:hover     { background-color: color-mod(${hexValue} tint(70%)); }
-        .bgd-${colorName}-tint-80-h:hover     { background-color: color-mod(${hexValue} tint(80%)); }
-        .bgd-${colorName}-tint-90-h:hover     { background-color: color-mod(${hexValue} tint(90%)); }
-        .bgd-${colorName}-shade-10-h:hover    { background-color: color-mod(${hexValue} shade(10%)); }
-        .bgd-${colorName}-shade-20-h:hover    { background-color: color-mod(${hexValue} shade(20%)); }
-        .bgd-${colorName}-shade-30-h:hover    { background-color: color-mod(${hexValue} shade(30%)); }
-        .bgd-${colorName}-shade-40-h:hover    { background-color: color-mod(${hexValue} shade(40%)); }
-        .bgd-${colorName}-shade-50-h:hover    { background-color: color-mod(${hexValue} shade(50%)); }
-        .bgd-${colorName}-shade-60-h:hover    { background-color: color-mod(${hexValue} shade(60%)); }
-        .bgd-${colorName}-shade-70-h:hover    { background-color: color-mod(${hexValue} shade(70%)); }
-        .bgd-${colorName}-shade-80-h:hover    { background-color: color-mod(${hexValue} shade(80%)); }
-        .bgd-${colorName}-shade-90-h:hover    { background-color: color-mod(${hexValue} shade(90%)); }
-        .bgd-${colorName}-opacity-10-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
-        .bgd-${colorName}-opacity-20-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
-        .bgd-${colorName}-opacity-30-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
-        .bgd-${colorName}-opacity-40-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.4); }
-        .bgd-${colorName}-opacity-50-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.5); }
-        .bgd-${colorName}-opacity-60-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.6); }
-        .bgd-${colorName}-opacity-70-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.7); }
-        .bgd-${colorName}-opacity-80-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
-        .bgd-${colorName}-opacity-90-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
-        `;
-        }
-      );
+      //   .bgd-${colorName}-h:hover             { background-color: var(--${colorName}); }
+      //   .bgd-${colorName}-opacity-10-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.1); }
+      //   .bgd-${colorName}-opacity-20-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.2); }
+      //   .bgd-${colorName}-opacity-30-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.3); }
+      //   .bgd-${colorName}-opacity-40-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.4); }
+      //   .bgd-${colorName}-opacity-50-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.5); }
+      //   .bgd-${colorName}-opacity-60-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.6); }
+      //   .bgd-${colorName}-opacity-70-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.7); }
+      //   .bgd-${colorName}-opacity-80-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.8); }
+      //   .bgd-${colorName}-opacity-90-h:hover  { background-color: rgba(var(--${colorName}-rgb), 0.9); }
+      //   `;
+      //   }
+      // );
 
-      const colorModdedBgdCSS = await Promise.all(
-        bgdCSS.map(async (css) => {
-          const newCSS = await colorMod(css);
-          return newCSS;
-        })
-      );
-
-      await appendCSSWithMQ(colorModdedBgdCSS, mqStringsRec, cssRoot);
       // await appendCSSWithMQ(bgdCSS, mqStringsRec, cssRoot);
 
       // Themes
@@ -396,13 +347,13 @@ const horizon = (options = defaultConfig) => {
         );
       });
 
-
       // Surfaces
       entries(options.surfaces).forEach(([themeName, surfacesObj]) => {
-        let a = entries(surfacesObj)
-        .map(([surfaceName, surfaceProps]) => { return [`surface-${surfaceName}-${themeName}`, surfaceProps]; })
+        let a = entries(surfacesObj).map(([surfaceName, surfaceProps]) => {
+          return [`surface-${surfaceName}-${themeName}`, surfaceProps];
+        });
 
-        let b = Object.fromEntries(a)
+        let b = Object.fromEntries(a);
 
         let c = createColorVariables(b);
 
@@ -411,15 +362,20 @@ const horizon = (options = defaultConfig) => {
           :root {
             ${c.join('\n')}
           }
-        ${entries(surfacesObj).map(([surfaceColorName, surfaceColorValue]) => {
-          return `
+        ${entries(surfacesObj)
+          .map(([surfaceColorName, surfaceColorValue]) => {
+            return `
           [color-scheme="${themeName}"] .surface-${surfaceColorName} {
             background-color: var(--surface-${surfaceColorName}-${themeName});
             color: var(--surface-${surfaceColorName}-${themeName}-tl);
-            --shadow-color: ${getShadowBackgroundHslValues(surfaceColorValue, 0.5)}
+            --shadow-color: ${getShadowBackgroundHslValues(
+              surfaceColorValue,
+              0.5
+            )}
           }
           `;
-        }).join('\n')}
+          })
+          .join('\n')}
         `
         );
       });

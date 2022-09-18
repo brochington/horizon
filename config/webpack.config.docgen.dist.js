@@ -11,65 +11,70 @@ module.exports = (destination, horizonConfig) => {
   return {
     entry: [
       path.join(__dirname, '../src/site/client/index.tsx'),
-      path.join(__dirname, '../src/horizon/styles/generation.css')
+      path.join(__dirname, '../src/horizon/styles/generation.css'),
     ],
     output: {
       path: destination,
-      filename: 'horizon_site.js'
+      filename: 'horizon_site.js',
     },
     mode: 'production',
     resolve: {
       alias: {
         ...aliases,
       },
-      extensions: ['.js', '.mjs', '.ts', '.tsx']
+      extensions: ['.js', '.mjs', '.ts', '.tsx'],
     },
     module: {
-      rules: [{
-        test: /\.ts(x?)$/,
-        loader: 'babel-loader',
-        include: path.join(__dirname, '../src/site/client'),
-        options: {
-          plugins: [
-            '@babel/plugin-syntax-dynamic-import',
-            '@babel/plugin-proposal-class-properties',
-            '@babel/plugin-proposal-optional-chaining'
+      rules: [
+        {
+          test: /\.ts(x?)$/,
+          include: path.join(process.cwd(), 'src/site/client'),
+          use: {
+            loader: 'swc-loader',
+            options: {
+              jsc: {
+                parser: {
+                  syntax: 'typescript',
+                },
+              },
+            },
+          },
+        },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [
+                  horizon(horizonConfig.config),
+                  postcssPresetEnv({ stage: 0 }),
+                  colorFunction({ preserveCustomProps: false }),
+                ],
+              },
+            },
           ],
-          presets: [
-            '@babel/preset-react',
-            '@babel/preset-typescript'
-          ]
-        }
-      }, {
-        test: /\.css$/,
-        use: [{
-          loader: MiniCssExtractPlugin.loader
-        }, {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 1
-          }
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins: () => [
-              horizon(horizonConfig.config),
-              postcssPresetEnv({ stage: 0 }),
-              colorFunction({ preserveCustomProps: false })
-            ]
-          }
-        }]
-      }]
+        },
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Horizon Docs',
-        template: path.join(__dirname, 'index.html')
+        template: path.join(__dirname, 'index.html'),
       }),
       new MiniCssExtractPlugin(),
       new webpack.DefinePlugin({
-        __HORIZON_CONFIG__: JSON.stringify(horizonConfig)
-      })
-    ]
-  }
-}
+        __HORIZON_CONFIG__: JSON.stringify(horizonConfig),
+      }),
+    ],
+  };
+};

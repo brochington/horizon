@@ -2,10 +2,7 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 const postcssPresetEnv = require('postcss-preset-env');
-const colorFunction = require('postcss-color-function');
 const horizon = require('../src/horizon/postCSSPlugins/horizon');
-
-console.log('horizon', horizon);
 
 module.exports = {
   entry: [
@@ -34,7 +31,6 @@ module.exports = {
             plugins: [
               horizon,
               postcssPresetEnv({ stage: 0 }),
-              colorFunction({ preserveCustomProps: false })
             ]
           }
         }

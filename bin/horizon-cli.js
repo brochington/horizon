@@ -11,7 +11,6 @@ const webpack = require('webpack');
 
 const postcss = require('postcss');
 const postcssPresetEnv = require('postcss-preset-env');
-const colorFunction = require('postcss-color-function');
 // const postcssModules = require('postcss-modules');
 // const postcssComposes = require('postcss-composes');
 // const { horizon } = require(path.join(__dirname, '../dist/horizon'));
@@ -33,7 +32,6 @@ async function generateCSS(config, destinationPath) {
     const result = await postcss([
       horizon(config.config),
       postcssPresetEnv({ stage: 0 }),
-      colorFunction({ preserveCustomProps: false }),
     ]).process('', { from: '', to: destinationPath });
 
     return result.css;

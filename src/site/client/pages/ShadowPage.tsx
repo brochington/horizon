@@ -9,21 +9,21 @@ const ShadowPage: FC<Props> = (props: Props) => {
 
   return (
     <div>
-      <div className="hrem-20 bgd-teal-9 flex-center gap3">
+      <div className="hrem-20 bgd-teal-10 flex-center gap3">
         <div className="wrem-10 hrem-10 shadow-1">
-          <div className="h100 w100 bgd-teal-6 p3"></div>
+          <div className="h100 w100 bgd-teal-5 p3"></div>
         </div>
         <div className="wrem-10 hrem-10 shadow-2">
-          <div className="h100 w100 bgd-teal-7"></div>
+          <div className="h100 w100 bgd-teal-6"></div>
         </div>
         <div className="wrem-10 hrem-10 shadow-3">
-          <div className="h100 w100 bgd-teal-8"></div>
+          <div className="h100 w100 bgd-teal-7"></div>
         </div>
         <div className="wrem-10 hrem-10 shadow-4">
-          <div className="h100 w100 bgd-teal-9"></div>
+          <div className="h100 w100 bgd-teal-8"></div>
         </div>
         <div className="wrem-10 hrem-10 shadow-5">
-          <div className="h100 w100 bgd-teal-10"></div>
+          <div className="h100 w100 bgd-teal-9"></div>
         </div>
       </div>
     </div>
