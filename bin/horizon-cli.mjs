@@ -1,26 +1,41 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const fs = require('fs-extra');
-const chalk = require('chalk');
-const argv = require('yargs').argv;
-const ora = require('ora');
-// const cliSpinners = require('cli-spinners');
-const webpack = require('webpack');
-// const docgenWebpackConfig = require('../config/webpack.config.docgen.dist');
+console.log('hello world');
 
-const postcss = require('postcss');
-const postcssPresetEnv = require('postcss-preset-env');
-// const postcssModules = require('postcss-modules');
-// const postcssComposes = require('postcss-composes');
-// const { horizon } = require(path.join(__dirname, '../dist/horizon'));
-const horizon = require('../src/horizon/postCSSPlugins/horizon');
+import path from 'path';
+import fs from 'fs-extra';
+import chalk from 'chalk';
+import ora from 'ora';
+import webpack from 'webpack';
+import { Command } from 'commander';
+// const cliSpinners = require('cli-spinners');
+// import docgenWebpackConfig from '../config/webpack.config.docgen.dist';
+
+import postcss from 'postcss';
+import postcssPresetEnv from 'postcss-preset-env';
+// // const postcssModules = require('postcss-modules');
+// // const postcssComposes = require('postcss-composes');
+// // const { horizon } = require(path.join(__dirname, '../dist/horizon'));
+import horizon from '../src/horizon/postCSSPlugins/horizon.js';
+
+console.log(horizon);
+
+const program = new Command();
+console.log(program);
+
+program.option('-c, --config <path>', 'path to config file');
+
+program.parse();
+
+const options = program.opts();
+
+console.log('options: ', options.config);
 
 const kill = () => process.kill(process.pid, 'SIGTERM');
 
 const configPath = path.resolve(
   process.cwd(),
-  argv.config || './horizon.config.js'
+  options.config || './horizon.config.js'
 );
 console.log('configPath: ', configPath);
 // const config = require(configPath);
